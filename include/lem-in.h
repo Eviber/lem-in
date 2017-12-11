@@ -6,16 +6,25 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/05 10:04:14 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/11 21:42:00 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+typedef struct		s_pos
+{
+	int				x;
+	int				y;
+}					t_pos;
+
 typedef struct		s_room
 {
-	struct s_room	*links;
+	struct s_room	**links;
+	struct s_room	*next;
+	struct s_room	*prev;
+	struct s_pos	pos;
 	char			*name;
 	int				nlinks;
 	char			full;
