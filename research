@@ -1,7 +1,0 @@
-Il y a plusieurs niveaux d'opti:
-	0: mono-path, Dijkstra
-	1: multi-path, Dijkstra aussi
-	2: Ford-Fulkerson ? Ca a l'air cool mais je suis perdu la mdr
-
-Points a creuser:
-	Theorie des graphes -> maximum flow problem
