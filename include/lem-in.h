@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/13 19:55:24 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/13 21:06:55 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ typedef struct		s_env
 	long			total_ants;
 	long			atstart;
 }					t_env;
+
+enum { ROOM, TUBE, COMM, START, END };
 
 #endif
