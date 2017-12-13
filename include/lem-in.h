@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/11 21:42:00 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/13 18:28:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ typedef struct		s_room
 	int				nlinks;
 	char			full;
 }					t_room;
-
-typedef struct		s_ant
-{
-	struct s_room	*room;
-	int				id;
-}					t_ant;
 
 typedef struct		s_env
 {
