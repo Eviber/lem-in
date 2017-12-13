@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/13 21:35:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/14 00:17:46 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,51 @@ t_env	parser(void)
 	return (env);
 }
 
+t_winenv		*getsdlenv(t_pile *p)
+{
+	static t_winenv	*winenv = NULL;
+
+	if (!winenv)
+		if (p && (winenv = (t_winenv *)malloc(sizeof(t_winenv))))
+			winenv->max = maxvalue(p, &(winenv->pop)) + 1;
+	return (winenv);
+}
+
+int				visu_init(void)
+{
+	t_winenv	*env;
+
+	env = getsdlenv(NULL);
+	if (!env || SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
+	{
+		fprintf(stderr, "Error while initializing SDL: %s\n", SDL_GetError());
+		return (0);
+	}
+	env->win = SDL_CreateWindow("push_swap",
+				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+				WIN_W, WIN_H, 0);
+	if (!env->win)
+	{
+		fprintf(stderr, "Error while creating window: %s\n", SDL_GetError());
+		return (0);
+	}
+	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_ACCELERATED);
+	if (!env->render)
+	{
+		fprintf(stderr, "Error while creating renderer: %s\n", SDL_GetError());
+		return (0);
+	}
+	SDL_SetRenderDrawColor(env->render, 0, 0, 0, 255);
+	SDL_RenderClear(env->render);
+	return (1);
+}
+
 int		main(void)
 {
 	t_env	env;
 
 	env = parser();
+	if (!visu_init())
+		ft_putstr_fd(2, "Visualizer failed.\n");
 	return (0);
 }
