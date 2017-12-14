@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/13 21:06:55 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/15 00:16:30 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_env
 	struct s_room	*start;
 	struct s_room	*end;
 	struct s_path	**paths;
+	struct s_room	**rooms;
 	long			total_ants;
 	long			atstart;
 }					t_env;
