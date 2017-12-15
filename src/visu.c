@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/15 22:52:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/16 00:11:54 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,21 @@ t_env	parser(void)
 	return (env);
 }
 
-t_winenv		*getsdlenv(t_room **rooms)
+t_winenv		*getsdlenv(t_env *colony)
 {
 	static t_winenv	*winenv = NULL;
 
-	if (!winenv && rooms)
+	if (!winenv && colony)
 		if ((winenv = (t_winenv *)malloc(sizeof(t_winenv))))
-			winenv->rooms = rooms;
+			winenv->colony = colony;
 	return (winenv);
 }
 
-int		visu_init(t_room **rooms)
+int		visu_init(t_env *colony)
 {
 	t_winenv	*env;
 
-	env = getsdlenv(rooms);
+	env = getsdlenv(colony);
 	if (!env || SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
 		return(panic("Error while initializing SDL: ", SDL_GetError()));
 	if (SDL_GetDesktopDisplayMode(0, &(env->dispmode)))
@@ -134,14 +134,23 @@ int		visu_init(t_room **rooms)
 	return (1);
 }
 
-void	putroom(SDL_Renderer *render, t_room room)
+void	putroom(SDL_Renderer *render, t_room *room, t_env colony)
 {
-	if (room.ant)
-		filledCircleRGBA (render, room.pos.x * 100, room.pos.y * 100,
-				30, 200, 100, 100, SDL_ALPHA_OPAQUE);
+	if (room == colony.start && room == colony.end)
+		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
+				35, 200, 200, 200, SDL_ALPHA_OPAQUE);
+	else if (room == colony.start)
+		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
+				35, 100, 200, 200, SDL_ALPHA_OPAQUE);
+	else if (room == colony.end)
+		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
+				35, 200, 200, 100, SDL_ALPHA_OPAQUE);
+	if (room->ant)
+		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
+				30, 200, 100, 0, SDL_ALPHA_OPAQUE);
 	else
-		filledCircleRGBA (render, room.pos.x * 100, room.pos.y * 100,
-				30, 200, 200, 200, SDL_ALPHA_OPAQUE);
+		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
+				30, 100, 100, 100, SDL_ALPHA_OPAQUE);
 }
 
 void	putpipes(SDL_Renderer *render, t_room room)
@@ -161,11 +170,13 @@ void	putpipes(SDL_Renderer *render, t_room room)
 	}
 }
 
-void	putrooms(SDL_Renderer *render, t_room **rooms)
+void	putrooms(SDL_Renderer *render, t_env colony)
 {
+	t_room	**rooms;
 	int		i;
 
 	i = 0;
+	rooms = colony.rooms;
 	while (rooms[i])
 	{
 		putpipes(render, *(rooms[i]));
@@ -174,12 +185,12 @@ void	putrooms(SDL_Renderer *render, t_room **rooms)
 	i = 0;
 	while (rooms[i])
 	{
-		putroom(render, *(rooms[i]));
+		putroom(render, rooms[i], colony);
 		i++;
 	}
 }
 
-int		visu(t_room **rooms)
+int		visu(void)
 {
 	t_winenv	*env;
 
@@ -188,10 +199,10 @@ int		visu(t_room **rooms)
 	{
 		SDL_SetRenderDrawColor(env->render, 25, 37, 75, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(env->render);
-		putrooms(env->render, rooms);
+		putrooms(env->render, *(env->colony));
 		SDL_RenderPresent(env->render);
 	}
-	return (!SDL_QuitRequested());
+	return (env && !SDL_QuitRequested());
 }
 
 int		main(void)
@@ -201,18 +212,18 @@ int		main(void)
 
 	v = 1;
 	env = parser();
-	if (!visu_init(env.rooms))
+	if (!visu_init(&env))
 	{
 		ft_putstr_fd("Visualizer failed.\n", 2);
 		v = 0;
 	}
 	while (v)
 	{
-		v = visu(env.rooms);
+		v = visu();
 		if (0)
 		{
 			SDL_Delay(500);
-			v = visu(env.rooms);
+			v = visu();
 		}
 	}
 	return (0);
