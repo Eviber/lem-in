@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/14 21:49:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/15 20:42:48 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_room
 	struct s_pos	pos;
 	long			ant;
 	int				weight;
+	int				dead;
 }					t_room;
 
 typedef struct		s_path
@@ -42,8 +43,8 @@ typedef struct		s_env
 	struct s_room	*end;
 	struct s_path	**paths;
 	struct s_room	**rooms;
-	long			total_ants;
-	long			atstart;
+	long			nb_ants;
+	long			antleft;
 }					t_env;
 
 typedef struct			s_winenv
@@ -56,5 +57,7 @@ typedef struct			s_winenv
 }						t_winenv;
 
 enum { ROOM, TUBE, COMM, START, END };
+
+enum { FALSE, TRUE };
 
 #endif
