@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/15 20:42:48 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/15 20:49:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct		s_pos
 
 typedef struct		s_room
 {
-	struct s_room	**links;
+	struct s_room	**pipes;
 	struct s_room	*next;
 	struct s_room	*prev;
 	char			*name;
@@ -46,15 +46,6 @@ typedef struct		s_env
 	long			nb_ants;
 	long			antleft;
 }					t_env;
-
-typedef struct			s_winenv
-{
-	SDL_Texture			*tex;
-	SDL_Window			*win;
-	SDL_Renderer		*render;
-	struct s_room		**rooms;
-	SDL_DisplayMode		dispmode;
-}						t_winenv;
 
 enum { ROOM, TUBE, COMM, START, END };
 
