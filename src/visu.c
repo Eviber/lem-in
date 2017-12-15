@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/15 00:09:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/15 20:47:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,11 @@
 #include "../libft/libft.h"
 #include "../include/lem-in.h"
 
-void	panic(const char *str, const char *str2)
+int		panic(const char *str, const char *str2)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
-	exit(EXIT_FAILURE);
-}
-
-int		atoi_next_line(int fd, int *val)
-{
-	int		ret;
-	char	*str;
-
-	if ((ret = get_next_line(fd, &str)) != -1)
-	{
-		*val = ft_atoi(str);
-		ft_strdel(&str); }
-	return (ret);
-}
-/*
-int		parse_room(t_env *env, char *str)
-{
 	return (0);
-}
-
-int		parse_tube(t_env *env, char *str)
-{
-	return (0);
-}
-*/
-int		whatis(char *str)
-{
-	if(str[0] == '#')
-	{
-		if (ft_strequ(str, "##start"))
-			return (START);
-		else if (ft_strequ(str, "##end"))
-			return (END);
-		else
-			return (COMM);
-	}
-	if (ft_strchr(str, '-') && !ft_strchr(str, ' '))
-		return (TUBE);
-	return (ROOM);
 }
 
 /*
@@ -132,8 +94,8 @@ t_env	parser(void)
 	env.rooms = ret;
 	env.start = &rooms[1];
 	env.end = &rooms[0];
-	env.total_ants = 12;
-	env.atstart = 12;
+	env.nb_ants = 12;
+	env.antleft = 12;
 	return (env);
 }
 
@@ -147,26 +109,26 @@ t_winenv		*getsdlenv(t_room **rooms)
 	return (winenv);
 }
 
-t_winenv		*visu_init(t_room **rooms)
+int		visu_init(t_room **rooms)
 {
 	t_winenv	*env;
 
 	env = getsdlenv(rooms);
 	if (!env || SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
-		panic("Error while initializing SDL: ", SDL_GetError());
+		return(panic("Error while initializing SDL: ", SDL_GetError()));
 	if (SDL_GetDesktopDisplayMode(0, &(env->dispmode)))
-		panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError());
+		return(panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError()));
 	env->win = SDL_CreateWindow("lem-in",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				env->dispmode.w, env->dispmode.h, SDL_WINDOW_FULLSCREEN);
+				env->dispmode.w, env->dispmode.h, 0);//SDL_WINDOW_FULLSCREEN);
 	if (!env->win)
-		panic("Error while creating window: ", SDL_GetError());
+		return(panic("Error while creating window: ", SDL_GetError()));
 	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_ACCELERATED);
 	if (!env->render)
-		panic("Error while creating renderer: ", SDL_GetError());
+		return(panic("Error while creating renderer: ", SDL_GetError()));
 	SDL_SetRenderDrawColor(env->render, 50, 75, 150, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(env->render);
-	return (env);
+	return (1);
 }
 
 void	putroom(SDL_Renderer *render, t_room room)
@@ -224,23 +186,30 @@ int		visu(t_room **rooms)
 {
 	t_winenv	*env;
 
-	env = visu_init(rooms);
-	while (!SDL_QuitRequested())
+	env = getsdlenv(NULL);
+	if (env)
 	{
 		SDL_SetRenderDrawColor(env->render, 50, 75, 150, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(env->render);
 		putrooms(env->render, rooms);
 		SDL_RenderPresent(env->render);
 	}
-	return (1);
+	return (!SDL_QuitRequested());
 }
 
 int		main(void)
 {
 	t_env	env;
+	int		v;
 
+	v = 1;
 	env = parser();
-	if (!visu(env.rooms))
+	if (!visu_init(env.rooms))
+	{
 		ft_putstr_fd("Visualizer failed.\n", 2);
+		v = 0;
+	}
+	while (v)
+		v = visu(env.rooms);
 	return (0);
 }
