@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/15 13:59:22 by sbrochar         ###   ########.fr        #
+#    Updated: 2017/12/15 22:19:37 by sbrochar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ OBJ_DIR = ./obj
 LIB_DIR = ./libft
 LIB_INC = $(LIB_DIR)/inc
 
-SRC = main.c
+SRC = main.c \
+	  parsing_antfarm.c \
+	  get_rooms.c
+
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 CC = clang
