@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/15 22:19:37 by sbrochar         ###   ########.fr        #
+#    Updated: 2017/12/16 23:59:30 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,16 @@ OBJ_DIR = ./obj
 LIB_DIR = ./libft
 LIB_INC = $(LIB_DIR)/inc
 
-SRC = main.c \
-	  parsing_antfarm.c \
-	  get_rooms.c
+SRC =	get_rooms.c \
+		main.c \
+		parsing_antfarm.c \
+		visu.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 CC = clang
-CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC)
-LFLAGS = -L$(LIB_DIR) -lft
+CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC) `sdl2-config --cflags`
+LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx
 
 $(NAME): $(OBJ)
 	make -C $(LIB_DIR)
