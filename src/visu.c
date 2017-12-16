@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/16 00:11:54 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/16 23:02:14 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ t_winenv		*getsdlenv(t_env *colony)
 int		visu_init(t_env *colony)
 {
 	t_winenv	*env;
+	t_pos		min;
+	t_pos		max;
+	int			i;
 
 	env = getsdlenv(colony);
 	if (!env || SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
@@ -129,48 +132,87 @@ int		visu_init(t_env *colony)
 	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_ACCELERATED);
 	if (!env->render)
 		return(panic("Error while creating renderer: ", SDL_GetError()));
-	SDL_SetRenderDrawColor(env->render, 50, 75, 150, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(env->render);
+	min = colony->rooms[0]->pos;
+	max = min;
+	i = 1;
+	while (((colony->rooms)[i]))
+	{
+		if (colony->rooms[i]->pos.x < min.x)
+			min.x = colony->rooms[i]->pos.x;
+		if (colony->rooms[i]->pos.y < min.y)
+			min.y = colony->rooms[i]->pos.y;
+		if (colony->rooms[i]->pos.x > max.x)
+			max.x = colony->rooms[i]->pos.x;
+		if (colony->rooms[i]->pos.y > max.y)
+			max.y = colony->rooms[i]->pos.y;
+		i++;
+	}
+	i = 0;
+	while (((colony->rooms)[i]))
+	{
+		colony->rooms[i]->pos.x -= min.x + (max.x - min.x) / 2;
+		colony->rooms[i]->pos.y -= min.y + (max.y - min.y) / 2;
+		i++;
+	}
+	if (env->dispmode.w * 3 / 4 / (max.x - min.x) < env->dispmode.h * 3 / 4 / (max.y - min.y))
+		env->zoom = env->dispmode.w * 3 / 4 / (max.x - min.x);
+	else
+		env->zoom = env->dispmode.h * 3 / 4 / (max.y - min.y);
+	env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 	return (1);
 }
 
-void	putroom(SDL_Renderer *render, t_room *room, t_env colony)
+void	putroom(SDL_Renderer *render, t_room *room, t_env colony, t_winenv w)
 {
+	t_pos	pos;
+
+	pos.x = room->pos.x * w.zoom + w.mov.x;
+	pos.y = room->pos.y * w.zoom + w.mov.y;
+	filledCircleColor(render, pos.x, pos.y, 33, 0xFF78726F);
 	if (room == colony.start && room == colony.end)
-		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
-				35, 200, 200, 200, SDL_ALPHA_OPAQUE);
+		filledCircleRGBA (render, pos.x, pos.y,
+				30, 200, 200, 200, SDL_ALPHA_OPAQUE);
 	else if (room == colony.start)
-		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
-				35, 100, 200, 200, SDL_ALPHA_OPAQUE);
+		filledCircleColor(render, pos.x, pos.y, 30, 0xFFBCBA00);
 	else if (room == colony.end)
-		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
-				35, 200, 200, 100, SDL_ALPHA_OPAQUE);
-	if (room->ant)
-		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
-				30, 200, 100, 0, SDL_ALPHA_OPAQUE);
+		filledCircleRGBA (render, pos.x, pos.y,
+				30, 200, 200, 100, SDL_ALPHA_OPAQUE);
 	else
-		filledCircleRGBA (render, room->pos.x * 100, room->pos.y * 100,
-				30, 100, 100, 100, SDL_ALPHA_OPAQUE);
+		filledCircleColor(render, pos.x, pos.y, 30, 0xFF4C4846);
+	if (room->ant)
+	{
+		if (room->ant % 4 == 1)
+			filledCircleColor(render, pos.x, pos.y, 10, 0xFFD161A0);
+		else if (room->ant % 4 == 2)
+			filledCircleColor(render, pos.x, pos.y, 10, 0xFFDB8041);
+		else if (room->ant % 4 == 3)
+			filledCircleColor(render, pos.x, pos.y, 10, 0xFF7FC433);
+		else
+			filledCircleColor(render, pos.x, pos.y, 10, 0xFF5069FF);
+	}
 }
 
-void	putpipes(SDL_Renderer *render, t_room room)
+void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 {
 	t_pos	orig;
+	t_pos	dest;
 	int		i;
-
-	orig.x = room.pos.x * 100;
-	orig.y = room.pos.y * 100;
+	orig.x = room.pos.x * w.zoom + w.mov.x;
+	orig.y = room.pos.y * w.zoom + w.mov.y;
 	i = 0;
 	while (room.pipes[i])
 	{
-		thickLineRGBA(render, orig.x, orig.y,
-				room.pipes[i]->pos.x * 100, room.pipes[i]->pos.y * 100,
+		dest.x = room.pipes[i]->pos.x * w.zoom + w.mov.x;
+		dest.y = room.pipes[i]->pos.y * w.zoom + w.mov.y;
+		thickLineRGBA(render, orig.x, orig.y, dest.x, dest.y,
 				10, 255, 255, 255, 50);
 		i++;
 	}
 }
 
-void	putrooms(SDL_Renderer *render, t_env colony)
+void	putrooms(SDL_Renderer *render, t_env colony, t_winenv w)
 {
 	t_room	**rooms;
 	int		i;
@@ -179,13 +221,13 @@ void	putrooms(SDL_Renderer *render, t_env colony)
 	rooms = colony.rooms;
 	while (rooms[i])
 	{
-		putpipes(render, *(rooms[i]));
+		putpipes(render, *(rooms[i]), w);
 		i++;
 	}
 	i = 0;
 	while (rooms[i])
 	{
-		putroom(render, rooms[i], colony);
+		putroom(render, rooms[i], colony, w);
 		i++;
 	}
 }
@@ -193,13 +235,41 @@ void	putrooms(SDL_Renderer *render, t_env colony)
 int		visu(void)
 {
 	t_winenv	*env;
+	const Uint8	*state;
 
 	env = getsdlenv(NULL);
+	state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_KP_PLUS])
+	{
+		env->mov.x = env->dispmode.w / 2 +
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
+		env->mov.y = env->dispmode.h / 2 +
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
+		env->zoom++;
+	}
+	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
+	{
+		env->mov.x = env->dispmode.w / 2 +
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
+		env->mov.y = env->dispmode.h / 2 +
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
+		env->zoom--;
+	}
+	if (state[SDL_SCANCODE_UP])
+		env->mov.y--;
+	if (state[SDL_SCANCODE_DOWN])
+		env->mov.y++;
+	if (state[SDL_SCANCODE_LEFT])
+		env->mov.x--;
+	if (state[SDL_SCANCODE_RIGHT])
+		env->mov.x++;
+	if (state[SDL_SCANCODE_SPACE])
+		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 	if (env)
 	{
-		SDL_SetRenderDrawColor(env->render, 25, 37, 75, SDL_ALPHA_OPAQUE);
+		SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(env->render);
-		putrooms(env->render, *(env->colony));
+		putrooms(env->render, *(env->colony), *env);
 		SDL_RenderPresent(env->render);
 	}
 	return (env && !SDL_QuitRequested());

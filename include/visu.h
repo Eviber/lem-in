@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/15 23:59:23 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/16 19:36:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct			s_winenv
 	SDL_Renderer		*render;
 	struct s_room		**rooms;
 	struct s_env		*colony;
+	struct s_pos		mov;
+	unsigned int		zoom;
 }						t_winenv;
 
 #endif
