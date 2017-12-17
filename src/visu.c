@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/16 23:02:14 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/16 23:57:29 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,92 +14,15 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_ttf.h>
-#include "../libft/libft.h"
-#include "../include/lem-in.h"
-#include "../include/visu.h"
+#include "libft.h"
+#include "lem-in.h"
+#include "visu.h"
 
 int		panic(const char *str, const char *str2)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
 	return (0);
-}
-
-/*
-** Bourrin du cul
-*/
-
-t_env	parser(void)
-{
-	t_env	env;
-	t_room	**ret;
-	t_room	*rooms;
-	t_room	**tmp;
-
-	rooms = (t_room *)malloc(sizeof(t_room) * 8);
-	tmp = (t_room **)malloc(sizeof(t_room *) * 3);
-	tmp[0] = &rooms[4];
-	tmp[1] = &rooms[6];
-	tmp[2] = NULL;
-	rooms[0] = (t_room){ tmp, NULL, NULL, "a", {23, 3}, 0, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 3);
-	tmp[0] = &rooms[2];
-	tmp[1] = &rooms[3];
-	tmp[2] = NULL;
-	rooms[1] = (t_room){ tmp, NULL, NULL, "b", {16, 7}, 0, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 4);
-	tmp[0] = &rooms[1];
-	tmp[1] = &rooms[4];
-	tmp[2] = &rooms[7];
-	tmp[3] = NULL;
-	rooms[2] = (t_room){ tmp, NULL, NULL, "c", {16, 3}, 2, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 4);
-	tmp[0] = &rooms[1];
-	tmp[1] = &rooms[4];
-	tmp[2] = &rooms[5];
-	tmp[3] = NULL;
-	rooms[3] = (t_room){ tmp, &rooms[4], &rooms[1], "d", {16, 5}, 0, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 5);
-	tmp[0] = &rooms[0];
-	tmp[1] = &rooms[2];
-	tmp[2] = &rooms[3];
-	tmp[3] = &rooms[7];
-	tmp[4] = NULL;
-	rooms[4] = (t_room){ tmp, &rooms[0], &rooms[3], "e", {9, 3}, 5, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 4);
-	tmp[0] = &rooms[2];
-	tmp[1] = &rooms[3];
-	tmp[2] = &rooms[6];
-	tmp[3] = NULL;
-	rooms[5] = (t_room){ tmp, NULL, NULL, "f", {1, 5}, 3, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 4);
-	tmp[0] = &rooms[0];
-	tmp[1] = &rooms[5];
-	tmp[2] = &rooms[7];
-	tmp[3] = NULL;
-	rooms[6] = (t_room){ tmp, NULL, NULL, "g", {4, 8}, 0, 0, 0 };
-	tmp = (t_room **)malloc(sizeof(t_room) * 4);
-	tmp[0] = &rooms[2];
-	tmp[1] = &rooms[4];
-	tmp[2] = &rooms[6];
-	tmp[3] = NULL;
-	rooms[7] = (t_room){ tmp, NULL, NULL, "h", {9, 5}, 0, 0, 0 };
-	ret = (t_room **)malloc(sizeof(t_room *) * 9);
-	ret[0] = &rooms[0];
-	ret[1] = &rooms[1];
-	ret[2] = &rooms[2];
-	ret[3] = &rooms[3];
-	ret[4] = &rooms[4];
-	ret[5] = &rooms[5];
-	ret[6] = &rooms[6];
-	ret[7] = &rooms[7];
-	ret[8] = NULL;
-	env.rooms = ret;
-	env.start = &rooms[1];
-	env.end = &rooms[0];
-	env.nb_ants = 12;
-	env.antleft = 12;
-	return (env);
 }
 
 t_winenv		*getsdlenv(t_env *colony)
@@ -273,28 +196,4 @@ int		visu(void)
 		SDL_RenderPresent(env->render);
 	}
 	return (env && !SDL_QuitRequested());
-}
-
-int		main(void)
-{
-	t_env	env;
-	int		v;
-
-	v = 1;
-	env = parser();
-	if (!visu_init(&env))
-	{
-		ft_putstr_fd("Visualizer failed.\n", 2);
-		v = 0;
-	}
-	while (v)
-	{
-		v = visu();
-		if (0)
-		{
-			SDL_Delay(500);
-			v = visu();
-		}
-	}
-	return (0);
 }
