@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/18 00:56:17 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/18 22:25:04 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int			check_antfarm(t_env *antfarm)
 	return ((antfarm->nb_ants > -1) && antfarm->start && antfarm->end);
 }
 
-static void			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
+static int			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 {
 	int				i;
 
@@ -29,12 +29,13 @@ static void			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 		while (nb_ants[i])
 		{
 			if (!ft_isdigit(nb_ants[i]))
-				return ;
+				return (FALSE);
 			i++;
 		}
 		antfarm->nb_ants = ft_atoi(nb_ants); // /!\ REPLACE WITH ATOL
 		antfarm->antleft = antfarm->nb_ants;
 	}
+	return (TRUE);
 }
 
 static void			parse_comment(int *start, int *end, char *comment)
@@ -65,7 +66,7 @@ static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
 	if (*line == '#')
 		parse_comment(start, end, line + 1);
 	else if (ants)
-		get_nb_ants(antfarm, line, &ants);
+		return (get_nb_ants(antfarm, line, &ants));
 	else
 	{
 		if (rooms)
