@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/15 22:36:59 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/18 00:52:22 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static t_env			init_antfarm(void)
 	ret.end = NULL;
 	ret.paths = NULL;
 	ret.rooms = NULL;
-	ret.nb_ants = 0;
-	ret.antleft = 0;
+	ret.nb_ants = -1;
+	ret.antleft = -1;
 	return (ret);
 }
 
@@ -31,13 +31,13 @@ int						main(void)
 	t_env				antfarm;
 
 	antfarm = init_antfarm();
-	if (!get_antfarm(&antfarm))
+	if (!parse_antfarm(&antfarm))
 		ft_printf("ERROR\n");
 	else
+	{
 		ft_printf("Okay!\n");
-//	{
 //		solver(&antfarm);
 //		output(&antfarm);
-//	}
+	}
 	return (0);
 }
