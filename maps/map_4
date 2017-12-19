@@ -1,0 +1,38 @@
+100
+##start
+Entry 1 1
+##end
+Exit 1 1
+Infirmerie 1 1
+Library 1 1
+Kitchen 1 1
+MastersRoom 1 1
+Stables 1 1
+Workshop 1 1
+Entry-Workshop
+Entry-Infirmerie
+Entry-Library
+Entry-Kitchen
+Library-MastersRoom
+Infirmerie-Stables
+Exit-MastersRoom
+Exit-Workshop
+Exit-Kitchen
+Exit-Stables
+
+# Map looks like this:
+#
+#  		       --- Entry --
+#  		     /     /   \    \
+#  		    /     |     |    \
+#  		 Library  |     | Infirmerie
+#  		   |      |     |     |
+#  		   |   Workshop |     |
+#  		   |      |     |     |
+#  		   |      |  Kitchen  |
+#  		   |      |     |     |
+#   MastersRoom |     |  Stables
+#  		    \     |     |    /
+#  		     \     \   /    /
+#  		       ---  Exit --
+#

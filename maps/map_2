@@ -1,0 +1,21 @@
+3
+##start
+start 1 0
+##end
+end 5 0
+2 9 0
+3 13 0
+start-2
+2-3
+3-end
+
+# Map looks like this:
+#
+#    (start)
+#     \
+#      2
+#     /
+#    3
+#     \
+#      (end)
+#

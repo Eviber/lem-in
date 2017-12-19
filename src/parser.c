@@ -17,7 +17,6 @@ void	room_print(t_room *room){
 
 	while (ptr)
 	{
-		ft_putstr("Current room is : ");
 		ft_putendl(ptr->name);
 		ptr = ptr->next;
 	}
@@ -46,8 +45,12 @@ int linetodata(t_map *map, char *line, int status)
 	if (i != 3)
 		{
 			room_print(map->rooms);
+			if(map->start && map->end)
+				{
+					printf("start : %s, end : %s\n", map->start->name, map->end->name);
+				}
 			ft_putendl("error format input\n");
-			exit(-1);
+			exit(-1); /*si pas EXIT on met quoi?*/
 		}
 	room->name = ft_strdup(data[0]);
 	room->x = ft_atoi(data[1]);
