@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 19:53:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 20:53:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +109,12 @@ int						main(int argc, char **argv)
 	v = (argc == 2 && ft_strequ(argv[1], "-v"));
 	antfarm = init_antfarm();
 	if (!parse_antfarm(&antfarm))
+	{
 		ft_printf("ERROR\n");
+		v = 0;
+	}
 	else
 	{
-		ft_printf("Okay!\n");
 		debug_colony(antfarm);
 		ft_printf("tubes of first room:\n");
 		t_room *first_room = *(antfarm.rooms);
