@@ -12,6 +12,8 @@
 #define TRUE 1;
 #define FALSE 0;
 
+enum { NO_ANT, ANT, START, END };
+
 typedef struct s_tube
 {
 	struct s_room *room;

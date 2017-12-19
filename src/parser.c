@@ -1,6 +1,10 @@
 # include "cookielem-in.h"
 # include "get_next_line.h"
 
+void	parse_tube(t_map *map, char *line){
+
+}
+
 void	push_room(t_map *map, t_room *room)
 {
 	t_room *tmp;
@@ -49,8 +53,12 @@ int linetodata(t_map *map, char *line, int status)
 				{
 					printf("start : %s, end : %s\n", map->start->name, map->end->name);
 				}
-			ft_putendl("error format input\n");
-			exit(-1); /*si pas EXIT on met quoi?*/
+			parse_tube();
+			if (i!= 2)
+				{
+					ft_putendl("error format input\n");
+					exit(-1); /*si pas EXIT on met quoi?*/
+				}
 		}
 	room->name = ft_strdup(data[0]);
 	room->x = ft_atoi(data[1]);
@@ -59,9 +67,9 @@ int linetodata(t_map *map, char *line, int status)
 	/*
 	** Test type data (room ou tube) =====strchr()!
 	*/
-	if (status == 2)
+	if (status == START)
 		map->start = room;
-	else if (status == 3)
+	else if (status == END)
 		map->end = room;
 	if (iffirstroom == 1)
 	{
@@ -93,7 +101,7 @@ int parser(t_map *map){
 	char 	*line;
 	int		status; /*0:no ant, 1:ant done, 2:start or 3:end */
 
-	status = 0;
+	status = NO_ANT;
 	line = NULL;
 
 	while(ret != 0)
@@ -109,16 +117,16 @@ int parser(t_map *map){
 		{
 			//printf("STATUS 0\n");
 			map->ant = ft_atoi(line);
-			status = 1;
+			status = ANT;
 		}
 		else if (line[0] == '#')
 		{
 			if (line[1] == '#')
 			{
 				if (!(ft_strcmp(line + 2, "start")))
-			 		status = 2;
+			 		status = START;
 				else if (!(ft_strcmp(line + 2, "end")))
-			 		status = 3;
+			 		status = END;
 			}
 			else
 				continue;
@@ -126,7 +134,7 @@ int parser(t_map *map){
 		else
 		{
 			linetodata(map, line, status);
-			status = 0;
+			status = ANT;
 		}
 		free(line);
 	}
