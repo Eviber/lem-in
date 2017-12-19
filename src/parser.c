@@ -1,21 +1,58 @@
 # include "cookielem-in.h"
 # include "get_next_line.h"
 
-void linetodata(t_map *map, char *line, int status)
+void	push_room(t_map *map, t_room *room)
+{
+	t_room *tmp;
+
+	tmp = map->rooms;
+	while (tmp->next)
+			tmp = tmp->next;
+	tmp->next = room;
+}
+
+void	room_print(t_room *room){
+
+	t_room *ptr = room;
+
+	while (ptr)
+	{
+		ft_putstr("Current room is : ");
+		ft_putendl(ptr->name);
+		ptr = ptr->next;
+	}
+}
+
+int linetodata(t_map *map, char *line, int status)
 {
 	char 	**data;
 	t_room 	*room;
-	char	iffirstroom = 1;
+	static char	iffirstroom = 1;
+	int i = 0;
 
 	if ((room = (t_room*)ft_memalloc(sizeof(t_room))) == NULL)
 		{
 			ft_putendl(ERR_ALLOC);
 			exit(-1);
 		}
-	data = ft_strsplit(line, ' ');
+	if ((data = ft_strsplit(line, ' ')) == NULL )
+		{
+			ft_putendl("Error");
+			exit(-1);
+		}
+
+	while (data[i] != NULL)
+		i++;
+	if (i != 3)
+		{
+			room_print(map->rooms);
+			ft_putendl("error format input\n");
+			exit(-1);
+		}
 	room->name = ft_strdup(data[0]);
 	room->x = ft_atoi(data[1]);
 	room->y = ft_atoi(data[2]);
+	room->next = NULL;
 	/*
 	** Test type data (room ou tube) =====strchr()!
 	*/
@@ -23,13 +60,19 @@ void linetodata(t_map *map, char *line, int status)
 		map->start = room;
 	else if (status == 3)
 		map->end = room;
-	else if (!iffirstroom)
-		map->rooms->next = room;
-	else
+	if (iffirstroom == 1)
 	{
 		map->rooms = room;
 		iffirstroom = 0;
 	}
+	else
+	{
+			printf("av = romm = %p\n", map->rooms);
+		push_room(map, room);
+		printf("ap = romm = %p\n\n\n", map->rooms);
+	}
+	//room_print(map->rooms);
+	return (1);
 }
 
 int ifisdigit(char *line){
@@ -45,7 +88,7 @@ int ifisdigit(char *line){
 }
 
 
-void parser(t_map *map){
+int parser(t_map *map){
 
 	int 	ret = 1;
 	char 	*line;
@@ -56,17 +99,16 @@ void parser(t_map *map){
 
 	while(ret != 0)
 	{
-		if (status == 2 || status == 3){
-			linetodata(map, line, status);
-			status = 1;
-		}
-		if ((ret = get_next_line(0, &line)) == -1)
+
+		if ((ret = get_next_line(0, &line)) < 0)
 		{
 			ft_putendl(ERR_READ);
 			exit(-1);
 		}
-		else if (*line && ifisdigit(line) && !status)
+
+	 	if (*line && ifisdigit(line) && !status)
 		{
+			//printf("STATUS 0\n");
 			map->ant = ft_atoi(line);
 			status = 1;
 		}
@@ -75,15 +117,23 @@ void parser(t_map *map){
 			if (line[1] == '#')
 			{
 				if (!(ft_strcmp(line + 2, "start")))
-			 		status = 2; // on peut mettre un ternaire ici ? ==> sans faille de parser?
+			 		status = 2;
 				else if (!(ft_strcmp(line + 2, "end")))
 			 		status = 3;
 			}
 			else
-				continue; /*would be a # comment line though*/
+				continue;
 		}
 		else
+		{
 			linetodata(map, line, status);
+			status = 0;
+		}
+		free(line);
 	}
-	free(line);
+
+		room_print(map->rooms);
+
+
+	return (1);
 }

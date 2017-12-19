@@ -33,6 +33,6 @@ typedef struct	s_map
 	t_room		**roads;
 }		t_map;
 
-void parser(t_map *map);
+int parser(t_map *map);
 
 # endif
