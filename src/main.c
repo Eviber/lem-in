@@ -6,13 +6,53 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 16:56:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 18:10:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "eparser.h"
 #include "visu.h"
+
+t_room				**add_room(t_room **rooms, int nb_rooms)
+{
+	t_room			**ret;
+	size_t			old_size;
+	size_t			new_size;
+
+	old_size = sizeof(t_room *) * nb_rooms;
+	new_size = sizeof(t_room *) + old_size;
+	if (!rooms)
+	{
+		if ((ret = (t_room **)ft_memalloc(new_size)))
+			return (ret);
+	}
+	else
+	{
+		ret = (t_room **)ft_memalloc(new_size);
+		if (ret)
+		{
+			ft_memcpy(ret, rooms, old_size);
+			ft_memdel((void **)&rooms);
+			return (ret);
+		}
+	}
+	return (NULL);
+}
+
+t_room					*find_room(t_env *antfarm, char *name)
+{
+	t_room				**rooms;
+
+	rooms = antfarm->rooms;
+	while (rooms && *rooms)
+	{
+		if (!ft_strcmp(name, (*rooms)->name))
+			return (*rooms);
+		rooms++;
+	}
+	return (NULL);
+}
 
 static t_env			init_antfarm(void)
 {
