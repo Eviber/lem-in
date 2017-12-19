@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 16:54:50 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 16:55:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int						main(void)
 		debug_colony(antfarm);
 //		solver(&antfarm);
 //		output(&antfarm);
+	}
 	ft_printf("Okay 2!\n");
 	if (0 && !visu_init(&antfarm))
 	{
