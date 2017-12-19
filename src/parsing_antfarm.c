@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/18 22:25:04 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 17:44:35 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ static void			parse_comment(int *start, int *end, char *comment)
 	}
 }
 
-/*static int			parse_pipe(t_env *antfarm, char *line)
-{
-	(void)antfarm;
-	(void)line;
-	ft_printf("parsing pipe\n");
-	return (FALSE);
-}*/
-
 static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
 {
 	int				rooms;
@@ -73,7 +65,7 @@ static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
 			rooms = parse_room(start, end, antfarm, line);
 		if (!rooms)
 		{
-//			if (!parse_pipe(antfarm, line))
+			if (!parse_pipe(antfarm, line))
 				return (FALSE);
 		}
 	}

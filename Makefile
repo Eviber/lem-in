@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/15 22:19:37 by sbrochar         ###   ########.fr        #
+#    Updated: 2017/12/19 17:43:58 by sbrochar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIB_INC = $(LIB_DIR)/inc
 
 SRC = main.c \
 	  parsing_antfarm.c \
-	  get_rooms.c
+	  get_rooms.c \
+	  get_pipes.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
