@@ -12,6 +12,12 @@
 #define TRUE 1;
 #define FALSE 0;
 
+typedef struct s_tube
+{
+	struct s_room *room;
+	struct s_room *next;
+}		t_tube;
+
 typedef struct s_room
 {
 	char 	*name;
@@ -30,7 +36,7 @@ typedef struct	s_map
 	t_room		*rooms;
 	t_room		*start;
 	t_room		*end;
-	t_room		**roads;
+	t_tube		*tubes;
 }		t_map;
 
 int parser(t_map *map);

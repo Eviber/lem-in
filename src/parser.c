@@ -66,11 +66,7 @@ int linetodata(t_map *map, char *line, int status)
 		iffirstroom = 0;
 	}
 	else
-	{
-			printf("av = romm = %p\n", map->rooms);
 		push_room(map, room);
-		printf("ap = romm = %p\n\n\n", map->rooms);
-	}
 	//room_print(map->rooms);
 	return (1);
 }
