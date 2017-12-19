@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 17:47:19 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/19 19:30:08 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
 			antfarm->end = room;
 		}
 		nb_rooms++;
-		antfarm->rooms = (t_room **)add_room(antfarm->rooms, nb_rooms); // pourquoi un cast?
+		antfarm->rooms = add_room(antfarm->rooms, nb_rooms);
 		(antfarm->rooms)[nb_rooms - 1] = room;
 	}
 }
