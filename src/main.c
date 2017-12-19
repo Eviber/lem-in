@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/18 23:45:42 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 16:44:41 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void				debug_colony(t_env colony)
 	int		i;
 
 	i = 0;
-	ft_printf("start=%p\nend=%p\npaths=%p\nrooms=%p\nnb_ants=%ld\nantleft=%ld\n\n", colony.start, colony.end, colony.paths, colony.rooms, colony.nb_ants, colony.antleft);
+	ft_printf("start=%s\nend=%s\npaths=%p\nrooms=%p\nnb_ants=%ld\nantleft=%ld\n\n", colony.start->name, colony.end->name, colony.paths, colony.rooms, colony.nb_ants, colony.antleft);
 	while (colony.rooms && (colony.rooms)[i])
 	{
 		debug_room(*(colony.rooms[i]));
