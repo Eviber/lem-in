@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 17:51:03 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/19 19:30:03 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static void			add_pipe(t_room **room1, t_room **room2)
 	nb_pipes1 = get_nb_pipes(*room1);
 	nb_pipes2 = get_nb_pipes(*room2);
 	(*room1)->pipes = add_room((*room1)->pipes, nb_pipes1);
+	(*room1)->pipes[nb_pipes1] = *room2;
 	(*room2)->pipes = add_room((*room2)->pipes, nb_pipes2);
+	(*room2)->pipes[nb_pipes2] = *room1;
 }
 
 int					parse_pipe(t_env *antfarm, char *line)
@@ -58,6 +60,8 @@ int					parse_pipe(t_env *antfarm, char *line)
 	t_room			*room1;
 	t_room			*room2;
 
+	room1 = NULL;
+	room2 = NULL;
 	tmp = ft_strtrim(line);
 	if (!tmp)
 		return (FALSE);

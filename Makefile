@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/19 17:43:58 by sbrochar         ###   ########.fr        #
+#    Updated: 2017/12/19 19:29:12 by sbrochar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 CC = clang
 CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC)
-LFLAGS = -L$(LIB_DIR) -lft
+LFLAGS = -fsanitize=address -L$(LIB_DIR) -lft
 
 $(NAME): $(OBJ)
 	make -C $(LIB_DIR)
