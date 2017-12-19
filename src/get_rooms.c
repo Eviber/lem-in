@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/16 01:48:07 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/19 16:44:14 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,32 @@ static t_room		*init_room(char **tab)
 	return (NULL);
 }
 
+static t_room		**add_room(t_room **rooms, int nb_rooms)
+{
+	t_room			**ret;
+	size_t			old_size;
+	size_t			new_size;
+
+	old_size = sizeof(t_room *) * nb_rooms;
+	new_size = sizeof(t_room *) + old_size;
+	if (!rooms)
+	{
+		if ((ret = (t_room **)ft_memalloc(new_size)))
+			return (ret);
+	}
+	else
+	{
+		ret = (t_room **)ft_memalloc(new_size);
+		if (ret)
+		{
+			ft_memcpy(ret, rooms, old_size);
+			ft_memdel((void **)&rooms);
+			return (ret);
+		}
+	}
+	return (NULL);
+}
+
 static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
 {
 	t_room			*room;
@@ -82,7 +108,7 @@ static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
 			antfarm->end = room;
 		}
 		nb_rooms++;
-		antfarm->rooms = (t_room **)ft_realloc(antfarm->rooms, nb_rooms + 1);
+		antfarm->rooms = (t_room **)add_room(antfarm->rooms, nb_rooms);
 		(antfarm->rooms)[nb_rooms - 1] = room;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 17:52:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/16 01:48:21 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/17 23:19:38 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <libft.h>
 
-int					get_antfarm(t_env *antfarm);
+int					parse_antfarm(t_env *antfarm);
 int					parse_room(int *start, int *end, t_env *antfarm, char *line);
 
 #endif
