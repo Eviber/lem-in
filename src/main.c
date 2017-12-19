@@ -1,12 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+/*   main.c                                             :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 19:36:10 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 19:53:18 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +100,12 @@ static void				debug_colony(t_env colony)
 	}
 }
 
-int						main(void)
+int						main(int argc, char **argv)
 {
 	t_env				antfarm;
 	int		v;
 
-	v = 1;
+	v = (argc == 2 && ft_strequ(argv[1], "-v"));
 	antfarm = init_antfarm();
 	if (!parse_antfarm(&antfarm))
 		ft_printf("ERROR\n");
@@ -120,8 +119,7 @@ int						main(void)
 //		solver(&antfarm);
 //		output(&antfarm);
 	}
-	ft_printf("Okay 2!\n");
-	if (!visu_init(&antfarm))
+	if (v && !visu_init(&antfarm))
 	{
 		ft_putstr_fd("Visualizer failed.\n", 2);
 		v = 0;
