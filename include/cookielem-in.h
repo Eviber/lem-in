@@ -13,6 +13,7 @@
 #define FALSE 0;
 
 enum { NO_ANT, ANT, START, END };
+enum { ROOM, TUBE, ERROR, LICORNE };
 
 typedef struct s_tube
 {
@@ -39,7 +40,7 @@ typedef struct	s_map
 	t_room		*start;
 	t_room		*end;
 	t_tube		*tubes;
-	t_room		*tmp[2]; //comment faire un pointeur sur tableau t_room a deux cases?
+	t_room		*tmp[2]; //p1 p2
 }		t_map;
 
 int parser(t_map *map);

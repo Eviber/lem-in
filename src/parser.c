@@ -1,47 +1,54 @@
 # include "cookielem-in.h"
 # include "get_next_line.h"
 
-//
-// static void connect_rooms(t_map *map){
-// 	t_room *ptr1 = map->tmp[0];
-// 	t_room *ptr2 = map->tmp[1];
-//
-// 	ptr1->tubes->room = ptr2;
-// 	ptr2->tubes->room = ptr1;
-// }
 
-static int parse_tubes(t_map *map, char *line){
+static void connect_rooms(t_map *map){
+
+	printf("ICI\n");
+	t_room *ptr1 = map->tmp[0];
+	t_room *ptr2 = map->tmp[1];
+
+	ptr1->tubes = (t_tube*)ft_memalloc(sizeof(t_tube));
+
+	ptr2->tubes = (t_tube*)ft_memalloc(sizeof(t_tube));
+
+	printf("%p\n", ptr1);
+	printf("%p\n", ptr2);
+	ptr1->tubes->room = ptr2;
+	ptr2->tubes->room = ptr1;
+}
+
+static int check_tubes(t_map *map, char *line){
 
 	// comment etre sur que je passe l adresse de data a chaque fois et non data en copie?
 	// t_room res[2];
-	int i = 0; // pour tester le retour du split
-	char **tube_data;
+	int 	i = 0; // pour tester le retour du split
+	t_room 	*ptr;
+	char 	**tube_data;
+	char 	status = 0;
 
 	tube_data = ft_strsplit(line, '-');
-
 	while (tube_data[i] != NULL)
 		i++;
-	//refaire un split et tester son retour :
-
 	if (i!= 2)
 	{
 		ft_putendl("error format input\n");
-		exit(-1);
-		return(-1); /*si pas EXIT on met quoi?*/
+		return(-1);
 	}
-	printf("Passe le premier tube line : %s\n", line);
-	exit(1);
-
-
-
+	// printf("Passe le premier tube line : %s\n", line);
+    //
+	// printf("%s - %s\n", tube_data[0], tube_data[1]);
+	// exit(1);
 	ft_memset(map->tmp, 0, sizeof(t_room*) * 2);
-	t_room *ptr;
-	/*allocation? a la fin de la function si ok on a trouve les deux names/*/
-	char status = 0;
 
 	// printf("entering parse tube\n");
 	// exit(0);
 	ptr = map->rooms;
+
+	printf("%p\n", ptr);
+	printf("content : %s (name)\n", map->rooms->name);
+
+//	exit(1);
 	while (ptr && status != 2)
 	{
 		if (!(ft_strcmp(tube_data[0], ptr->name)))
@@ -57,7 +64,7 @@ static int parse_tubes(t_map *map, char *line){
 		ptr = ptr->next;
 	}
 	if (status == 2)
-		//connect_rooms(map);
+		connect_rooms(map);
 	return (status); //si retourne 1 ou 0 signifie erreur ou detail 1 une seule
 	//salle existe, 0 aucune des salles existe
 }
@@ -84,15 +91,15 @@ static void	room_print(t_room *room){
 	}
 }
 
-static int linetodata(t_map *map, char *line, int status)
+static int linetodata(t_map *map, char *line, int p_status)
 {
 	char 	**data;
 	t_room 	*room;
 	//int ret;
-	static int valide_room = 1;
 
 	static char	iffirstroom = 1;
 	int i = 0;
+	char 		status = ROOM;
 
 	if ((room = (t_room*)ft_memalloc(sizeof(t_room))) == NULL)
 		{
@@ -100,27 +107,28 @@ static int linetodata(t_map *map, char *line, int status)
 			exit(-1);
 		}
 		if (ft_strchr(line, '-'))
-			valide_room = 0;
+			status = TUBE;
 
 	if ((data = ft_strsplit(line, ' ')) == NULL )
 		{
 			ft_putendl("Error");
+			status = ERROR;
 			exit(-1);
 		}
 
 	while (data[i] != NULL)
 		i++;
 
-	if (!valide_room && i == 3)
+	if ((status == ROOM) && i == 3)
 	{
 		room->name = ft_strdup(data[0]);
 		room->x = ft_atoi(data[1]);
 		room->y = ft_atoi(data[2]);
 		room->next = NULL;
 
-		if (status == START)
+		if (p_status == START)
 			map->start = room;
-		else if (status == END)
+		else if (p_status == END)
 			map->end = room;
 		if (iffirstroom == 1)
 		{
@@ -133,7 +141,7 @@ static int linetodata(t_map *map, char *line, int status)
 
 
 	//printf("%s\n", line);
-	if (i != 3)
+	if (status == TUBE && i == 1)
 		{
 			printf("List : \n");
 			room_print(map->rooms);
@@ -148,7 +156,7 @@ static int linetodata(t_map *map, char *line, int status)
 				// 	}
 				if (ft_strchr(line, '-')){
 					printf("OK line de tube !\n");
-					if ((parse_tubes(map, line)) == -1)
+					if ((check_tubes(map, line)) == -1)
 						return (-1);
 				}
 
