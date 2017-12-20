@@ -7,6 +7,7 @@ CFLAGS =
 endif
 LDFLAGS += -I $(DIR_INC)
 LDFLAGS += -I $(DIR_LIBFT)/inc
+CFLAGS += -fsanitize=address
 CLIBS 	+= -L $(DIR_LIBFT) -lft
 
 #Directories

@@ -1,47 +1,63 @@
 # include "cookielem-in.h"
 # include "get_next_line.h"
 
+//
+// static void connect_rooms(t_map *map){
+// 	t_room *ptr1 = map->tmp[0];
+// 	t_room *ptr2 = map->tmp[1];
+//
+// 	ptr1->tubes->room = ptr2;
+// 	ptr2->tubes->room = ptr1;
+// }
 
-static void connect_rooms(t_map *map){
-	t_room *ptr1 = map->tmp[0];
-	t_room *ptr2 = map->tmp[1];
-
-	ptr1->tubes->room = ptr2;
-	ptr2->tubes->room = ptr1;
-}
-
-static int parse_tubes(t_map *map, char *data1, char *data2){
+static int parse_tubes(t_map *map, char *line){
 
 	// comment etre sur que je passe l adresse de data a chaque fois et non data en copie?
-	t_room res[2];
-	t_room *ptr = NULL;
+	// t_room res[2];
+	int i = 0; // pour tester le retour du split
+	char **tube_data;
+
+	tube_data = ft_strsplit(line, '-');
+
+	while (tube_data[i] != NULL)
+		i++;
+	//refaire un split et tester son retour :
+
+	if (i!= 2)
+	{
+		ft_putendl("error format input\n");
+		exit(-1);
+		return(-1); /*si pas EXIT on met quoi?*/
+	}
+	printf("Passe le premier tube line : %s\n", line);
+	exit(1);
+
+
+
+	ft_memset(map->tmp, 0, sizeof(t_room*) * 2);
+	t_room *ptr;
 	/*allocation? a la fin de la function si ok on a trouve les deux names/*/
 	char status = 0;
 
-	printf("entering parse tube\n");
-	exit(0);
+	// printf("entering parse tube\n");
+	// exit(0);
 	ptr = map->rooms;
 	while (ptr && status != 2)
 	{
-		if (!(ft_strcmp(data1, ptr->name)))
+		if (!(ft_strcmp(tube_data[0], ptr->name)))
 			{
 				status += 1;
-				res[0] = *ptr;
+				map->tmp[0] = ptr;
 			}
-		if (!(ft_strcmp(data2, ptr->name)))  // if si on veut qu il passe dans les deux
+		if (!(ft_strcmp(tube_data[1], ptr->name)))  // if si on veut qu il passe dans les deux
 			{
 				status += 1;
-				res[1] = *ptr;
+				map->tmp[1] = ptr;
 			}
-		if (status == 2){
-			//alors il sera passe dans les deux boucles et on aura les deux names ok
-			map->tmp[0] = &res[0];
-			map->tmp[1] = &res[1];
-			connect_rooms(map);
-		}
 		ptr = ptr->next;
 	}
-
+	if (status == 2)
+		//connect_rooms(map);
 	return (status); //si retourne 1 ou 0 signifie erreur ou detail 1 une seule
 	//salle existe, 0 aucune des salles existe
 }
@@ -72,7 +88,8 @@ static int linetodata(t_map *map, char *line, int status)
 {
 	char 	**data;
 	t_room 	*room;
-	int ret;
+	//int ret;
+	static int valide_room = 1;
 
 	static char	iffirstroom = 1;
 	int i = 0;
@@ -82,6 +99,9 @@ static int linetodata(t_map *map, char *line, int status)
 			ft_putendl(ERR_ALLOC);
 			exit(-1);
 		}
+		if (ft_strchr(line, '-'))
+			valide_room = 0;
+
 	if ((data = ft_strsplit(line, ' ')) == NULL )
 		{
 			ft_putendl("Error");
@@ -91,6 +111,27 @@ static int linetodata(t_map *map, char *line, int status)
 	while (data[i] != NULL)
 		i++;
 
+	if (!valide_room && i == 3)
+	{
+		room->name = ft_strdup(data[0]);
+		room->x = ft_atoi(data[1]);
+		room->y = ft_atoi(data[2]);
+		room->next = NULL;
+
+		if (status == START)
+			map->start = room;
+		else if (status == END)
+			map->end = room;
+		if (iffirstroom == 1)
+		{
+			map->rooms = room;
+			iffirstroom = 0;
+		}
+		else
+			push_room(map, room);
+	}
+
+
 	//printf("%s\n", line);
 	if (i != 3)
 		{
@@ -98,40 +139,25 @@ static int linetodata(t_map *map, char *line, int status)
 			room_print(map->rooms);
 			printf("end of list\n");
 			if(map->start && map->end)
-			{
 				printf("start : %s, end : %s\n", map->start->name, map->end->name);
-				printf("parse_tube();");
-				if ((ret = parse_tubes(map, data[0], data[1])) != 2)
-					{
-						printf("error while parsing tubes : %d", ret);
+				// printf("parse_tube();");
+				// if ((ret = parse_tubes(map, data[0], data[1])) != 2)
+				// 	{
+				// 		printf("error while parsing tubes : %d", ret);
+				// 		return (-1);
+				// 	}
+				if (ft_strchr(line, '-')){
+					printf("OK line de tube !\n");
+					if ((parse_tubes(map, line)) == -1)
 						return (-1);
-					}
-			if (i!= 2)
-				{
-					ft_putendl("error format input\n");
-					return(-1); /*si pas EXIT on met quoi?*/
 				}
-			}
+
 		}
-	room->name = ft_strdup(data[0]);
-	room->x = ft_atoi(data[1]);
-	room->y = ft_atoi(data[2]);
-	room->next = NULL;
+
 	/*
 	** Test type data (room ou tube) =====strchr()!
 	*/
-	if (status == START)
-		map->start = room;
-	else if (status == END)
-		map->end = room;
-	if (iffirstroom == 1)
-	{
-		map->rooms = room;
-		iffirstroom = 0;
-	}
-	else
-		push_room(map, room);
-	//room_print(map->rooms);
+
 	return (1);
 }
 
