@@ -73,6 +73,8 @@ static int linetodata(t_map *map, char *line, int status)
 {
 	char 	**data;
 	t_room 	*room;
+	int ret;
+
 	static char	iffirstroom = 1;
 	int i = 0;
 
@@ -97,10 +99,15 @@ static int linetodata(t_map *map, char *line, int status)
 					printf("start : %s, end : %s\n", map->start->name, map->end->name);
 				}
 				printf("parse_tube();");
+				if ((ret = parse_tubes(&map, data[0], data[1]) != 2)
+					{
+						printf("error while parsing tubes : %d", ret);
+						return (-1);
+					}
 			if (i!= 2)
 				{
 					ft_putendl("error format input\n");
-					exit(-1); /*si pas EXIT on met quoi?*/
+					return(-1); /*si pas EXIT on met quoi?*/
 				}
 		}
 	room->name = ft_strdup(data[0]);
@@ -176,7 +183,11 @@ int parser(t_map *map){
 		}
 		else
 		{
-			linetodata(map, line, status);
+				if ((linetodata(map, line, status)) != 0)
+					{
+						printf("Error line to data, stop parsing\n");
+						break;
+					}
 			status = ANT;
 		}
 		free(line);
