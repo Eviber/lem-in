@@ -17,7 +17,7 @@ enum { NO_ANT, ANT, START, END };
 typedef struct s_tube
 {
 	struct s_room *room;
-	struct s_room *next;
+	struct s_tube *next;
 }		t_tube;
 
 typedef struct s_room
@@ -25,7 +25,7 @@ typedef struct s_room
 	char 	*name;
 	int		x;
 	int		y;
-	struct s_room	**tubes;
+	struct s_tube	*tubes;
 	struct s_room 	*next;
 	int 	weight;
 //	t_bool 	visited;
@@ -39,6 +39,7 @@ typedef struct	s_map
 	t_room		*start;
 	t_room		*end;
 	t_tube		*tubes;
+	t_room		*tmp[2]; //comment faire un pointeur sur tableau t_room a deux cases?
 }		t_map;
 
 int parser(t_map *map);

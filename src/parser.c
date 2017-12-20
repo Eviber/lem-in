@@ -1,11 +1,54 @@
 # include "cookielem-in.h"
 # include "get_next_line.h"
 
-void	parse_tube(t_map *map, char *line){
 
+static void connect_rooms(t_map *map){
+	t_room *ptr1 = map->tmp[0];
+	t_room *ptr2 = map->tmp[1];
+
+	ptr1->tubes->room = ptr2;
+	ptr2->tubes->room = ptr1;
 }
 
-void	push_room(t_map *map, t_room *room)
+static int parse_tubes(t_map *map, char *data1, char *data2){
+
+	// comment etre sur que je passe l adresse de data a chaque fois et non data en copie?
+	t_room res[2];
+	t_room *ptr = NULL;
+	/*allocation? a la fin de la function si ok on a trouve les deux names/*/
+	char status = 0;
+
+	ptr = map->rooms;
+	while (ptr && status != 2)
+	{
+		if (!(ft_strcmp(data1, ptr->name)))
+			{
+				status += 1;
+				res[0] = ptr;
+			}
+		if (!(ft_strcmp(data2, ptr->name)))  // if si on veut qu il passe dans les deux
+			{
+				status += 1;
+				res[1] = ptr;
+			}
+		if (status == 2){
+			//alors il sera passe dans les deux boucles et on aura les deux names ok
+			store_tube();
+		}
+		ptr = ptr->next;
+	}
+	if (status == 2)
+		{
+			map.tmp[0] = res[0];
+			map.tmp[1] = res[1];
+			connect_rooms(&map);//est ce que ca va marcher normalement je passe des &
+		}
+	return (status); //si retourne 1 ou 0 signifie erreur ou detail 1 une seule
+	//salle existe, 0 aucune des salles existe
+}
+
+
+static void	push_room(t_map *map, t_room *room)
 {
 	t_room *tmp;
 
@@ -15,7 +58,7 @@ void	push_room(t_map *map, t_room *room)
 	tmp->next = room;
 }
 
-void	room_print(t_room *room){
+static void	room_print(t_room *room){
 
 	t_room *ptr = room;
 
@@ -26,7 +69,7 @@ void	room_print(t_room *room){
 	}
 }
 
-int linetodata(t_map *map, char *line, int status)
+static int linetodata(t_map *map, char *line, int status)
 {
 	char 	**data;
 	t_room 	*room;
@@ -53,7 +96,7 @@ int linetodata(t_map *map, char *line, int status)
 				{
 					printf("start : %s, end : %s\n", map->start->name, map->end->name);
 				}
-			parse_tube();
+				printf("parse_tube();");
 			if (i!= 2)
 				{
 					ft_putendl("error format input\n");
@@ -82,7 +125,7 @@ int linetodata(t_map *map, char *line, int status)
 	return (1);
 }
 
-int ifisdigit(char *line){
+static int ifisdigit(char *line){
 	int i = 0;
 
 	while (line && line[i] != '\0'){
