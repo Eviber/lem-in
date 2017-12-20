@@ -18,31 +18,30 @@ static int parse_tubes(t_map *map, char *data1, char *data2){
 	/*allocation? a la fin de la function si ok on a trouve les deux names/*/
 	char status = 0;
 
+	printf("entering parse tube\n");
+	exit(0);
 	ptr = map->rooms;
 	while (ptr && status != 2)
 	{
 		if (!(ft_strcmp(data1, ptr->name)))
 			{
 				status += 1;
-				res[0] = ptr;
+				res[0] = *ptr;
 			}
 		if (!(ft_strcmp(data2, ptr->name)))  // if si on veut qu il passe dans les deux
 			{
 				status += 1;
-				res[1] = ptr;
+				res[1] = *ptr;
 			}
 		if (status == 2){
 			//alors il sera passe dans les deux boucles et on aura les deux names ok
-			store_tube();
+			map->tmp[0] = &res[0];
+			map->tmp[1] = &res[1];
+			connect_rooms(map);
 		}
 		ptr = ptr->next;
 	}
-	if (status == 2)
-		{
-			map.tmp[0] = res[0];
-			map.tmp[1] = res[1];
-			connect_rooms(&map);//est ce que ca va marcher normalement je passe des &
-		}
+
 	return (status); //si retourne 1 ou 0 signifie erreur ou detail 1 une seule
 	//salle existe, 0 aucune des salles existe
 }
@@ -91,15 +90,18 @@ static int linetodata(t_map *map, char *line, int status)
 
 	while (data[i] != NULL)
 		i++;
+
+	//printf("%s\n", line);
 	if (i != 3)
 		{
+			printf("List : \n");
 			room_print(map->rooms);
+			printf("end of list\n");
 			if(map->start && map->end)
-				{
-					printf("start : %s, end : %s\n", map->start->name, map->end->name);
-				}
+			{
+				printf("start : %s, end : %s\n", map->start->name, map->end->name);
 				printf("parse_tube();");
-				if ((ret = parse_tubes(&map, data[0], data[1]) != 2)
+				if ((ret = parse_tubes(map, data[0], data[1])) != 2)
 					{
 						printf("error while parsing tubes : %d", ret);
 						return (-1);
@@ -109,6 +111,7 @@ static int linetodata(t_map *map, char *line, int status)
 					ft_putendl("error format input\n");
 					return(-1); /*si pas EXIT on met quoi?*/
 				}
+			}
 		}
 	room->name = ft_strdup(data[0]);
 	room->x = ft_atoi(data[1]);
@@ -183,16 +186,16 @@ int parser(t_map *map){
 		}
 		else
 		{
-				if ((linetodata(map, line, status)) != 0)
+				if ((linetodata(map, line, status)) == -1)
 					{
 						printf("Error line to data, stop parsing\n");
-						break;
+						//break;
 					}
 			status = ANT;
 		}
 		free(line);
 	}
-
+		printf("Liste des rooms\n");
 		room_print(map->rooms);
 
 
