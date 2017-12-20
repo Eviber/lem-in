@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/19 17:10:05 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/21 00:21:30 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,6 @@ int		visu(void)
 		putrooms(env->render, *(env->colony), *env);
 		SDL_RenderPresent(env->render);
 	}
+	SDL_Delay(500);
 	return (env && !SDL_QuitRequested());
 }

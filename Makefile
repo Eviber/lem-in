@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/19 19:38:36 by ygaude           ###   ########.fr        #
+#    Updated: 2017/12/20 23:51:22 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ OBJ_DIR = ./obj
 LIB_DIR = ./libft
 LIB_INC = $(LIB_DIR)/inc
 
-SRC = main.c \
-	  parsing_antfarm.c \
+SRC = get_pipes.c \
 	  get_rooms.c \
-	  get_pipes.c \
+	  main.c \
+	  output.c \
+	  parsing_antfarm.c \
+	  solver.c \
 	  visu.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))

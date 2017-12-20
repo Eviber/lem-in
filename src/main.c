@@ -6,12 +6,13 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 20:53:09 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/21 00:07:29 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "eparser.h"
+#include "solver.h"
 #include "visu.h"
 
 t_room				**add_room(t_room **rooms, int nb_rooms)
@@ -64,6 +65,7 @@ static t_env			init_antfarm(void)
 	ret.rooms = NULL;
 	ret.nb_ants = -1;
 	ret.antleft = -1;
+	ret.nb_rooms = 0;
 	return (ret);
 }
 
@@ -115,26 +117,17 @@ int						main(int argc, char **argv)
 	}
 	else
 	{
+		if (v && !visu_init(&antfarm))
+		{
+			ft_putstr_fd("Visualizer failed.\n", 2);
+			v = 0;
+		}
 		debug_colony(antfarm);
 		ft_printf("tubes of first room:\n");
 		t_room *first_room = *(antfarm.rooms);
 		debug_pipes(first_room->pipes);
-//		solver(&antfarm);
-//		output(&antfarm);
-	}
-	if (v && !visu_init(&antfarm))
-	{
-		ft_putstr_fd("Visualizer failed.\n", 2);
-		v = 0;
-	}
-	while (v)
-	{
-		v = visu();
-		if (0)
-		{
-			SDL_Delay(500);
-			v = visu();
-		}
+		find_shortest(&antfarm);
+		output(&antfarm, v);
 	}
 	return (0);
 }

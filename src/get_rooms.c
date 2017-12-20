@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 19:30:08 by sbrochar         ###   ########.fr       */
+/*   Updated: 2017/12/20 19:40:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static t_room		*init_room(char **tab)
 static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
 {
 	t_room			*room;
-	static size_t	nb_rooms = 0;
 
 	room = init_room(tab);
 	if (room)
@@ -81,9 +80,9 @@ static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
 			*end = FALSE;
 			antfarm->end = room;
 		}
-		nb_rooms++;
-		antfarm->rooms = add_room(antfarm->rooms, nb_rooms);
-		(antfarm->rooms)[nb_rooms - 1] = room;
+		antfarm->nb_rooms++;
+		antfarm->rooms = add_room(antfarm->rooms, antfarm->nb_rooms);
+		(antfarm->rooms)[antfarm->nb_rooms - 1] = room;
 	}
 }
 
