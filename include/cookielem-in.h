@@ -26,7 +26,8 @@ typedef struct s_room
 	char 	*name;
 	int		x;
 	int		y;
-	struct s_tube	*tubes;
+	t_tube	*tubes;
+	t_tube *a_tube;
 	struct s_room 	*next;
 	int 	weight;
 //	t_bool 	visited;

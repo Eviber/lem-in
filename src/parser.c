@@ -3,19 +3,19 @@
 
 
 static void connect_rooms(t_map *map){
-
-	printf("ICI\n");
 	t_room *ptr1 = map->tmp[0];
 	t_room *ptr2 = map->tmp[1];
 
-	ptr1->tubes = (t_tube*)ft_memalloc(sizeof(t_tube));
-
-	ptr2->tubes = (t_tube*)ft_memalloc(sizeof(t_tube));
-
-	printf("%p\n", ptr1);
-	printf("%p\n", ptr2);
+	ptr1->tubes = ptr1->a_tube;
+	ptr2->tubes = ptr2->a_tube;
+	while (ptr1->tubes->room)
+		ptr1->tubes = ptr1->tubes->next;
+	while (ptr2->tubes->room)
+		ptr2->tubes = ptr2->tubes->next;
 	ptr1->tubes->room = ptr2;
 	ptr2->tubes->room = ptr1;
+	ptr1->tubes->next = (t_tube*)ft_memalloc(sizeof(t_tube));
+	ptr2->tubes->next = (t_tube*)ft_memalloc(sizeof(t_tube));
 }
 
 static int check_tubes(t_map *map, char *line){
@@ -27,6 +27,7 @@ static int check_tubes(t_map *map, char *line){
 	char 	**tube_data;
 	char 	status = 0;
 
+	ptr = map->rooms;
 	tube_data = ft_strsplit(line, '-');
 	while (tube_data[i] != NULL)
 		i++;
@@ -35,20 +36,9 @@ static int check_tubes(t_map *map, char *line){
 		ft_putendl("error format input\n");
 		return(-1);
 	}
-	// printf("Passe le premier tube line : %s\n", line);
-    //
-	// printf("%s - %s\n", tube_data[0], tube_data[1]);
-	// exit(1);
+
 	ft_memset(map->tmp, 0, sizeof(t_room*) * 2);
 
-	// printf("entering parse tube\n");
-	// exit(0);
-	ptr = map->rooms;
-
-	printf("%p\n", ptr);
-	printf("content : %s (name)\n", map->rooms->name);
-
-//	exit(1);
 	while (ptr && status != 2)
 	{
 		if (!(ft_strcmp(tube_data[0], ptr->name)))
@@ -64,7 +54,12 @@ static int check_tubes(t_map *map, char *line){
 		ptr = ptr->next;
 	}
 	if (status == 2)
+	{
+		// printf("status vaut 2\n");
 		connect_rooms(map);
+		// printf("print & de map->rooms->tubes stored : %p", map->rooms->tubes->room);
+
+	}
 	return (status); //si retourne 1 ou 0 signifie erreur ou detail 1 une seule
 	//salle existe, 0 aucune des salles existe
 }
@@ -87,6 +82,12 @@ static void	room_print(t_room *room){
 	while (ptr)
 	{
 		ft_putendl(ptr->name);
+		ptr->tubes = ptr->a_tube;
+		while (ptr->tubes->room)
+		{
+			printf("%s - %s\n", ptr->name, ptr->tubes->room->name);
+			ptr->tubes = ptr->tubes->next;
+		}
 		ptr = ptr->next;
 	}
 }
@@ -96,6 +97,8 @@ static int linetodata(t_map *map, char *line, int p_status)
 	char 	**data;
 	t_room 	*room;
 	//int ret;
+
+
 
 	static char	iffirstroom = 1;
 	int i = 0;
@@ -125,7 +128,8 @@ static int linetodata(t_map *map, char *line, int p_status)
 		room->x = ft_atoi(data[1]);
 		room->y = ft_atoi(data[2]);
 		room->next = NULL;
-
+		room->tubes = ft_memalloc(sizeof(t_tube));
+		room->a_tube = 	room->tubes;
 		if (p_status == START)
 			map->start = room;
 		else if (p_status == END)
@@ -143,11 +147,9 @@ static int linetodata(t_map *map, char *line, int p_status)
 	//printf("%s\n", line);
 	if (status == TUBE && i == 1)
 		{
-			printf("List : \n");
-			room_print(map->rooms);
-			printf("end of list\n");
-			if(map->start && map->end)
-				printf("start : %s, end : %s\n", map->start->name, map->end->name);
+			//printf("tube\n");
+			// if(map->start && map->end)
+			// 	printf("start : %s, end : %s\n", map->start->name, map->end->name);
 				// printf("parse_tube();");
 				// if ((ret = parse_tubes(map, data[0], data[1])) != 2)
 				// 	{
@@ -155,8 +157,8 @@ static int linetodata(t_map *map, char *line, int p_status)
 				// 		return (-1);
 				// 	}
 				if (ft_strchr(line, '-')){
-					printf("OK line de tube !\n");
-					if ((check_tubes(map, line)) == -1)
+					//printf("OK line de tube !\n");
+					if ((check_tubes(map, line)) != 2)
 						return (-1);
 				}
 
@@ -199,10 +201,10 @@ int parser(t_map *map){
 			ft_putendl(ERR_READ);
 			exit(-1);
 		}
-
-	 	if (*line && ifisdigit(line) && !status)
+		if (ret == 0)
+		break;
+	 	if (ret && *line && ifisdigit(line) && !status)
 		{
-			//printf("STATUS 0\n");
 			map->ant = ft_atoi(line);
 			status = ANT;
 		}
@@ -229,8 +231,8 @@ int parser(t_map *map){
 		}
 		free(line);
 	}
-		printf("Liste des rooms\n");
-		room_print(map->rooms);
+		// printf("Liste des rooms\n");
+		 room_print(map->rooms);
 
 
 	return (1);
