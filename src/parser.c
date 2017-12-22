@@ -10,38 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cookielem-in.h"
+#include "cookielem_in.h"
 #include "get_next_line.h"
-
-void		ft_error(unsigned long motif)
-{
-	if (motif == 1)
-		ft_putendl(ERR_ALLOC);
-	else if (motif == 2)
-		ft_putendl("Error");
-	else if (motif == 3)
-		ft_putendl("error format input\n");
-	exit(-1);
-}
-
-static void	connect_rooms(t_map *map)
-{
-	t_room *ptr1;
-	t_room *ptr2;
-
-	ptr1 = map->tmp[0];
-	ptr2 = map->tmp[1];
-	ptr1->tubes = ptr1->a_tube;
-	ptr2->tubes = ptr2->a_tube;
-	while (ptr1->tubes->room)
-		ptr1->tubes = ptr1->tubes->next;
-	while (ptr2->tubes->room)
-		ptr2->tubes = ptr2->tubes->next;
-	ptr1->tubes->room = ptr2;
-	ptr2->tubes->room = ptr1;
-	ptr1->tubes->next = (t_tube*)ft_memalloc(sizeof(t_tube));
-	ptr2->tubes->next = (t_tube*)ft_memalloc(sizeof(t_tube));
-}
 
 static int	check_tubes(t_map *map, char *line)
 {
@@ -72,54 +42,6 @@ static int	check_tubes(t_map *map, char *line)
 	return (status);
 }
 
-static void	push_room(t_map *map, t_room *room)
-{
-	t_room *tmp;
-
-	if (!map->rooms)
-		map->rooms = room;
-	else
-	{
-		tmp = map->rooms;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = room;
-	}
-}
-
-static void	room_print(t_room *room)
-{
-	t_room *ptr;
-
-	ptr = room;
-	while (ptr)
-	{
-		ft_putendl(ptr->name);
-		ptr->tubes = ptr->a_tube;
-		while (ptr->tubes->room)
-		{
-			printf("%s - %s\n", ptr->name, ptr->tubes->room->name);
-			ptr->tubes = ptr->tubes->next;
-		}
-		ptr = ptr->next;
-	}
-}
-
-static void	init_room(t_map *map, t_room *room, char **data, int p_status)
-{
-	room->name = ft_strdup(data[0]);
-	room->x = ft_atoi(data[1]);
-	room->y = ft_atoi(data[2]);
-	room->next = NULL;
-	room->tubes = ft_memalloc(sizeof(t_tube));
-	room->a_tube = room->tubes;
-	if (p_status == START)
-		map->start = room;
-	else if (p_status == END)
-		map->end = room;
-	push_room(map, room);
-}
-
 static int	linetodata(t_map *map, char *line, int p_status)
 {
 	char	**data;
@@ -145,21 +67,6 @@ static int	linetodata(t_map *map, char *line, int p_status)
 	return (1);
 }
 
-static int	ifisdigit(char *line)\
-{
-	int i;
-
-	i = 0;
-	while (line && line[i] != '\0')
-	{
-		if (!ft_isdigit(line[i]))
-			return (0);
-		else
-			i++;
-	}
-	return (1);
-}
-
 int			parser(t_map *map)
 {
 	char	*line;
@@ -170,7 +77,7 @@ int			parser(t_map *map)
 	line = NULL;
 	while ((get_next_line(0, &line)) > 0)
 	{
-		if (*line && ifisdigit(line) && !status && (status = ANT))
+		if (*line && ft_strisdigit(line) && !status && (status = ANT))
 			map->ant = ft_atoi(line);
 		if (line[0] == '#' && line[1] == '#')
 		{
