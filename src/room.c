@@ -35,6 +35,7 @@ static void	push_room(t_map *map, t_room *room)
 {
 	t_room *tmp;
 
+	map->nb_rooms += 1;
 	if (!map->rooms)
 		map->rooms = room;
 	else

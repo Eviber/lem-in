@@ -19,8 +19,8 @@
 # define ERR_READ "error while reading stdin\n"
 # define ERR_DIGIT "error while checking digit format\n"
 # define ERR_ALLOC "error while allocating memory\n"
-# define TRUE 1;
-# define FALSE 0;
+# define TRUE 1
+# define FALSE 0
 
 enum { NO_ANT, ANT, START, END };
 enum { ROOM, TUBE, ERROR, LICORNE };
@@ -35,22 +35,26 @@ typedef struct	s_room
 {
 	int				x;
 	int				y;
+	int				ant;//a changer en unsigned long
 	int				weight;
 	char			*name;
 	t_tube			*tubes;
 	t_tube			*a_tube;
 	struct s_room	*next;
+	struct s_room	*prev;
 }				t_room;
 
 typedef struct	s_map
 {
-	int			ant;
-	int			antleft;
-	t_room		*rooms;
-	t_room		*start;
-	t_room		*end;
-	t_tube		*tubes;
-	t_room		*tmp[2];
+	int				ant;//a changer en unsigned long
+	int				antleft;// voir commentaire du dessus
+	unsigned long	nb_rooms;
+	t_room			*rooms;
+	t_room			*start;
+	t_room			*end;
+	t_tube			*tubes;
+	t_room			*tmp[2];
+	t_room			*path;
 }				t_map;
 
 int				parser(t_map *map);
@@ -58,5 +62,6 @@ void			ft_error(unsigned long motif);
 void			connect_rooms(t_map *map);
 void			room_print(t_room *room);
 void			init_room(t_map *map, t_room *room, char **data, int p_status);
+int				find_shortest(t_map *map);
 
 #endif
