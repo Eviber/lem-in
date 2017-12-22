@@ -46,7 +46,7 @@ static void	push_room(t_map *map, t_room *room)
 		tmp->next = room;
 	}
 }
-
+/*
 void	room_print(t_room *room)
 {
 	t_room *ptr;
@@ -63,7 +63,7 @@ void	room_print(t_room *room)
 		}
 		ptr = ptr->next;
 	}
-}
+}*/
 
 void	init_room(t_map *map, t_room *room, char **data, int p_status)
 {

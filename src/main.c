@@ -38,7 +38,7 @@ static void	put_ants(t_map *map, t_room *last_room)
 	}
 	if (map->antleft)
 	{
-		cur->ant = map->ant - map->antleft;
+		cur->ant = map->ant - map->antleft + 1;
 		output_ant(cur->ant, cur->name);
 		map->antleft -= 1;
 	}
@@ -56,7 +56,7 @@ void		out_pout(t_map *map/*, int v*/)
 			output_ant(map->path->ant, map->path->name);
 			lem_out++;
 		}
-		put_ants(map, map->path->next);
+		put_ants(map, map->path);
 		ft_putchar('\n');
 		//v = visu();
 	}
@@ -83,6 +83,7 @@ int		main(void)
 
 	map = ft_memalloc(sizeof(t_map));
 	parser(map);
+	map->antleft = map->ant;
 	if (find_shortest(map))
 		out_pout(map/*, 0*/);
 	else

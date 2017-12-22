@@ -14,9 +14,10 @@
 
 static int		fill_weight(const t_map *map, t_room *room)
 {
+	room->tubes = room->a_tube;
 	while (room->tubes->room)
 	{
-		if (room->tubes->room ==  map->end)
+		if (room->tubes->room == map->end)
 			return (TRUE);
 		if (!room->tubes->room->weight && room->tubes->room != map->start)
 		{
@@ -38,8 +39,10 @@ static t_room	*try_path(t_map *map, int depth)
 	while (cur)
 	{
 		if (cur->weight == depth - 1 && (cur->weight || cur == map->start))
+		{
 			if (fill_weight(map, cur))
 				return (cur);
+		}
 		cur = cur->next;
 	}
 	return (NULL);

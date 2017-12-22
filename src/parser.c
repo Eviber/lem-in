@@ -90,6 +90,6 @@ int			parser(t_map *map)
 		ft_putendl(line);
 		free(line);
 	}
-	room_print(map->rooms);
+	//room_print(map->rooms);
 	return (1);
 }
