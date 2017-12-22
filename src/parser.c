@@ -42,15 +42,15 @@ static int check_tubes(t_map *map, char *line){
 	while (ptr && status != 2)
 	{
 		if (!(ft_strcmp(tube_data[0], ptr->name)))
-			{
-				status += 1;
-				map->tmp[0] = ptr;
-			}
+		{
+			status += 1;
+			map->tmp[0] = ptr;
+		}
 		if (!(ft_strcmp(tube_data[1], ptr->name)))  // if si on veut qu il passe dans les deux
-			{
-				status += 1;
-				map->tmp[1] = ptr;
-			}
+		{
+			status += 1;
+			map->tmp[1] = ptr;
+		}
 		ptr = ptr->next;
 	}
 	if (status == 2)
@@ -71,7 +71,7 @@ static void	push_room(t_map *map, t_room *room)
 
 	tmp = map->rooms;
 	while (tmp->next)
-			tmp = tmp->next;
+		tmp = tmp->next;
 	tmp->next = room;
 }
 
@@ -105,19 +105,19 @@ static int linetodata(t_map *map, char *line, int p_status)
 	char 		status = ROOM;
 
 	if ((room = (t_room*)ft_memalloc(sizeof(t_room))) == NULL)
-		{
-			ft_putendl(ERR_ALLOC);
-			exit(-1);
-		}
-		if (ft_strchr(line, '-'))
-			status = TUBE;
+	{
+		ft_putendl(ERR_ALLOC);
+		exit(-1);
+	}
+	if (ft_strchr(line, '-'))
+		status = TUBE;
 
 	if ((data = ft_strsplit(line, ' ')) == NULL )
-		{
-			ft_putendl("Error");
-			status = ERROR;
-			exit(-1);
-		}
+	{
+		ft_putendl("Error");
+		status = ERROR;
+		exit(-1);
+	}
 
 	while (data[i] != NULL)
 		i++;
@@ -146,27 +146,27 @@ static int linetodata(t_map *map, char *line, int p_status)
 
 	//printf("%s\n", line);
 	if (status == TUBE && i == 1)
-		{
-			//printf("tube\n");
-			// if(map->start && map->end)
-			// 	printf("start : %s, end : %s\n", map->start->name, map->end->name);
-				// printf("parse_tube();");
-				// if ((ret = parse_tubes(map, data[0], data[1])) != 2)
-				// 	{
-				// 		printf("error while parsing tubes : %d", ret);
-				// 		return (-1);
-				// 	}
-				if (ft_strchr(line, '-')){
-					//printf("OK line de tube !\n");
-					if ((check_tubes(map, line)) != 2)
-						return (-1);
-				}
-
+	{
+		//printf("tube\n");
+		// if(map->start && map->end)
+		// 	printf("start : %s, end : %s\n", map->start->name, map->end->name);
+		// printf("parse_tube();");
+		// if ((ret = parse_tubes(map, data[0], data[1])) != 2)
+		// 	{
+		// 		printf("error while parsing tubes : %d", ret);
+		// 		return (-1);
+		// 	}
+		if (ft_strchr(line, '-')){
+			//printf("OK line de tube !\n");
+			if ((check_tubes(map, line)) != 2)
+				return (-1);
 		}
 
+	}
+
 	/*
-	** Test type data (room ou tube) =====strchr()!
-	*/
+	 ** Test type data (room ou tube) =====strchr()!
+	 */
 
 	return (1);
 }
@@ -184,56 +184,37 @@ static int ifisdigit(char *line){
 }
 
 
-int parser(t_map *map){
-
-	int 	ret = 1;
+int parser(t_map *map)
+{
 	char 	*line;
 	int		status; /*0:no ant, 1:ant done, 2:start or 3:end */
 
 	status = NO_ANT;
 	line = NULL;
-
-	while(ret != 0)
+	while((get_next_line(0, &line)) > 0)
 	{
-
-		if ((ret = get_next_line(0, &line)) < 0)
-		{
-			ft_putendl(ERR_READ);
-			exit(-1);
-		}
-		if (ret == 0)
-		break;
-	 	if (ret && *line && ifisdigit(line) && !status)
+		if (*line && ifisdigit(line) && !status)
 		{
 			map->ant = ft_atoi(line);
 			status = ANT;
 		}
-		else if (line[0] == '#')
+		else if (line[0] == '#' && line[1] == '#')
 		{
-			if (line[1] == '#')
-			{
-				if (!(ft_strcmp(line + 2, "start")))
-			 		status = START;
-				else if (!(ft_strcmp(line + 2, "end")))
-			 		status = END;
-			}
-			else
-				continue;
+			if (!(ft_strcmp(line + 2, "start")))
+				status = START;
+			else if (!(ft_strcmp(line + 2, "end")))
+				status = END;
 		}
 		else
 		{
-				if ((linetodata(map, line, status)) == -1)
-					{
-						printf("Error line to data, stop parsing\n");
-						//break;
-					}
+			if ((linetodata(map, line, status)) == -1)
+				break;
 			status = ANT;
 		}
+	ft_putendl(line);
+
 		free(line);
 	}
-		// printf("Liste des rooms\n");
-		 room_print(map->rooms);
-
-
+	room_print(map->rooms);
 	return (1);
 }
