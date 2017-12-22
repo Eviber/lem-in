@@ -85,7 +85,7 @@ int			parser(t_map *map)
 			(!ft_strcmp(line + 2, "end") * 2);
 			status = ((test) ? ANT + test : status);
 		}
-		else if ((status = ANT) && (linetodata(map, line, status)) == -1)
+		else if ((linetodata(map, line, status)) == -1 || !(status = ANT))
 			break ;
 		ft_putendl(line);
 		free(line);

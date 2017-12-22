@@ -13,25 +13,34 @@
 #include "cookielem_in.h"
 #include <stdio.h>
 
-static void	put_ants(t_env *env, t_room *pathroom)
+static void output_ant(int name_ant, char *name_room)
+{
+	write(1, "L", 1);
+	ft_putnbr(name_ant);
+	write(1, "-", 1);
+	ft_putstr(name_room);
+	write(1, " ", 1);
+}
+
+static void	put_ants(t_map *map, t_room *last_room)
 {
 	t_room	*cur;
 
-	cur = pathroom;
-	while (cur->prev != env->start)
+	cur = last_room;
+	while (cur->prev != map->start)
 	{
 		if (cur->prev->ant)
 		{
 			cur->ant = cur->prev->ant;
-			ft_printf("L%d-%s ", cur->ant, cur->name);
+			output_ant(cur->ant, cur->name);
 		}
 		cur = cur->prev;
 	}
-	if (env->antleft)
+	if (map->antleft)
 	{
-		cur->ant = env->nb_ants - env->antleft;
-		ft_printf("L%d-%s ", cur->ant, cur->name);
-		env->antleft--;
+		cur->ant = map->ant - map->antleft;
+		output_ant(cur->ant, cur->name);
+		map->antleft -= 1;
 	}
 }
 
@@ -44,10 +53,10 @@ void		out_pout(t_map *map/*, int v*/)
 	{
 		if (map->path->ant)
 		{
-			ft_printf("L%d-%s ", env->paths[0]->room->ant, env->paths[0]->room->name);
+			output_ant(map->path->ant, map->path->name);
 			lem_out++;
 		}
-		put_ants(env, env->paths[0]->room);
+		put_ants(map, map->path->next);
 		ft_putchar('\n');
 		//v = visu();
 	}
@@ -65,13 +74,17 @@ void	ft_error(unsigned long motif)
 	exit(-1);
 }
 
+
+#include <stdio.h>
+
 int		main(void)
 {
-	t_map map;
+	t_map *map;
 
-	parser(&map);
-	if (find_shortest(&map))
-		out_pout(&map/*, 0*/);
+	map = ft_memalloc(sizeof(t_map));
+	parser(map);
+	if (find_shortest(map))
+		out_pout(map/*, 0*/);
 	else
 		ft_error(2);
 	return (0);
