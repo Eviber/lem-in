@@ -12,7 +12,7 @@
 
 #include "cookielem_in.h"
 
-void	connect_rooms(t_map *map)
+void		connect_rooms(t_map *map)
 {
 	t_room *ptr1;
 	t_room *ptr2;
@@ -65,7 +65,7 @@ void	room_print(t_room *room)
 	}
 }*/
 
-void	init_room(t_map *map, t_room *room, char **data, int p_status)
+void		init_room(t_map *map, t_room *room, char **data, int p_status)
 {
 	room->name = ft_strdup(data[0]);
 	room->x = ft_atoi(data[1]);

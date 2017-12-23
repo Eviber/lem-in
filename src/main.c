@@ -13,7 +13,7 @@
 #include "cookielem_in.h"
 #include <stdio.h>
 
-static void output_ant(int name_ant, char *name_room)
+static void	output_ant(int name_ant, char *name_room)
 {
 	write(1, "L", 1);
 	ft_putnbr(name_ant);
@@ -45,7 +45,7 @@ static void	put_ants(t_map *map)
 	}
 }
 
-void		out_pout(t_map *map/*, int v*/)
+void		out_pout(t_map *map)
 {
 	unsigned long	lem_out;
 
@@ -61,8 +61,7 @@ void		out_pout(t_map *map/*, int v*/)
 	}
 }
 
-
-void	ft_error(unsigned long motif)
+void		ft_error(unsigned long motif)
 {
 	if (motif == 1)
 		ft_putendl(ERR_ALLOC);
@@ -73,10 +72,7 @@ void	ft_error(unsigned long motif)
 	exit(-1);
 }
 
-
-#include <stdio.h>
-
-int		main(void)
+int			main(void)
 {
 	t_map *map;
 
@@ -84,7 +80,7 @@ int		main(void)
 	parser(map);
 	map->antleft = map->ant;
 	if (find_shortest(map))
-		out_pout(map/*, 0*/);
+		out_pout(map);
 	else
 		ft_error(2);
 	return (0);
