@@ -35,7 +35,7 @@ typedef struct	s_room
 {
 	int				x;
 	int				y;
-	int				ant;//a changer en unsigned long
+	unsigned long	ant;//a changer en unsigned long
 	int				weight;
 	char			*name;
 	t_tube			*tubes;
@@ -46,8 +46,8 @@ typedef struct	s_room
 
 typedef struct	s_map
 {
-	int				ant;//a changer en unsigned long
-	int				antleft;// voir commentaire du dessus
+	unsigned long	ant;//a changer en unsigned long
+	unsigned long	antleft;// voir commentaire du dessus
 	unsigned long	nb_rooms;
 	t_room			*rooms;
 	t_room			*start;

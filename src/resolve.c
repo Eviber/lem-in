@@ -43,7 +43,7 @@ static t_room	*try_path(t_map *map, int depth)
 	{
 		if (cur->weight == depth - 1 && (cur->weight || cur == map->start))
 			if (fill_weight(map, cur))
-				return (map);
+				return (map->end);
 		cur = cur->next;
 	}
 	return (NULL);

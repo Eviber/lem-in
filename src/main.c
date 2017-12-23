@@ -22,11 +22,11 @@ static void output_ant(int name_ant, char *name_room)
 	write(1, " ", 1);
 }
 
-static void	put_ants(t_map *map, t_room *last_room)
+static void	put_ants(t_map *map)
 {
 	t_room	*cur;
 
-	cur = last_room;
+	cur = map->end;
 	while (cur->prev != map->start)
 	{
 		if (cur->prev->ant)
@@ -47,14 +47,15 @@ static void	put_ants(t_map *map, t_room *last_room)
 
 void		out_pout(t_map *map/*, int v*/)
 {
-	int	lem_out;
+	unsigned long	lem_out;
 
 	lem_out = 1;
+	ft_putchar('\n');
 	while (lem_out < map->ant)
 	{
-		if (map->path->ant)
+		if (map->end->ant)
 			lem_out++;
-		put_ants(map, map->path);
+		put_ants(map);
 		ft_putchar('\n');
 		//v = visu();
 	}
@@ -66,7 +67,7 @@ void	ft_error(unsigned long motif)
 	if (motif == 1)
 		ft_putendl(ERR_ALLOC);
 	else if (motif == 2)
-		ft_putendl("Error");
+		ft_putendl("ERROR\n");
 	else if (motif == 3)
 		ft_putendl("error format input\n");
 	exit(-1);
