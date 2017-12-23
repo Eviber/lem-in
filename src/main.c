@@ -32,6 +32,7 @@ static void	put_ants(t_map *map, t_room *last_room)
 		if (cur->prev->ant)
 		{
 			cur->ant = cur->prev->ant;
+			cur->prev->ant = 0;
 			output_ant(cur->ant, cur->name);
 		}
 		cur = cur->prev;
@@ -46,16 +47,13 @@ static void	put_ants(t_map *map, t_room *last_room)
 
 void		out_pout(t_map *map/*, int v*/)
 {
-	unsigned long	lem_out;
+	int	lem_out;
 
-	lem_out = 0;
-	while ((int)lem_out < map->ant)
+	lem_out = 1;
+	while (lem_out < map->ant)
 	{
 		if (map->path->ant)
-		{
-			output_ant(map->path->ant, map->path->name);
 			lem_out++;
-		}
 		put_ants(map, map->path);
 		ft_putchar('\n');
 		//v = visu();
