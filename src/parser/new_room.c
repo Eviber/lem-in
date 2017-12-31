@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:08:44 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/30 14:41:26 by vsporer          ###   ########.fr       */
+/*   Updated: 2017/12/31 14:24:01 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ t_room			*new_room(char *name, int x,  int y, t_env *env)
 	new->ant = 0;
 	new->weight = 0;
 	new->dead = 0;
+	return (new);
 }

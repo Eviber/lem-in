@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/30 17:56:16 by vsporer          ###   ########.fr       */
+/*   Updated: 2017/12/31 14:43:43 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 	t_room	*one;
 	t_room	*two;
 
-	if (*mode != 2)
-		*mode = 2;
+	if ((*mode & 4) || (*mode & 8))
+		return (1);
+	if (!(*mode & 2))
+		*mode = (*mode | 2);
 	if (ft_strcmp(line, "-"))
 	{
 		if (!(pipe = ft_strsplit(line, '-')))
@@ -84,9 +86,25 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 	return (1);
 }
 
-static int	check_cmd(int *mode, t_room *room)
+static int	check_cmd(int *mode, t_room *room, t_env *env)
 {
-	
+	if (!(*mode & 4) && !(*mode & 8))
+		return (0);
+	if ((*mode & 4))
+	{
+		if (env->start)
+			return (1);
+		env->start = room;
+		*mode = (*mode ^ 4);
+	}
+	if ((*mode & 8))
+	{
+		if (env->end)
+			return (1);
+		env->end = room;
+		*mode = (*mode ^ 8);
+	}
+	return (0);
 }
 
 int			check_in(char *line, t_env *env)
@@ -109,8 +127,8 @@ int			check_in(char *line, t_env *env)
 		return (1);
 	else if (mode == 0)
 		return (check_ants(line, &mode, env));
-	else if (mode == 1 && !check_room(&ret, line, env))
-		return (check_cmd(&mode, ret));
+	else if ((mode & 1) && !(mode & 2) && !check_room(&ret, line, env))
+		return (check_cmd(&mode, ret, env));
 	else
 		return (check_pipe(line, &mode, env));
 }
