@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2017/12/16 19:52:30 by vsporer          ###   ########.fr        #
+#    Updated: 2017/12/31 19:42:37 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ PATH_LIBFT =		libft/
 PATH_SRC =			src/
 PATH_OBJ =			objs/
 PATH_PARS =			$(PATH_SRC)parser/
+PATH_VISU =			$(PATH_SRC)visu/
 PATH_ALGO =			$(PATH_SRC)algo/
 PATH_TOOLS =		$(PATH_SRC)tools/
 
@@ -39,12 +40,16 @@ PARSER =			$(PATH_PARS)read_map.c\
 					$(PATH_PARS)add_pipe.c\
 					$(PATH_PARS)new_room.c
 
+VISU =				$(PATH_VISU)lem_in_visu.c
+#					$(PATH_PARS)check_in.c
+
 #ALGO =				$(PATH_ALGO)get_path.c\
 #					$(PATH_ALGO)release_ants.c
 
 OBJ =				$(patsubst $(PATH_SRC)%.c, $(PATH_OBJ)%.o, $(SRC))\
 					$(patsubst $(PATH_TOOLS)%.c, $(PATH_OBJ)%.o, $(TOOLS))\
-					$(patsubst $(PATH_PARS)%.c, $(PATH_OBJ)%.o, $(PARSER))
+					$(patsubst $(PATH_PARS)%.c, $(PATH_OBJ)%.o, $(PARSER))\
+					$(patsubst $(PATH_VISU)%.c, $(PATH_OBJ)%.o, $(VISU))
 #					$(patsubst $(PATH_ALGO)%.c, $(PATH_OBJ)%.o, $(ALGO))
 
 .PHONY: all clean fclean libft

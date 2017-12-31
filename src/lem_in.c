@@ -6,19 +6,24 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 19:08:38 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 15:18:46 by vsporer          ###   ########.fr       */
+/*   Updated: 2017/12/31 19:01:49 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "parser_lem-in.h"
 
-int				main(void)
+int		main(int ac, char **av)
 {
 	int		i;
 	t_env	env;
 
 	i = -1;
+	if (ac > 2 || (ac == 2 && ft_strcmp(av[1], "-v")))
+	{
+		ft_putendl_fd(2, "usage: ./lem-in [-v]");
+		return (1);
+	}
 	read_map(&env);
 //	check_map(&env);
 //	get_path(&env);
@@ -34,6 +39,8 @@ int				main(void)
 			ft_putstr(" - End");
 		ft_putendl("");
 	}
+	if (ac == 2 && ft_strcmp(av[1], "-v"))
+		lem_in_visu(&env);
 	del_room_tab(env.rooms);
 	return (0);
 }
