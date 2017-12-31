@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:08:44 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/16 19:57:50 by vsporer          ###   ########.fr       */
+/*   Updated: 2017/12/30 14:41:26 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_room	*roomalloc(t_env *env)
 	return ((env->rooms)[i]);
 }
 
-void			new_room(char *name, int x,  int y, t_env *env)
+t_room			*new_room(char *name, int x,  int y, t_env *env)
 {
 	t_room	*new;
 

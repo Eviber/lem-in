@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/16 20:43:30 by vsporer          ###   ########.fr       */
+/*   Updated: 2017/12/30 17:56:16 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_ants(char *line, int *mode, t_env *env)
 	return (0);
 }
 
-static int	check_room(char *line, t_env *env)
+static int	check_room(t_room **ret, char *line, t_env *env)
 {
 	int		i;
 	int		j;
@@ -49,7 +49,7 @@ static int	check_room(char *line, t_env *env)
 			if (room[j][i])
 				return (1);
 		}
-		new_room(room[0], ft_atoi(room[1]), ft_atoi(room[2]), env);
+		*ret = new_room(room[0], ft_atoi(room[1]), ft_atoi(room[2]), env);
 		ft_strdel(&(room[1]));
 		ft_strdel(&(room[2]));
 		ft_memdel((void**)&room);
@@ -86,14 +86,15 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 
 static int	check_cmd(int *mode, t_room *room)
 {
-	WIP
+	
 }
 
 int			check_in(char *line, t_env *env)
 {
-	t_room		ret;
+	t_room		*ret;
 	static int	mode = 0;
 
+	ret = NULL;
 	if (!line)
 		return (1);
 	if (line[0] == '#')
@@ -108,7 +109,7 @@ int			check_in(char *line, t_env *env)
 		return (1);
 	else if (mode == 0)
 		return (check_ants(line, &mode, env));
-	else if (mode == 1 && !(ret = check_room(line, env)))
+	else if (mode == 1 && !check_room(&ret, line, env))
 		return (check_cmd(&mode, ret));
 	else
 		return (check_pipe(line, &mode, env));
