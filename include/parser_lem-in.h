@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 16:24:46 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 19:08:40 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/02 18:37:43 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_room			*new_room(char *name, int x, int y, t_env *env);
 /*
 ** Visu
 */
-void			lem_in_visu(t_env *env);
+int				lem_in_visu(t_env *env);
 /*
 ** Algorithm
 */

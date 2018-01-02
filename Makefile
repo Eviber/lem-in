@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2017/12/31 19:42:37 by vsporer          ###   ########.fr        #
+#    Updated: 2018/01/02 18:44:11 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ all: libft $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 	@echo "Compiling $@ ...\033[K"
-	@$(CC) $(INC) $^ -o $@
+	@$(CC) $(INC) $^ -o $@ `sdl2-config --cflags --libs` -lSDL2_gfx
 	@echo "$(C_OK)Done !$(C_RESET)"
 
 $(LIBFT): libft
@@ -81,6 +81,11 @@ $(PATH_OBJ)%.o: $(PATH_PARS)%.c
 #	@mkdir -p $(@D)
 #	@$(CC) $(INC) -c $< -o $@
 #
+$(PATH_OBJ)%.o: $(PATH_VISU)%.c
+	@echo "Compiling $@\033[K\033[1A\r"
+	@mkdir -p $(@D)
+	@$(CC) $(INC) -c $< -o $@
+
 $(PATH_OBJ)%.o: $(PATH_TOOLS)%.c
 	@echo "Compiling $@\033[K\033[1A\r"
 	@mkdir -p $(@D)
