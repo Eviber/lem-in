@@ -6,12 +6,13 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 19:08:38 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/02 18:49:44 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/03 16:25:27 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "parser_lem-in.h"
+#include "visu_lem-in.h"
 
 int		main(int ac, char **av)
 {

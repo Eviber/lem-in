@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 14:43:43 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/03 16:40:57 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static int	check_ants(char *line, int *mode, t_env *env)
 	while (ft_isdigit(line[i]))
 		i++;
 	if (!line[i] && (n_ants = ft_atoi(line)) > 0)
+	{
 		env->nb_ants = n_ants;
+		env->antleft = n_ants;
+	}
 	else
 		lem_in_error(ANTS, 'q', env);
 	return (0);
