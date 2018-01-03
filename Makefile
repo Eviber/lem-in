@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2017/12/31 19:42:37 by vsporer          ###   ########.fr        #
+#    Updated: 2018/01/03 18:39:45 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,16 +40,16 @@ PARSER =			$(PATH_PARS)read_map.c\
 					$(PATH_PARS)add_pipe.c\
 					$(PATH_PARS)new_room.c
 
-VISU =				$(PATH_VISU)lem_in_visu.c
+#VISU =				$(PATH_VISU)lem_in_visu.c
 #					$(PATH_PARS)check_in.c
-
+#
 #ALGO =				$(PATH_ALGO)get_path.c\
 #					$(PATH_ALGO)release_ants.c
 
 OBJ =				$(patsubst $(PATH_SRC)%.c, $(PATH_OBJ)%.o, $(SRC))\
 					$(patsubst $(PATH_TOOLS)%.c, $(PATH_OBJ)%.o, $(TOOLS))\
-					$(patsubst $(PATH_PARS)%.c, $(PATH_OBJ)%.o, $(PARSER))\
-					$(patsubst $(PATH_VISU)%.c, $(PATH_OBJ)%.o, $(VISU))
+					$(patsubst $(PATH_PARS)%.c, $(PATH_OBJ)%.o, $(PARSER))
+#					$(patsubst $(PATH_VISU)%.c, $(PATH_OBJ)%.o, $(VISU))
 #					$(patsubst $(PATH_ALGO)%.c, $(PATH_OBJ)%.o, $(ALGO))
 
 .PHONY: all clean fclean libft
@@ -76,6 +76,11 @@ $(PATH_OBJ)%.o: $(PATH_PARS)%.c
 	@mkdir -p $(@D)
 	@$(CC) $(INC) -c $< -o $@
 
+#$(PATH_OBJ)%.o: $(PATH_VISU)%.c
+#	@echo "Compiling $@\033[K\033[1A\r"
+#	@mkdir -p $(@D)
+#	@$(CC) $(INC) -c $< -o $@
+#
 #$(PATH_OBJ)%.o: $(PATH_ALGO)%.c
 #	@echo "Compiling $@\033[K\033[1A\r"
 #	@mkdir -p $(@D)
@@ -99,7 +104,7 @@ fclean: clean
 test: all
 	@echo "\\/\\/\\/\\/\\/\\/\\/BEGIN TEST\\/\\/\\/\\/\\/\\/\\/"
 	@echo ""
-	@./$(NAME) < map_test.txt
+	@./$(NAME) < maps/simple_map
 	@echo ""
 	@echo "/\\/\\/\\/\\/\\/\\/\\END TEST/\\/\\/\\/\\/\\/\\/\\"
 
