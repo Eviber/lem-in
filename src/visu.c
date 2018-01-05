@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/21 00:21:30 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/05 23:58:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,45 +161,50 @@ int		visu(void)
 {
 	t_winenv	*env;
 	const Uint8	*state;
+	Uint32		ticks;
 
+	ticks = SDL_GetTicks();
 	env = getsdlenv(NULL);
 	state = SDL_GetKeyboardState(NULL);
-	if (state[SDL_SCANCODE_KP_PLUS])
+	while (SDL_GetTicks() - ticks < 500)
 	{
-		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
-		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
-		env->zoom++;
+		SDL_PumpEvents();
+		if (state[SDL_SCANCODE_KP_PLUS])
+		{
+			env->mov.x = env->dispmode.w / 2 +
+			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
+			env->mov.y = env->dispmode.h / 2 +
+			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
+			env->zoom++;
+		}
+		if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
+		{
+			env->mov.x = env->dispmode.w / 2 +
+			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
+			env->mov.y = env->dispmode.h / 2 +
+			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
+			env->zoom--;
+		}
+		if (state[SDL_SCANCODE_UP])
+			env->mov.y--;
+		if (state[SDL_SCANCODE_DOWN])
+			env->mov.y++;
+		if (state[SDL_SCANCODE_LEFT])
+			env->mov.x--;
+		if (state[SDL_SCANCODE_RIGHT])
+			env->mov.x++;
+		if (state[SDL_SCANCODE_SPACE])
+		{
+			env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
+			env->zoom = env->orig_zoom;
+		}
+		if (env)
+		{
+			SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
+			SDL_RenderClear(env->render);
+			putrooms(env->render, *(env->colony), *env);
+			SDL_RenderPresent(env->render);
+		}
 	}
-	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
-	{
-		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
-		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
-		env->zoom--;
-	}
-	if (state[SDL_SCANCODE_UP])
-		env->mov.y--;
-	if (state[SDL_SCANCODE_DOWN])
-		env->mov.y++;
-	if (state[SDL_SCANCODE_LEFT])
-		env->mov.x--;
-	if (state[SDL_SCANCODE_RIGHT])
-		env->mov.x++;
-	if (state[SDL_SCANCODE_SPACE])
-	{
-		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
-		env->zoom = env->orig_zoom;
-	}
-	if (env)
-	{
-		SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(env->render);
-		putrooms(env->render, *(env->colony), *env);
-		SDL_RenderPresent(env->render);
-	}
-	SDL_Delay(500);
 	return (env && !SDL_QuitRequested());
 }
