@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/21 00:07:38 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/04 18:08:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		output(t_env *env, int v)
 		}
 		put_ants(env, env->paths[0]->room);
 		ft_putchar('\n');
-		v = visu();
+		if (v)
+			v = visu();
 	}
 }
