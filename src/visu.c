@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/05 23:58:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/06 08:46:28 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_ttf.h>
-#include "libft.h"
+#include "../libft/libft.h"
 #include "lem-in.h"
 #include "visu.h"
 
@@ -88,6 +88,20 @@ int		visu_init(t_env *colony)
 	return (1);
 }
 
+void	putant(SDL_Renderer *render, t_room *room, t_winenv w, int ant)
+{
+	int		*antcolor;
+	t_pos	pos;
+	t_pos	lastpos;
+
+	pos.x = room->pos.x * w.zoom + w.mov.x;
+	pos.y = room->pos.y * w.zoom + w.mov.y;
+	lastpos.x = room->pos.x * w.zoom + w.mov.x;
+	lastpos.y = room->pos.y * w.zoom + w.mov.y;
+	antcolor = (int [4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
+	filledCircleColor(render, pos.x, pos.y, 10, antcolor[ant % 4]);
+}
+
 void	putroom(SDL_Renderer *render, t_room *room, t_env colony, t_winenv w)
 {
 	t_pos	pos;
@@ -107,14 +121,7 @@ void	putroom(SDL_Renderer *render, t_room *room, t_env colony, t_winenv w)
 		filledCircleColor(render, pos.x, pos.y, 30, 0xFF4C4846);
 	if (room->ant)
 	{
-		if (room->ant % 4 == 1)
-			filledCircleColor(render, pos.x, pos.y, 10, 0xFFD161A0);
-		else if (room->ant % 4 == 2)
-			filledCircleColor(render, pos.x, pos.y, 10, 0xFFDB8041);
-		else if (room->ant % 4 == 3)
-			filledCircleColor(render, pos.x, pos.y, 10, 0xFF7FC433);
-		else
-			filledCircleColor(render, pos.x, pos.y, 10, 0xFF5069FF);
+		putant(render, room, w, room->ant);
 	}
 }
 
@@ -157,49 +164,58 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv w)
 	}
 }
 
+void	handle_event(t_winenv *env)
+{
+	const Uint8	*state;
+
+	state = SDL_GetKeyboardState(NULL);
+	SDL_PumpEvents();
+	if (state[SDL_SCANCODE_KP_PLUS])
+	{
+		env->mov.x = env->dispmode.w / 2 +
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
+		env->mov.y = env->dispmode.h / 2 +
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
+		env->zoom++;
+	}
+	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
+	{
+		env->mov.x = env->dispmode.w / 2 +
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
+		env->mov.y = env->dispmode.h / 2 +
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
+		env->zoom--;
+	}
+	if (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W])
+		env->mov.y--;
+	if (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A])
+		env->mov.x--;
+	if (state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
+		env->mov.y++;
+	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
+		env->mov.x++;
+	if (state[SDL_SCANCODE_SPACE])
+	{
+		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
+		env->zoom = env->orig_zoom;
+	}
+}
+
 int		visu(void)
 {
 	t_winenv	*env;
-	const Uint8	*state;
 	Uint32		ticks;
+	Uint32		frameticks;
 
 	ticks = SDL_GetTicks();
+	frameticks = ticks;
 	env = getsdlenv(NULL);
-	state = SDL_GetKeyboardState(NULL);
 	while (SDL_GetTicks() - ticks < 500)
 	{
-		SDL_PumpEvents();
-		if (state[SDL_SCANCODE_KP_PLUS])
+		handle_event(env);
+		if (env && SDL_GetTicks() - 33)
 		{
-			env->mov.x = env->dispmode.w / 2 +
-			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
-			env->mov.y = env->dispmode.h / 2 +
-			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
-			env->zoom++;
-		}
-		if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
-		{
-			env->mov.x = env->dispmode.w / 2 +
-			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
-			env->mov.y = env->dispmode.h / 2 +
-			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
-			env->zoom--;
-		}
-		if (state[SDL_SCANCODE_UP])
-			env->mov.y--;
-		if (state[SDL_SCANCODE_DOWN])
-			env->mov.y++;
-		if (state[SDL_SCANCODE_LEFT])
-			env->mov.x--;
-		if (state[SDL_SCANCODE_RIGHT])
-			env->mov.x++;
-		if (state[SDL_SCANCODE_SPACE])
-		{
-			env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
-			env->zoom = env->orig_zoom;
-		}
-		if (env)
-		{
+			frameticks = SDL_GetTicks();
 			SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
 			SDL_RenderClear(env->render);
 			putrooms(env->render, *(env->colony), *env);
