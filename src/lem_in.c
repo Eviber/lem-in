@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 19:08:38 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/03 16:25:27 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/03 18:50:11 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,20 @@
 #include "parser_lem-in.h"
 #include "visu_lem-in.h"
 
-int		main(int ac, char **av)
+static void		print_map(char **input)
+{
+	int		i;
+
+	i = -1;
+	while (input && input[++i])
+	{
+		ft_putendl(input[i]);
+		ft_strdel(&(input[i]));
+	}
+	ft_memdel(((void**)&input));
+}
+
+int				main(int ac, char **av)
 {
 	int		i;
 	t_env	env;
@@ -25,7 +38,7 @@ int		main(int ac, char **av)
 		ft_putendl_fd("usage: ./lem-in [-v]", 2);
 		return (1);
 	}
-	read_map(&env);
+	print_map(read_map(&env));
 //	check_map(&env);
 //	get_path(&env);
 //	release_ants(&env);
