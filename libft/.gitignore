@@ -1,6 +1,0 @@
-*.o
-*.a
-*.swp
-*.out
-test.c
-main.c
