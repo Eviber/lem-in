@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/16 23:57:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/05 23:58:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ int		visu_init(t_env *colony)
 		colony->rooms[i]->pos.y -= min.y + (max.y - min.y) / 2;
 		i++;
 	}
-	if (env->dispmode.w * 3 / 4 / (max.x - min.x) < env->dispmode.h * 3 / 4 / (max.y - min.y))
-		env->zoom = env->dispmode.w * 3 / 4 / (max.x - min.x);
+	if (env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.y - min.y)) < env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y)))
+		env->zoom = env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.y - min.y));
 	else
-		env->zoom = env->dispmode.h * 3 / 4 / (max.y - min.y);
+		env->zoom = env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y));
+	env->orig_zoom = env->zoom;
 	env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 	return (1);
 }
@@ -144,7 +145,8 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv w)
 	rooms = colony.rooms;
 	while (rooms[i])
 	{
-		putpipes(render, *(rooms[i]), w);
+		if (rooms[i]->pipes)
+			putpipes(render, *(rooms[i]), w);
 		i++;
 	}
 	i = 0;
@@ -159,41 +161,50 @@ int		visu(void)
 {
 	t_winenv	*env;
 	const Uint8	*state;
+	Uint32		ticks;
 
+	ticks = SDL_GetTicks();
 	env = getsdlenv(NULL);
 	state = SDL_GetKeyboardState(NULL);
-	if (state[SDL_SCANCODE_KP_PLUS])
+	while (SDL_GetTicks() - ticks < 500)
 	{
-		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
-		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
-		env->zoom++;
-	}
-	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
-	{
-		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
-		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
-		env->zoom--;
-	}
-	if (state[SDL_SCANCODE_UP])
-		env->mov.y--;
-	if (state[SDL_SCANCODE_DOWN])
-		env->mov.y++;
-	if (state[SDL_SCANCODE_LEFT])
-		env->mov.x--;
-	if (state[SDL_SCANCODE_RIGHT])
-		env->mov.x++;
-	if (state[SDL_SCANCODE_SPACE])
-		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
-	if (env)
-	{
-		SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(env->render);
-		putrooms(env->render, *(env->colony), *env);
-		SDL_RenderPresent(env->render);
+		SDL_PumpEvents();
+		if (state[SDL_SCANCODE_KP_PLUS])
+		{
+			env->mov.x = env->dispmode.w / 2 +
+			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
+			env->mov.y = env->dispmode.h / 2 +
+			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
+			env->zoom++;
+		}
+		if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
+		{
+			env->mov.x = env->dispmode.w / 2 +
+			(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
+			env->mov.y = env->dispmode.h / 2 +
+			(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
+			env->zoom--;
+		}
+		if (state[SDL_SCANCODE_UP])
+			env->mov.y--;
+		if (state[SDL_SCANCODE_DOWN])
+			env->mov.y++;
+		if (state[SDL_SCANCODE_LEFT])
+			env->mov.x--;
+		if (state[SDL_SCANCODE_RIGHT])
+			env->mov.x++;
+		if (state[SDL_SCANCODE_SPACE])
+		{
+			env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
+			env->zoom = env->orig_zoom;
+		}
+		if (env)
+		{
+			SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
+			SDL_RenderClear(env->render);
+			putrooms(env->render, *(env->colony), *env);
+			SDL_RenderPresent(env->render);
+		}
 	}
 	return (env && !SDL_QuitRequested());
 }

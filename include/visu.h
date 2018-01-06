@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/16 19:36:05 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/19 17:09:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ typedef struct			s_winenv
 	struct s_env		*colony;
 	struct s_pos		mov;
 	unsigned int		zoom;
+	unsigned int		orig_zoom;
 }						t_winenv;
+
+int						visu_init(t_env *colony);
+int						visu(void);
 
 #endif
