@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/01/06 21:24:34 by vsporer          ###   ########.fr        #
+#    Updated: 2018/01/07 16:03:57 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,10 @@ PARSER =			$(PATH_PARS)read_map.c\
 					$(PATH_PARS)new_room.c
 
 VISU =				$(PATH_VISU)lem_in_visu.c\
+					$(PATH_VISU)default_zoom.c\
 					$(PATH_VISU)pipes_visu.c\
-					$(PATH_VISU)rooms_visu.c
+					$(PATH_VISU)rooms_visu.c\
+					$(PATH_VISU)event_manager.c
 
 #ALGO =				$(PATH_ALGO)get_path.c\
 #					$(PATH_ALGO)release_ants.c

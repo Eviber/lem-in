@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:15:42 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/06 18:38:31 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/07 19:52:40 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 typedef struct		s_visu
 {
-	int				zoommod;
-	int				bzoom;
+//	int				zoommod;
+//	int				bzoom;
 	int				zoom;
 	t_pos			max;
 	t_pos			min;
@@ -36,7 +36,9 @@ typedef struct		s_visu
 ** Visu
 */
 int		lem_in_visu(t_env *env);
+void	get_default_zoom(t_room **rooms, t_visu *venv);
 void	get_rooms_visu(SDL_Renderer *render, t_room **rooms, t_visu *venv);
 void	get_pipes_visu(SDL_Renderer *render, t_room **rooms, t_visu *venv);
+void	event_manager(SDL_Renderer *render, const Uint8 *kb_state, t_visu *venv);
 
 #endif

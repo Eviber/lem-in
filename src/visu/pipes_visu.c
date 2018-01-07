@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 14:22:51 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/06 21:08:42 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/07 16:49:19 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ t_visu *venv)
 	t_pos	posa;
 	t_pos	posb;
 
-	posa.x = venv->zoommod == DIV ? \
-	(((rooma->pos.x / venv->zoom) + venv->offset.x)) : \
+	posa.x = /*venv->zoommod == DIV ? \
+	(((rooma->pos.x / venv->zoom) + venv->offset.x)) : \*/
 	(((rooma->pos.x * venv->zoom) + venv->offset.x));
-	posa.y = venv->zoommod == DIV ? \
-	(((rooma->pos.y / venv->zoom) + venv->offset.y)) : \
+	posa.y = /*venv->zoommod == DIV ? \
+	(((rooma->pos.y / venv->zoom) + venv->offset.y)) : \*/
 	(((rooma->pos.y * venv->zoom) + venv->offset.y));
-	posb.x = venv->zoommod == DIV ? \
-	(((roomb->pos.x / venv->zoom) + venv->offset.x)) : \
+	posb.x = /*venv->zoommod == DIV ? \
+	(((roomb->pos.x / venv->zoom) + venv->offset.x)) : \*/
 	(((roomb->pos.x * venv->zoom) + venv->offset.x));
-	posb.y = venv->zoommod == DIV ? \
-	(((roomb->pos.y / venv->zoom) + venv->offset.y)) : \
+	posb.y = /*venv->zoommod == DIV ? \
+	(((roomb->pos.y / venv->zoom) + venv->offset.y)) : \*/
 	(((roomb->pos.y * venv->zoom) + venv->offset.y));
-	ft_printf("############\nOrigin X = %d\nOrigin Y = %d\nZoom = %d\nOffset X = %d\nOffset Y = %d\nX1 = %d\nY1 = %d\nX2 = %d\nY2 = %d\n############\n", venv->origin.x, venv->origin.y, venv->zoom, venv->offset.x, venv->offset.y, posa.x, posa.y, posb.x, posb.y);
+	ft_printf("############\nScreen X = %d\nScreen Y = %d\nOrigin X = %d\nOrigin Y = %d\nZoom = %d\nOffset X = %d\nOffset Y = %d\nX1 = %d\nY1 = %d\nX2 = %d\nY2 = %d\n############\n", venv->screen.x, venv->screen.y, venv->origin.x, venv->origin.y, venv->zoom, venv->offset.x, venv->offset.y, posa.x, posa.y, posb.x, posb.y);
 	thickLineRGBA(render, posa.x, posa.y, posb.x, posb.y, 20, 0, 0, 0, 180);
 }
 
