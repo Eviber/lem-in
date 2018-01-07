@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */ /*   Updated: 2018/01/06 08:46:28 by ygaude           ###   ########.fr       */
+/*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
+/*   Updated: 2018/01/07 00:49:53 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -13,7 +13,7 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_ttf.h>
-#include "../libft/libft.h"
+#include "libft.h"
 #include "lem-in.h"
 #include "visu.h"
 
@@ -89,14 +89,18 @@ int		visu_init(t_env *colony)
 
 void	putant(t_winenv w, t_room *room, int ant)
 {
+	Uint32	ticks;
 	int		*antcolor;
 	t_pos	pos;
 	t_pos	lastpos;
 
 	pos.x = room->pos.x * w.zoom + w.mov.x;
 	pos.y = room->pos.y * w.zoom + w.mov.y;
-	lastpos.x = room->pos.x * w.zoom + w.mov.x;
-	lastpos.y = room->pos.y * w.zoom + w.mov.y;
+	lastpos.x = room->prev->pos.x * w.zoom + w.mov.x;
+	lastpos.y = room->prev->pos.y * w.zoom + w.mov.y;
+	ticks = SDL_GetTicks();
+	pos.x = lastpos.x + (pos.x - lastpos.x) / 30 * ((ticks - w.ticks) / 16);
+	pos.y = lastpos.y + (pos.y - lastpos.y) / 30 * ((ticks - w.ticks) / 16);
 	antcolor = (int [4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
 	filledCircleColor(w.render, pos.x, pos.y, 10, antcolor[ant % 4]);
 }
@@ -185,10 +189,10 @@ void	handle_event(t_winenv *env)
 		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
 		env->zoom--;
 	}
-	env->mov.y += (state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
-				- (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]);
-	env->mov.x += (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
-				- (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]);
+	env->mov.y += 1 * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
+				- (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]));
+	env->mov.x += 1 * ((state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
+				- (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]));
 	if (state[SDL_SCANCODE_SPACE])
 	{
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
@@ -199,20 +203,22 @@ void	handle_event(t_winenv *env)
 int		visu(void)
 {
 	t_winenv	*env;
-	Uint32		ticks;
 	Uint32		frameticks;
 
-	ticks = SDL_GetTicks();
-	frameticks = ticks;
 	env = getsdlenv(NULL);
-	while (SDL_GetTicks() - ticks < 500)
+	env->ticks = SDL_GetTicks();
+	frameticks = env->ticks;
+	while (SDL_GetTicks() - env->ticks < 500)
 	{
 		handle_event(env);
-		if (env && SDL_GetTicks() - 33)
+		if (env && SDL_GetTicks() - 16)
 		{
 			frameticks = SDL_GetTicks();
-			SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
+			SDL_SetRenderDrawColor(env->render, 0, 0, 0, 30);
+			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_BLEND);
+//			SDL_RenderFillRect(env->render, NULL);
 			SDL_RenderClear(env->render);
+			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_NONE);
 			putrooms(env->render, *(env->colony), *env);
 			SDL_RenderPresent(env->render);
 		}
