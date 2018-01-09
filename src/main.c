@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/21 00:07:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/10 00:12:34 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,11 @@ int						main(int argc, char **argv)
 		ft_printf("tubes of first room:\n");
 		t_room *first_room = *(antfarm.rooms);
 		debug_pipes(first_room->pipes);
-		find_shortest(&antfarm);
-		output(&antfarm, v);
+		if (antfarm.start != antfarm.end)
+		{
+			find_shortest(&antfarm);
+			output(&antfarm, v);
+		}
 	}
 	return (0);
 }
