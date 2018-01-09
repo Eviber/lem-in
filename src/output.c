@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/07 05:19:55 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/09 05:08:13 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	put_ants(t_env *env, t_room *pathroom)
 	t_room	*cur;
 
 	cur = pathroom;
-	while (cur->prev != env->start)
+	while (cur && cur->prev && cur->prev != env->start)
 	{
 		if (cur->prev->ant)
 		{
@@ -29,10 +29,11 @@ static void	put_ants(t_env *env, t_room *pathroom)
 		}
 		cur = cur->prev;
 	}
-	if (env->antleft)
+	if (cur && env->antleft)
 	{
 		cur->ant = env->nb_ants - env->antleft + 1;
-		ft_printf("L%d-%s ", cur->ant, cur->name);
+		if (cur != env->start)
+			ft_printf("L%d-%s ", cur->ant, cur->name);
 		env->antleft--;
 	}
 }
@@ -44,7 +45,7 @@ void		output(t_env *env, int v)
 	lem_out = 0;
 	while (lem_out < env->nb_ants)
 	{
-		if (env->paths[0]->room->ant)
+		if (env->paths && env->paths[0] && env->paths[0]->room && env->paths[0]->room->ant)
 		{
 			ft_printf("L%d-%s ", env->paths[0]->room->ant, env->end->name);
 			env->paths[0]->room->ant = 0;

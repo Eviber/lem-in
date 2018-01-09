@@ -1,11 +1,12 @@
-/* ************************************************************************** */ /*                                                                            */
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/07 00:49:53 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/09 08:42:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +18,9 @@
 #include "lem-in.h"
 #include "visu.h"
 
-int		panic(const char *str, const char *str2)
-{
+#define TURNTIME 1000
+
+int		panic(const char *str, const char *str2) {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
 	return (0);
@@ -29,7 +31,7 @@ t_winenv		*getsdlenv(t_env *colony)
 	static t_winenv	*winenv = NULL;
 
 	if (!winenv && colony)
-		if ((winenv = (t_winenv *)malloc(sizeof(t_winenv))))
+		if ((winenv = (t_winenv *)ft_memalloc(sizeof(t_winenv))))
 			winenv->colony = colony;
 	return (winenv);
 }
@@ -87,7 +89,7 @@ int		visu_init(t_env *colony)
 	return (1);
 }
 
-void	putant(t_winenv w, t_room *room, int ant)
+void	putant(t_winenv w, t_room *room, t_room *prev, int ant)
 {
 	Uint32	ticks;
 	int		*antcolor;
@@ -96,13 +98,49 @@ void	putant(t_winenv w, t_room *room, int ant)
 
 	pos.x = room->pos.x * w.zoom + w.mov.x;
 	pos.y = room->pos.y * w.zoom + w.mov.y;
-	lastpos.x = room->prev->pos.x * w.zoom + w.mov.x;
-	lastpos.y = room->prev->pos.y * w.zoom + w.mov.y;
+	lastpos.x = prev->pos.x * w.zoom + w.mov.x;
+	lastpos.y = prev->pos.y * w.zoom + w.mov.y;
 	ticks = SDL_GetTicks();
-	pos.x = lastpos.x + (pos.x - lastpos.x) / 30 * ((ticks - w.ticks) / 16);
-	pos.y = lastpos.y + (pos.y - lastpos.y) / 30 * ((ticks - w.ticks) / 16);
+	pos.x = (double)lastpos.x + ((double)(pos.x - lastpos.x) *
+			(double)(ticks - w.ticks)) / (double)TURNTIME;
+	pos.y = (double)lastpos.y + ((double)(pos.y - lastpos.y) *
+			(double)(ticks - w.ticks)) / (double)TURNTIME;
 	antcolor = (int [4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
 	filledCircleColor(w.render, pos.x, pos.y, 10, antcolor[ant % 4]);
+}
+
+void	updatelast(t_winenv *w, t_env colony)
+{
+	int		i;
+
+	if (!w->lastants)
+	{
+		i = 0;
+		while (colony.paths[i])
+			i++;
+		w->lastants = (size_t *)ft_memalloc(i * sizeof(size_t));
+		if (!w->lastants)
+			panic("Malloc error\n", "");
+	}
+	i = 0;
+	while (colony.paths[i] && colony.paths[i]->room)
+	{
+		w->lastants[i] = colony.paths[i]->room->ant;
+		i++;
+	}
+}
+
+void	putlast(t_winenv *w, t_env colony)
+{
+	int		i;
+
+	i = 0;
+	while (w->lastants && colony.paths[i])
+	{
+		if (w->lastants[i])
+			putant(*w, colony.end, colony.paths[i]->room, w->lastants[i]);
+		i++;
+	}
 }
 
 void	putroom(t_winenv w, t_room *room, t_env colony)
@@ -122,10 +160,8 @@ void	putroom(t_winenv w, t_room *room, t_env colony)
 				30, 200, 200, 100, SDL_ALPHA_OPAQUE);
 	else
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF4C4846);
-	if (room->ant)
-	{
-		putant(w, room, room->ant);
-	}
+	if (room && room->prev && room->ant)
+		putant(w, room, room->prev, room->ant);
 }
 
 void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
@@ -133,6 +169,7 @@ void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 	t_pos	orig;
 	t_pos	dest;
 	int		i;
+
 	orig.x = room.pos.x * w.zoom + w.mov.x;
 	orig.y = room.pos.y * w.zoom + w.mov.y;
 	i = 0;
@@ -146,7 +183,7 @@ void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 	}
 }
 
-void	putrooms(SDL_Renderer *render, t_env colony, t_winenv w)
+void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 {
 	t_room	**rooms;
 	int		i;
@@ -156,15 +193,16 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv w)
 	while (rooms[i])
 	{
 		if (rooms[i]->pipes)
-			putpipes(render, *(rooms[i]), w);
+			putpipes(render, *(rooms[i]), *w);
 		i++;
 	}
 	i = 0;
 	while (rooms[i])
 	{
-		putroom(w, rooms[i], colony);
+		putroom(*w, rooms[i], colony);
 		i++;
 	}
+	putlast(w, colony);
 }
 
 void	handle_event(t_winenv *env)
@@ -208,10 +246,10 @@ int		visu(void)
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();
 	frameticks = env->ticks;
-	while (SDL_GetTicks() - env->ticks < 500)
+	while (SDL_GetTicks() - env->ticks < TURNTIME)
 	{
 		handle_event(env);
-		if (env && SDL_GetTicks() - 16)
+		if (env)
 		{
 			frameticks = SDL_GetTicks();
 			SDL_SetRenderDrawColor(env->render, 0, 0, 0, 30);
@@ -219,9 +257,10 @@ int		visu(void)
 //			SDL_RenderFillRect(env->render, NULL);
 			SDL_RenderClear(env->render);
 			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_NONE);
-			putrooms(env->render, *(env->colony), *env);
+			putrooms(env->render, *(env->colony), env);
 			SDL_RenderPresent(env->render);
 		}
 	}
+	updatelast(env, *(env->colony));
 	return (env && !SDL_QuitRequested());
 }
