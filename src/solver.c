@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/09 04:58:53 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/10 02:48:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		fill_weight(const t_env *env, t_room *room)
 	int		i;
 
 	i = 0;
-	while (room->pipes[i])
+	while (room && room->pipes && room->pipes[i])
 	{
 		if (room->pipes[i] == env->end)
 			return (TRUE);
@@ -58,7 +58,7 @@ int				find_shortest(t_env *env)
 	*(env->paths) = (t_path *)ft_memalloc(sizeof(t_path));
 	env->paths[0]->room = env->start;
 	env->paths[0]->length = 1;
-	while (depth <= env->nb_rooms - 2)
+	while (depth <= env->nb_rooms - 1)
 	{
 		if (((*(env->paths))->room = try_path(env, depth++)))
 		{
