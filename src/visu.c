@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/09 08:42:59 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/10 06:45:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,21 +238,32 @@ void	handle_event(t_winenv *env)
 	}
 }
 
+int		quitvisu(t_winenv *env, int quit)
+{
+	if (!env || quit)
+	{
+		SDL_Quit();
+		return (0);
+	}
+	return (1);
+}
+
 int		visu(void)
 {
 	t_winenv	*env;
 	Uint32		frameticks;
+	int			quit;
 
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();
 	frameticks = env->ticks;
-	while (SDL_GetTicks() - env->ticks < TURNTIME)
+	while (SDL_GetTicks() - env->ticks < TURNTIME && !(quit = SDL_QuitRequested()))
 	{
 		handle_event(env);
 		if (env)
 		{
 			frameticks = SDL_GetTicks();
-			SDL_SetRenderDrawColor(env->render, 0, 0, 0, 30);
+			SDL_SetRenderDrawColor(env->render, 0, 0, 0, 20);
 			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_BLEND);
 //			SDL_RenderFillRect(env->render, NULL);
 			SDL_RenderClear(env->render);
@@ -261,6 +272,7 @@ int		visu(void)
 			SDL_RenderPresent(env->render);
 		}
 	}
-	updatelast(env, *(env->colony));
-	return (env && !SDL_QuitRequested());
+	if (!quit)
+		updatelast(env, *(env->colony));
+	return (quitvisu(env, quit));
 }

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/10 02:48:09 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/10 07:02:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int				find_shortest(t_env *env)
 	int		depth;
 
 	depth = 1;
-	env->paths = (t_path **)ft_memalloc(sizeof(t_path *));
+	env->paths = (t_path **)ft_memalloc(sizeof(t_path *) * 2);
 	*(env->paths) = (t_path *)ft_memalloc(sizeof(t_path));
 	env->paths[0]->room = env->start;
 	env->paths[0]->length = 1;
