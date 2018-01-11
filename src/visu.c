@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/11 00:39:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/11 08:40:32 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 #define TURNTIME 1000
 
-int		panic(const char *str, const char *str2) {
+int		panic(const char *str, const char *str2)
+{
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
 	return (0);
