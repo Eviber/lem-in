@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/10 03:54:43 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/11 08:46:52 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ int						main(int argc, char **argv)
 		else
 			ft_printf("ERROR\n");
 	}
+	ft_memdel((void **)antfarm.paths);
+	ft_memdel((void **)&antfarm.paths);
 	return (0);
 }
