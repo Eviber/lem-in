@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/10 06:45:39 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/11 00:39:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 	putlast(w, colony);
 }
 
-void	handle_event(t_winenv *env)
+int		handle_event(t_winenv *env)
 {
 	const Uint8	*state;
 
@@ -236,6 +236,7 @@ void	handle_event(t_winenv *env)
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 		env->zoom = env->orig_zoom;
 	}
+	return (state[SDL_SCANCODE_Q] || state[SDL_SCANCODE_ESCAPE]);
 }
 
 int		quitvisu(t_winenv *env, int quit)
@@ -257,9 +258,8 @@ int		visu(void)
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();
 	frameticks = env->ticks;
-	while (SDL_GetTicks() - env->ticks < TURNTIME && !(quit = SDL_QuitRequested()))
+	while (SDL_GetTicks() - env->ticks < TURNTIME && !(quit = handle_event(env) || SDL_QuitRequested()))
 	{
-		handle_event(env);
 		if (env)
 		{
 			frameticks = SDL_GetTicks();
