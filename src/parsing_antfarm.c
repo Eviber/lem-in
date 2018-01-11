@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 21:07:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/11 08:51:37 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int					parse_antfarm(t_env *antfarm)
 		else
 			break ;
 	}
+	ft_strdel(&line);
 	if (gnl_ret == -1 || !check_antfarm(antfarm))
 		return (FALSE);
 	return (TRUE);
