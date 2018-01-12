@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/12 08:58:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/12 09:56:18 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,6 @@ void	putroom(t_winenv w, t_room *room, t_env colony)
 				30, 200, 200, 100, SDL_ALPHA_OPAQUE);
 	else
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF4C4846);
-	if (room && room->prev && room->ant)
-		putant(w, room, room->prev, room->ant);
 }
 
 void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
@@ -203,6 +201,13 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 	while (rooms[i])
 	{
 		putroom(*w, rooms[i], colony);
+		i++;
+	}
+	i = 0;
+	while (rooms[i])
+	{
+		if (rooms[i] && rooms[i]->prev && rooms[i]->ant)
+			putant(*w, rooms[i], rooms[i]->prev, rooms[i]->ant);
 		i++;
 	}
 	putlast(w, colony);
