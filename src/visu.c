@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/11 08:40:32 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/12 08:58:35 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int		visu_init(t_env *colony)
 		i++;
 	}
 	if (env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.y - min.y)) < env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y)))
-		env->zoom = env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.y - min.y));
+		env->zoom = (double)env->dispmode.w * 3.0 / 4.0 / (double)(max.x - min.x + !(max.y - min.y));
 	else
-		env->zoom = env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y));
-	env->orig_zoom = env->zoom;
+		env->zoom = (double)env->dispmode.h * 3.0 / 4.0 / (double)(max.y - min.y + !(max.y - min.y));
+	env->orig_zoom = env->zoom + !(env->zoom);
 	env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 	return (1);
 }
@@ -101,11 +101,13 @@ void	putant(t_winenv w, t_room *room, t_room *prev, int ant)
 	pos.y = room->pos.y * w.zoom + w.mov.y;
 	lastpos.x = prev->pos.x * w.zoom + w.mov.x;
 	lastpos.y = prev->pos.y * w.zoom + w.mov.y;
-	ticks = SDL_GetTicks();
-	pos.x = (double)lastpos.x + ((double)(pos.x - lastpos.x) *
+	if ((ticks = SDL_GetTicks()) < w.ticks + TURNTIME)
+	{
+		pos.x = (double)lastpos.x + ((double)(pos.x - lastpos.x) *
 			(double)(ticks - w.ticks)) / (double)TURNTIME;
-	pos.y = (double)lastpos.y + ((double)(pos.y - lastpos.y) *
+		pos.y = (double)lastpos.y + ((double)(pos.y - lastpos.y) *
 			(double)(ticks - w.ticks)) / (double)TURNTIME;
+	}
 	antcolor = (int [4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
 	filledCircleColor(w.render, pos.x, pos.y, 10, antcolor[ant % 4]);
 }
@@ -215,18 +217,18 @@ int		handle_event(t_winenv *env)
 	if (state[SDL_SCANCODE_KP_PLUS])
 	{
 		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom + 1) / env->zoom;
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * 1.1) / env->zoom;
 		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom + 1) / env->zoom;
-		env->zoom++;
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * 1.1) / env->zoom;
+		env->zoom *= 1.1;
 	}
-	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom > 30)
+	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom * 0.9 > 0)
 	{
 		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom - 1) / env->zoom;
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * 0.9) / env->zoom;
 		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom - 1) / env->zoom;
-		env->zoom--;
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * 0.9) / env->zoom;
+		env->zoom *= 0.9;
 	}
 	env->mov.y += 1 * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
 				- (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]));
@@ -259,7 +261,7 @@ int		visu(void)
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();
 	frameticks = env->ticks;
-	while (SDL_GetTicks() - env->ticks < TURNTIME && !(quit = handle_event(env) || SDL_QuitRequested()))
+	while (SDL_GetTicks() - env->ticks < TURNTIME + 100 && !(quit = handle_event(env) || SDL_QuitRequested()))
 	{
 		if (env)
 		{
