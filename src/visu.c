@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/12 09:56:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/12 13:00:53 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int		visu_init(t_env *colony)
 		colony->rooms[i]->pos.y -= min.y + (max.y - min.y) / 2;
 		i++;
 	}
-	if (env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.y - min.y)) < env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y)))
-		env->zoom = (double)env->dispmode.w * 3.0 / 4.0 / (double)(max.x - min.x + !(max.y - min.y));
+	if (env->dispmode.w * 3 / 4 / (max.x - min.x + !(max.x - min.x)) < env->dispmode.h * 3 / 4 / (max.y - min.y + !(max.y - min.y)))
+		env->zoom = (double)env->dispmode.w * 3.0 / 4.0 / (double)(max.x - min.x + !(max.x - min.x));
 	else
 		env->zoom = (double)env->dispmode.h * 3.0 / 4.0 / (double)(max.y - min.y + !(max.y - min.y));
 	env->orig_zoom = env->zoom + !(env->zoom);
