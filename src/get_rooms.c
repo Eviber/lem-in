@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/20 19:40:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/13 15:12:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ static int			check_errors(char **tab)
 	i = 0;
 	if (tab && tab[0] && tab[1] && tab[2] && !tab[3])
 	{
-		if (tab[0][0] == 'L')
+		if (tab[0][0] == 'L' || ft_strchr(tab[0], '-'))
 			return (FALSE);
 		while ((tab[1])[i])
 		{
-			if (!ft_isdigit((tab[1])[i]))
+			if (!ft_isdigit((tab[1])[i]) && tab[1][i] != '-')
 				return (FALSE);
 			i++;
 		}
 		i = 0;
 		while ((tab[2])[i])
 		{
-			if (!ft_isdigit((tab[2])[i]))
+			if (!ft_isdigit((tab[2])[i]) && tab[2][i] != '-')
 				return (FALSE);
 			i++;
 		}

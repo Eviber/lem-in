@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/11 08:51:37 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/13 14:43:34 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
 	static int		rooms = TRUE;
 	static int		ants = TRUE;
 
-	rooms = (ft_strchr(line, '-')) ? FALSE : rooms;
 	if (*line == '#')
 		parse_comment(start, end, line + 1);
 	else if (ants)
