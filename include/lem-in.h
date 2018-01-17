@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/20 20:05:12 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/17 22:48:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_room
 	long			ant;
 	int				weight;
 	int				dead;
+	int				locked;
 }					t_room;
 
 typedef struct		s_path
