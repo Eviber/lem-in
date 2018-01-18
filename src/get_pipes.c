@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2017/12/19 21:07:30 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/18 18:09:56 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int					parse_pipe(t_env *antfarm, char *line)
 	if (!tmp)
 		return (FALSE);
 	tab = ft_strsplit(tmp, '-');
+	ft_strdel(&tmp);
 	if (!tab)
 		return (FALSE);
 	if (!check_errors(antfarm, tab, &room1, &room2))
