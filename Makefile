@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2017/12/20 23:51:22 by ygaude           ###   ########.fr        #
+#    Updated: 2018/01/18 22:14:51 by sbrochar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC = get_pipes.c \
 	  output.c \
 	  parsing_antfarm.c \
 	  solver.c \
-	  visu.c
+	  visu.c \
+	  free_antfarm.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
