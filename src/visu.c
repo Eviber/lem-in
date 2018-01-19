@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/16 18:41:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/20 00:37:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ int		handle_event(t_winenv *env, Uint32 ticks)
 {
 	const Uint8	*state;
 	double		zoomval;
+	SDL_Point	mouse;
 
 	state = SDL_GetKeyboardState(NULL);
 	SDL_PumpEvents();
@@ -258,10 +259,18 @@ int		handle_event(t_winenv *env, Uint32 ticks)
 		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * zoomval) / env->zoom;
 		env->zoom *= zoomval;
 	}
-	env->mov.y += (0.3 * ticks) * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
+	if (SDL_GetRelativeMouseState(&(mouse.x), (&mouse.y)) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	{
+		env->mov.x += mouse.x;
+		env->mov.y += mouse.y;
+	}
+	else
+	{
+		env->mov.y += (0.3 * ticks) * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
 				- (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]));
-	env->mov.x += (0.3 * ticks) * ((state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
+		env->mov.x += (0.3 * ticks) * ((state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
 				- (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]));
+	}
 	if (state[SDL_SCANCODE_SPACE])
 	{
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
