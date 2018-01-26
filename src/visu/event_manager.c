@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 14:24:50 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/07 20:21:29 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/26 21:01:26 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 #include "visu_lem-in.h"
 #include <limits.h>
 
-static void		event_move(const Uint8 *kb_state, t_visu *venv)
+static void		event_move(t_visu *venv)
 {
-	if (kb_state[SDL_SCANCODE_UP])
+	if (venv->kb_state[SDL_SCANCODE_UP])
 		venv->offset.y -= 2;
-	if (kb_state[SDL_SCANCODE_DOWN])
+	if (venv->kb_state[SDL_SCANCODE_DOWN])
 		venv->offset.y += 2;
-	if (kb_state[SDL_SCANCODE_LEFT])
+	if (venv->kb_state[SDL_SCANCODE_LEFT])
 		venv->offset.x -= 4;
-	if (kb_state[SDL_SCANCODE_RIGHT])
+	if (venv->kb_state[SDL_SCANCODE_RIGHT])
 		venv->offset.x += 4;
 }
 
-static void		event_zoom(const Uint8 *kb_state, t_visu *venv)
+static void		event_zoom(t_visu *venv)
 {
-	if (kb_state[SDL_SCANCODE_KP_MINUS] && venv->zoom > 30)
+	if (venv->kb_state[SDL_SCANCODE_KP_MINUS] && venv->zoom > 30)
 	{
 		venv->offset.x = venv->origin.x + (venv->offset.x - venv->origin.x) * \
 		(venv->zoom - 1) / venv->zoom;
@@ -36,7 +36,7 @@ static void		event_zoom(const Uint8 *kb_state, t_visu *venv)
 		(venv->zoom - 1) / venv->zoom;
 		venv->zoom--;
 	}
-	if (kb_state[SDL_SCANCODE_KP_PLUS] && (venv->min.x * venv->zoom + venv->offset.x) > INT_MIN && (venv->min.y * venv->zoom + venv->offset.y) > INT_MIN && (venv->max.x * venv->zoom + venv->offset.x) < INT_MAX && (venv->max.y * venv->zoom + venv->offset.y) < INT_MAX)
+	if (venv->kb_state[SDL_SCANCODE_KP_PLUS] && (venv->min.x * venv->zoom + venv->offset.x) > INT_MIN && (venv->min.y * venv->zoom + venv->offset.y) > INT_MIN && (venv->max.x * venv->zoom + venv->offset.x) < INT_MAX && (venv->max.y * venv->zoom + venv->offset.y) < INT_MAX)
 	{
 		venv->offset.x = venv->origin.x + (venv->offset.x - venv->origin.x) * \
 		(venv->zoom + 1) / venv->zoom;
@@ -46,71 +46,71 @@ static void		event_zoom(const Uint8 *kb_state, t_visu *venv)
 	}
 }
 
-static void		get_help(SDL_Renderer *render, const Uint8 *kb_state, int *help)
+static void		get_step(SDL_Renderer *render, int *step, t_visu *venv)
 {
 	static int	frame = 0;
+
+	if (*step == 2 && frame > 0)
+		frame--;
+	else if (frame < ((venv->step_size.w + 60) / 3))
+		frame++;
+	else if (venv->kb_state[SDL_SCANCODE_S] && *step == 1)
+		*step = 2;
+	else
+		move_step(venv);
+	if (*step == 2 && frame == 0)
+		*step = 0;
+	boxRGBA(render, venv->screen.x - (frame * 3), 0, venv->screen.x, \
+	venv->screen.y, 0, 0, 0, 160);
+	boxRGBA(render, venv->screen.x - (frame * 3), \
+	venv->step_select.y + venv->i * 50, venv->screen.x, \
+	venv->step_select.y + venv->step_select.h, 255, 255, 255, 60);
+	venv->step_size.x = venv->screen.x - ((frame * 3) - 30);
+	venv->step_size.y = 0;
+	SDL_RenderCopy(render, venv->step, NULL, &venv->step_size);
+}
+
+static void		get_help(SDL_Renderer *render, int *help, t_visu *venv)
+{
+	static int		frame = 0;
+	SDL_Rect		pos;
 
 	if (*help == 2 && frame > 0)
 		frame--;
-	else if (frame < 100)
+	else if (frame < 210)
 		frame++;
-	else if ((kb_state[SDL_SCANCODE_H] || kb_state[SDL_SCANCODE_F1]) && *help == 1)
+	else if ((venv->kb_state[SDL_SCANCODE_H] || \
+	venv->kb_state[SDL_SCANCODE_F1]) && *help == 1)
 		*help = 2;
 	if (*help == 2 && frame == 0)
 		*help = 0;
-	boxRGBA(render, 0, 0, frame * 2, 300, 0, 0, 0, 150);
+	if (frame)
+	{
+		pos.x = (frame * 3) - 630;
+		pos.y = 0;
+		pos.w = 630;
+		pos.h = 400;
+		SDL_RenderCopy(render, venv->help, NULL, &pos);
+	}
 }
 
-static void		get_slider(SDL_Renderer *render, int sstate, int *slider, t_pos screen)
-{
-	static int	frame = 0;
-
-	if (*slider == 2 && frame > 0)
-		frame--;
-	else if (frame < 150)
-		frame++;
-	else if (sstate && *slider == 1)
-		*slider = 2;
-	if (*slider == 2 && frame == 0)
-		*slider = 0;
-	boxRGBA(render, (screen.x * 2 - (frame * 4)), 0, screen.x * 2 + 100, screen.y, 0, 0, 0, 150);
-}
-
-void			event_manager(SDL_Renderer *render, const Uint8 *kb_state, t_visu *venv)
+void			event_manager(SDL_Renderer *render, t_visu *venv)
 {
 	static int	help = 0;
-	static int	slider = 0;
+	static int	step = 0;
 
 	if (!render)
 		return ;
 	SDL_PumpEvents();
-	event_move(kb_state, venv);
-	event_zoom(kb_state, venv);
-	if ((kb_state[SDL_SCANCODE_H] || kb_state[SDL_SCANCODE_F1]) && !help)
+	event_move(venv);
+	event_zoom(venv);
+	if ((venv->kb_state[SDL_SCANCODE_H] || \
+	venv->kb_state[SDL_SCANCODE_F1]) && !help)
 		help = 1;
-	if (kb_state[SDL_SCANCODE_S] && !slider)
-		slider = 1;
+	if (venv->kb_state[SDL_SCANCODE_S] && !step)
+		step = 1;
 	if (help)
-		get_help(render, kb_state, &help);
-	if (slider)
-		get_slider(render, kb_state[SDL_SCANCODE_S], &slider, venv->screen);
-/*	if (kb_state[SDL_SCANCODE_KP_MINUS] || kb_state[SDL_SCANCODE_KP_PLUS])
-	{
-		venv->morigin.x = venv->zoommod == DIV ? \
-		(((venv->max.x / venv->zoom) - (venv->min.x / venv->zoom)) / 2) + \
-		((venv->min.x / venv->zoom) + venv->offset.x) : (((venv->max.x * venv->zoom) - \
-		(venv->min.x * venv->zoom)) / 2) + ((venv->min.x * venv->zoom) + venv->offset.x);
-		venv->morigin.y = venv->zoommod == DIV ? \
-		(((venv->max.y / venv->zoom) - (venv->min.y / venv->zoom)) / 2) + \
-		((venv->min.y / venv->zoom) + venv->offset.y) : (((venv->max.y * venv->zoom) - \
-		(venv->min.y * venv->zoom)) / 2) + ((venv->min.y * venv->zoom) + venv->offset.y);
-		venv->offset.x = venv->origin.x - venv->morigin.x;
-		venv->offset.y = venv->origin.y - venv->morigin.y;
-
-
-		venv->offset.x = venv->zoommod == DIV ? \
-		(venv->offset.x / venv->zoom) : (venv->offset.x * venv->zoom);
-		venv->offset.y = venv->zoommod == DIV ? \
-		(venv->offset.y / venv->zoom) : (venv->offset.y * venv->zoom);
-	}*/
+		get_help(render, &help, venv);
+	if (step)
+		get_step(render, &step, venv);
 }
