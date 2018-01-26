@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/25 19:23:46 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/26 22:01:48 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ static void clean_conflict(t_conflit *conflit)
 {
 	while(conflit->next)
 		conflit = conflit->next;
-	while(conflit)
+	while(0 && conflit)
 	{
 		free(conflit);
 		conflit = conflit->prev;
@@ -201,7 +201,7 @@ int save_info(int set, int new_depth, t_room *o_room, t_room *n_room, t_env *env
 	}
 	else
 	{
-		while((set++ - env->conflict) <= 1)
+		while((set++ - env->conflict) < 1)
 			conflict = conflict->prev;
 		if (env->antleft >= conflict->len && env->antleft >= new_depth)
 		{
@@ -258,7 +258,7 @@ void reset_room(t_env *env)
 	}
 }
 
-void conflit(t_room *rooms, t_env *env, long depth, t_room *room_confict)
+void			conflit(t_room *rooms, t_env *env, long depth, t_room *room_confict)
 {
 	long	dp;
 	long tmp_dp;
@@ -346,12 +346,12 @@ int				find_shortest(t_env *env, int f_iter)
 	return (FALSE);
 }
 
-static size_t	tabsize(void *tab)
+static size_t	tabsize(void **tab)
 {
 	size_t	i;
 
 	i = 0;
-	while (tab++)
+	while (tab && tab[i])
 		i++;
 	return (i);
 }
@@ -362,24 +362,17 @@ static t_path	**addpath(t_path **oldpaths)
 	size_t			size;
 	size_t			new_size;
 
-	size = tabsize((void *)oldpaths);
+	size = tabsize((void **)oldpaths);
 	new_size = sizeof(t_path *) * (size + 2);
-	if (!oldpaths)
+	ret = (t_path **)ft_memalloc(new_size);
+	if (ret)
 	{
-		if ((ret = (t_path **)ft_memalloc(new_size)))
-			return (ret);
-	}
-	else
-	{
-		ret = (t_path **)ft_memalloc(new_size);
-		if (ret)
-		{
+		if (oldpaths)
 			ft_memcpy(ret, oldpaths, sizeof(t_path *) * size);
-			ret[size] = (t_path *)ft_memalloc(sizeof(t_path));
-			ft_memdel((void **)&oldpaths);
-			if (ret[size])
-				return (ret);
-		}
+		ret[size] = (t_path *)ft_memalloc(sizeof(t_path));
+		ft_memdel((void **)&oldpaths);
+		if (ret[size])
+			return (ret);
 	}
 	return (NULL);
 }
