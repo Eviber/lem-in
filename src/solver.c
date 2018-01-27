@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/26 22:01:48 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/27 20:08:00 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,38 @@ int				solve(t_env *env, int *v)
 }
 */
 
-static void clean_conflict(t_conflit *conflit)
+static size_t	tabsize(void **tab)
+{
+	size_t	i;
+
+	i = 0;
+	while (tab && tab[i])
+		i++;
+	return (i);
+}
+
+static void		**tab_real(void **oldtab, size_t unitsize)
+{
+	void			**ret;
+	size_t			size;
+	size_t			new_size;
+
+	size = tabsize(oldtab);
+	new_size = sizeof(void *) * (size + 2);
+	ret = ft_memalloc(new_size);
+	if (ret)
+	{
+		if (oldtab)
+			ft_memcpy(ret, oldtab, sizeof(void *) * size);
+		ret[size] = ft_memalloc(unitsize);
+		ft_memdel((void **)&oldtab);
+		if (ret[size])
+			return (ret);
+	}
+	return (NULL);
+}
+
+static void		clean_conflict(t_conflit *conflit)
 {
 	while(conflit->next)
 		conflit = conflit->next;
@@ -184,38 +215,33 @@ static void clean_conflict(t_conflit *conflit)
 	conflit = ft_memalloc(sizeof(t_conflit));
 }
 
-int save_info(int set, int new_depth, t_room *o_room, t_room *n_room, t_env *env)
+int				save_info(int set, int new_depth, t_room *o_room, t_room *n_room, t_env *env)
 {
-	static t_conflit *conflict = NULL;
+	static t_conflit	**conflict = NULL;
+	size_t				i;
 
+	i = tabsize((void **) conflict);
 	if (set == 0)
 	{
-		if (!conflict)
-			conflict = ft_memalloc(sizeof(t_conflit));
-		conflict->len = new_depth;
-		conflict->old_room = o_room;
-		conflict->miss_direction = n_room;
-		conflict->next = ft_memalloc(sizeof(t_conflit));
-		conflict->next->prev = conflict;
-		conflict = conflict->next;
+		conflict = (t_conflit **)tab_real((void **)conflict, sizeof(t_conflit));
+		conflict[i]->len = new_depth;
+		conflict[i]->old_room = o_room;
+		conflict[i]->miss_direction = n_room;
 	}
 	else
 	{
-		while((set++ - env->conflict) < 1)
-			conflict = conflict->prev;
-		if (env->antleft >= conflict->len && env->antleft >= new_depth)
+		if (env->antleft >= conflict[i - (set - env->conflict) - 1]->len && env->antleft >= new_depth)
 		{
-			conflict->old_room->prev = conflict->miss_direction;
-			clean_conflict(conflict);
+			conflict[i - (set - env->conflict) - 1]->old_room->prev = conflict[i - (set+ - env->conflict) - 1]->miss_direction;
+			clean_conflict(conflict[i - (set - env->conflict) - 1]);
 			return(TRUE);
 		}
-		clean_conflict(conflict);
+		clean_conflict(conflict[i - (set - env->conflict) - 1]);
 	}
-
 	return(FALSE);
 }
 
-void lock_path(t_env *env)
+void			lock_path(t_env *env)
 {
 	t_room	*room;
 	int		len;
@@ -261,8 +287,8 @@ void reset_room(t_env *env)
 void			conflit(t_room *rooms, t_env *env, long depth, t_room *room_confict)
 {
 	long	dp;
-	long tmp_dp;
-	t_room *tmp;
+	long	tmp_dp;
+	t_room	*tmp;
 
 	tmp = rooms;
 	while(tmp->next != env->end)
@@ -346,43 +372,12 @@ int				find_shortest(t_env *env, int f_iter)
 	return (FALSE);
 }
 
-static size_t	tabsize(void **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
-}
-
-static t_path	**addpath(t_path **oldpaths)
-{
-	t_path			**ret;
-	size_t			size;
-	size_t			new_size;
-
-	size = tabsize((void **)oldpaths);
-	new_size = sizeof(t_path *) * (size + 2);
-	ret = (t_path **)ft_memalloc(new_size);
-	if (ret)
-	{
-		if (oldpaths)
-			ft_memcpy(ret, oldpaths, sizeof(t_path *) * size);
-		ret[size] = (t_path *)ft_memalloc(sizeof(t_path));
-		ft_memdel((void **)&oldpaths);
-		if (ret[size])
-			return (ret);
-	}
-	return (NULL);
-}
-
 void			solve(t_env *env)
 {
 	int		i;
 
 	i = 0;
-	env->paths = addpath(env->paths);
+	env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
 	while (find_shortest(env, i))
 	{
 		env->conflict = 1;
@@ -390,7 +385,7 @@ void			solve(t_env *env)
 		i++;
 		lock_path(env);
 		reset_room(env);
-		env->paths = addpath(env->paths);
+		env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
 	}
 	lock_path(env);
 }
