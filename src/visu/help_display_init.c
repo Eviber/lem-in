@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:19:06 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/26 13:40:46 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/27 15:44:53 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ TTF_Font *font, char *msg)
 	SDL_FreeSurface(surf);
 	if (SDL_RenderCopy(render, text, NULL, pos))
 		return (1);
+	SDL_DestroyTexture(text);
 	return (0);
 }
 
@@ -64,9 +65,9 @@ static void		create_msg_tab(char ***msgtab)
 		(*msgtab)[2] = ft_strdup("Zoom with keyboard '-' and '+' keys");
 		(*msgtab)[3] = ft_strdup("Center map with keyboard space key");
 		(*msgtab)[4] = \
-		ft_strdup("Move in step list with keyboard arrow up and down keys");
+		ft_strdup("Move in step-list with keyboard 'j' and 'k' keys");
 		(*msgtab)[5] = ft_strdup("Show/Hid step-list press keyboard 's' key");
-		(*msgtab)[6] = ft_strdup("Show/Hid room's name press keyboard 'n' key");
+		(*msgtab)[6] = ft_strdup("Show/Hid room's name press keyboard 'r' key");
 		(*msgtab)[7] = NULL;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 18:50:15 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/26 20:52:39 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/27 13:12:17 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int				step_display_init(SDL_Renderer *render, t_visu *venv)
 	}
 	SDL_SetRenderTarget(render, NULL);
 	venv->step_select.y = 25;
-	venv->step_select.h = 30;
+	venv->step_select.h = 34;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:15:42 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/26 20:59:45 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/27 15:54:00 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ typedef struct		s_visu
 	int				zoom;
 	int				nb_rooms;
 	int				i;
+	t_room			**rooms;
+	t_room			*start;
+	t_room			*end;
 	t_pos			max;
 	t_pos			min;
 	t_pos			screen;
@@ -51,8 +54,13 @@ typedef struct		s_visu
 int		lem_in_visu(t_env *env);
 int		help_display_init(SDL_Renderer *render, t_visu *venv);
 int		step_display_init(SDL_Renderer *render, t_visu *venv);
+int		get_room_index(t_room **rooms, t_room *src);
+int		display_ants(SDL_Renderer *render, t_visu *venv);
+void	move_step(t_visu *venv);
 void	get_default_zoom(t_room **rooms, t_visu *venv);
 void	draw_anthill(SDL_Renderer *render, t_room **rooms, t_visu *venv);
 void	event_manager(SDL_Renderer *render, t_visu *venv);
+void	get_rooms_name(SDL_Renderer *render, int *room, t_visu *venv);
+t_room	*search_room(char *name, t_room **room);
 
 #endif

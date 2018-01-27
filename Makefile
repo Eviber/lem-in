@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/01/25 22:37:07 by vsporer          ###   ########.fr        #
+#    Updated: 2018/01/27 15:54:23 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC =				$(PATH_SRC)lem_in.c\
 
 TOOLS =				$(PATH_TOOLS)del_strtab.c\
 					$(PATH_TOOLS)del_room.c\
+					$(PATH_TOOLS)get_room_index.c\
 					$(PATH_TOOLS)search_room.c
 
 PARSER =			$(PATH_PARS)read_map.c\
@@ -45,7 +46,10 @@ VISU =				$(PATH_VISU)lem_in_visu.c\
 					$(PATH_VISU)draw_anthill.c\
 					$(PATH_VISU)event_manager.c\
 					$(PATH_VISU)help_display_init.c\
-					$(PATH_VISU)step_display_init.c
+					$(PATH_VISU)step_display_init.c\
+					$(PATH_VISU)display_ants.c\
+					$(PATH_VISU)get_rooms_name.c\
+					$(PATH_VISU)move_step.c
 #					$(PATH_VISU)get_help.c
 
 #ALGO =				$(PATH_ALGO)get_path.c\

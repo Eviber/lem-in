@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 14:22:51 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/08 16:28:30 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/27 14:44:42 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,6 @@ static int		check_double_pipe(t_room **rooms, t_room *current, int i)
 		if (rooms[i] == current)
 			return (1);
 	return (0);
-}
-
-static int		get_room_index(t_room **rooms, t_room *src)
-{
-	int		i;
-
-	i = 0;
-	while (rooms && rooms[i] && rooms[i] != src)
-		i++;
-	if (rooms[i])
-		return (i);
-	else
-		return (-1);
 }
 
 void			draw_anthill(SDL_Renderer *render, t_room **rooms, t_visu *venv)
