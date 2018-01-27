@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/27 14:47:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/27 14:53:11 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void				debug_pipes(t_room **pipes)
 	}
 }
 
-static void				debug_colony(t_env colony)
+void				debug_colony(t_env colony)
 {
 	int		i;
 
@@ -101,6 +101,9 @@ static void				debug_colony(t_env colony)
 		debug_room(*(colony.rooms[i]));
 		i++;
 	}
+		ft_printf("tubes of first room:\n");
+		t_room *first_room = *(colony.rooms);
+		debug_pipes(first_room->pipes);
 }
 
 int						main(int argc, char **argv)
@@ -122,10 +125,7 @@ int						main(int argc, char **argv)
 			ft_putstr_fd("Visualizer failed.\n", 2);
 			v = 0;
 		}
-		debug_colony(antfarm);
-		ft_printf("tubes of first room:\n");
-		t_room *first_room = *(antfarm.rooms);
-		debug_pipes(first_room->pipes);
+//		debug_colony(antfarm);
 		if (antfarm.start != antfarm.end && solve(&antfarm, &v))
 			output(&antfarm, v);
 		else
