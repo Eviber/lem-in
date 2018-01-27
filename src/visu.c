@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/12 13:00:53 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/20 00:37:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ int		visu_init(t_env *colony)
 	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_ACCELERATED);
 	if (!env->render)
 		return(panic("Error while creating renderer: ", SDL_GetError()));
+	env->layer[TUBES] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
+	env->layer[ROOMS] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
+	env->layer[ANTS] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
+	env->layer[ANT] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
+	if (!env->layer[TUBES] || !env->layer[ROOMS] || !env->layer[ANTS])
+		return(panic("Error while creating layers: ", SDL_GetError()));
+//	SDL_SetTextureBlendMode(env->layer[TUBES], SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(env->layer[ROOMS], SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(env->layer[ANTS], SDL_BLENDMODE_BLEND);
+	SDL_SetTextureBlendMode(env->layer[ANT], SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(env->render, 9, 11, 16, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(env->render);
 	min = colony->rooms[0]->pos;
@@ -97,6 +107,7 @@ void	putant(t_winenv w, t_room *room, t_room *prev, int ant)
 	t_pos	pos;
 	t_pos	lastpos;
 
+	SDL_SetRenderTarget(w.render, w.layer[ANTS]);
 	pos.x = room->pos.x * w.zoom + w.mov.x;
 	pos.y = room->pos.y * w.zoom + w.mov.y;
 	lastpos.x = prev->pos.x * w.zoom + w.mov.x;
@@ -150,6 +161,7 @@ void	putroom(t_winenv w, t_room *room, t_env colony)
 {
 	t_pos	pos;
 
+	SDL_SetRenderTarget(w.render, w.layer[ROOMS]);
 	pos.x = room->pos.x * w.zoom + w.mov.x;
 	pos.y = room->pos.y * w.zoom + w.mov.y;
 	filledCircleColor(w.render, pos.x, pos.y, 33, 0xFF78726F);
@@ -171,6 +183,7 @@ void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 	t_pos	dest;
 	int		i;
 
+	SDL_SetRenderTarget(render, w.layer[TUBES]);
 	orig.x = room.pos.x * w.zoom + w.mov.x;
 	orig.y = room.pos.y * w.zoom + w.mov.y;
 	i = 0;
@@ -191,54 +204,73 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 
 	i = 0;
 	rooms = colony.rooms;
+	SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+	SDL_SetRenderTarget(render, w->layer[TUBES]);
+	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_NONE);
+	SDL_RenderClear(render);
+	SDL_SetRenderTarget(render, w->layer[ROOMS]);
+	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
+	SDL_RenderClear(render);
+	SDL_RenderFillRect(render, NULL);
+	SDL_SetRenderTarget(render, w->layer[ANTS]);
+	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+	SDL_RenderClear(render);
+	SDL_RenderFillRect(render, NULL);
 	while (rooms[i])
 	{
 		if (rooms[i]->pipes)
 			putpipes(render, *(rooms[i]), *w);
-		i++;
-	}
-	i = 0;
-	while (rooms[i])
-	{
 		putroom(*w, rooms[i], colony);
-		i++;
-	}
-	i = 0;
-	while (rooms[i])
-	{
 		if (rooms[i] && rooms[i]->prev && rooms[i]->ant)
 			putant(*w, rooms[i], rooms[i]->prev, rooms[i]->ant);
 		i++;
 	}
 	putlast(w, colony);
+	SDL_SetRenderTarget(render, NULL);
+	SDL_RenderCopy(render, w->layer[TUBES], NULL, NULL);
+	SDL_RenderCopy(render, w->layer[ROOMS], NULL, NULL);
+	SDL_RenderCopy(render, w->layer[ANTS], NULL, NULL);
 }
 
-int		handle_event(t_winenv *env)
+int		handle_event(t_winenv *env, Uint32 ticks)
 {
 	const Uint8	*state;
+	double		zoomval;
+	SDL_Point	mouse;
 
 	state = SDL_GetKeyboardState(NULL);
 	SDL_PumpEvents();
 	if (state[SDL_SCANCODE_KP_PLUS])
 	{
+		zoomval = 1.1;
 		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * 1.1) / env->zoom;
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * zoomval) / env->zoom;
 		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * 1.1) / env->zoom;
-		env->zoom *= 1.1;
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * zoomval) / env->zoom;
+		env->zoom *= zoomval;
 	}
 	if (state[SDL_SCANCODE_KP_MINUS] && env->zoom * 0.9 > 0)
 	{
+		zoomval = 0.9;
 		env->mov.x = env->dispmode.w / 2 +
-		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * 0.9) / env->zoom;
+		(long)(env->mov.x - env->dispmode.w / 2) * (env->zoom * zoomval) / env->zoom;
 		env->mov.y = env->dispmode.h / 2 +
-		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * 0.9) / env->zoom;
-		env->zoom *= 0.9;
+		(long)(env->mov.y - env->dispmode.h / 2) * (env->zoom * zoomval) / env->zoom;
+		env->zoom *= zoomval;
 	}
-	env->mov.y += 1 * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
+	if (SDL_GetRelativeMouseState(&(mouse.x), (&mouse.y)) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	{
+		env->mov.x += mouse.x;
+		env->mov.y += mouse.y;
+	}
+	else
+	{
+		env->mov.y += (0.3 * ticks) * ((state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S])
 				- (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]));
-	env->mov.x += 1 * ((state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
+		env->mov.x += (0.3 * ticks) * ((state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D])
 				- (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]));
+	}
 	if (state[SDL_SCANCODE_SPACE])
 	{
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
@@ -266,13 +298,13 @@ int		visu(void)
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();
 	frameticks = env->ticks;
-	while (SDL_GetTicks() - env->ticks < TURNTIME + 100 && !(quit = handle_event(env) || SDL_QuitRequested()))
+	while (SDL_GetTicks() - env->ticks < TURNTIME + 100 && !(quit = handle_event(env, SDL_GetTicks() - frameticks) || SDL_QuitRequested()))
 	{
 		if (env)
 		{
 			frameticks = SDL_GetTicks();
 			SDL_SetRenderDrawColor(env->render, 0, 0, 0, 20);
-			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_BLEND);
+//			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_BLEND);
 //			SDL_RenderFillRect(env->render, NULL);
 			SDL_RenderClear(env->render);
 			SDL_SetRenderDrawBlendMode(env->render, SDL_BLENDMODE_NONE);

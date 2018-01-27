@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/20 20:05:12 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/25 19:01:29 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@ typedef struct		s_room
 	long			ant;
 	int				weight;
 	int				dead;
+	int				locked;
 }					t_room;
+
+typedef struct			s_conflit
+{
+	t_room				*old_room;
+	t_room				*miss_direction;
+	struct s_conflit	*next;
+	struct s_conflit	*prev;
+	long				len;
+}						t_conflit;
 
 typedef struct		s_path
 {
@@ -43,9 +53,11 @@ typedef struct		s_env
 	struct s_room	*end;
 	struct s_path	**paths;
 	struct s_room	**rooms;
+	long			nb_rooms;
 	long			nb_ants;
 	long			antleft;
-	int				nb_rooms;
+	int 			depth;
+	int 			conflict;
 }					t_env;
 
 enum { ROOM, TUBE, COMM, START, END };

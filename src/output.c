@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/11 04:17:32 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/27 00:49:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,27 @@ static void	put_ants(t_env *env, t_room *pathroom)
 void		output(t_env *env, int v)
 {
 	int		lem_out;
+	int		i;
 
 	lem_out = 0;
+	env->antleft = env->nb_ants;
 	while (lem_out < env->nb_ants)
 	{
-		if (env->paths && env->paths[0] && env->paths[0]->room && env->paths[0]->room->ant)
+		i = 0;
+		while (env->paths[i])
 		{
-			ft_printf("L%d-%s ", env->paths[0]->room->ant, env->end->name);
-			env->paths[0]->room->ant = 0;
-			lem_out++;
+			if (env->paths && env->paths[i] && env->paths[i]->room && env->paths[i]->room->ant)
+			{
+				ft_printf("L%d-%s ", env->paths[i]->room->ant, env->end->name);
+				env->paths[i]->room->ant = 0;
+				lem_out++;
+			}
+			put_ants(env, env->paths[i]->room);
+			i++;
 		}
-		put_ants(env, env->paths[0]->room);
-		ft_putchar('\n');
 		if (v)
 			v = visu();
+		ft_putchar('\n');
 	}
 	while (v)
 		v = visu();
