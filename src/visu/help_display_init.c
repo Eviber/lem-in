@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:19:06 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/29 14:44:25 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/29 17:45:47 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,21 @@ static void		create_msg_tab(char ***msgtab)
 {
 	if ((*msgtab = (char**)ft_memalloc(sizeof(char*) * 8)))
 	{
-		(*msgtab)[0] = ft_strdup("Help");
-		(*msgtab)[1] = ft_strdup("Move with arrow keys");
-		(*msgtab)[2] = ft_strdup("Zoom with '-' and '+' keys");
-		(*msgtab)[3] = ft_strdup("Center map with 'space' key");
-		(*msgtab)[4] = ft_strdup("Move in step-list with 'j' and 'k' keys");
-		(*msgtab)[5] = ft_strdup("Show/Hid step-list press 's' key");
-		(*msgtab)[6] = ft_strdup("Show/Hid room's name press 'r' key");
+		if (!((*msgtab)[0] = ft_strdup("Help")))
+			return (1);
+		if (!((*msgtab)[1] = ft_strdup("Move with arrow keys")))
+			return (1);
+		if (!((*msgtab)[2] = ft_strdup("Zoom with '-' and '+' keys")))
+			return (1);
+		if (!((*msgtab)[3] = ft_strdup("Center map with 'space' key")))
+			return (1);
+		if (!((*msgtab)[4] = \
+		ft_strdup("Move in step-list with 'j' and 'k' keys")))
+			return (1);
+		if (!((*msgtab)[5] = ft_strdup("Show/Hid step-list press 's' key")))
+			return (1);
+		if (!((*msgtab)[6] = ft_strdup("Show/Hid room's name press 'r' key")))
+			return (1);
 		(*msgtab)[7] = NULL;
 	}
 }
