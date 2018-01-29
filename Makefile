@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/01/27 15:54:23 by vsporer          ###   ########.fr        #
+#    Updated: 2018/01/29 14:26:13 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,8 @@ VISU =				$(PATH_VISU)lem_in_visu.c\
 					$(PATH_VISU)step_display_init.c\
 					$(PATH_VISU)display_ants.c\
 					$(PATH_VISU)get_rooms_name.c\
+					$(PATH_VISU)reset_pos_map.c\
 					$(PATH_VISU)move_step.c
-#					$(PATH_VISU)get_help.c
 
 #ALGO =				$(PATH_ALGO)get_path.c\
 #					$(PATH_ALGO)release_ants.c

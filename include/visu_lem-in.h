@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:15:42 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/27 15:54:00 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/29 16:48:16 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define MULT 0
 # define DIV 1
+# define ZOOM_MAX 1000
 
 typedef struct		s_visu
 {
@@ -43,24 +44,22 @@ typedef struct		s_visu
 	SDL_Texture		*step;
 	char			**step_list;
 	SDL_Rect		step_size;
-	SDL_Rect		step_focus;
 	SDL_Rect		step_select;
-	SDL_Texture		*names;
-	SDL_Texture		*ants;
 }					t_visu;
 /*
 ** Visu
 */
-int		lem_in_visu(t_env *env);
 int		help_display_init(SDL_Renderer *render, t_visu *venv);
 int		step_display_init(SDL_Renderer *render, t_visu *venv);
 int		get_room_index(t_room **rooms, t_room *src);
 int		display_ants(SDL_Renderer *render, t_visu *venv);
+int		get_rooms_name(SDL_Renderer *render, int *room, t_visu *venv);
+int		event_manager(SDL_Renderer *render, t_visu *venv);
+int		draw_anthill(SDL_Renderer *render, t_room **rooms, t_visu *venv);
+void	lem_in_visu(t_env *env);
+void	reset_pos_map(t_visu *venv);
 void	move_step(t_visu *venv);
 void	get_default_zoom(t_room **rooms, t_visu *venv);
-void	draw_anthill(SDL_Renderer *render, t_room **rooms, t_visu *venv);
-void	event_manager(SDL_Renderer *render, t_visu *venv);
-void	get_rooms_name(SDL_Renderer *render, int *room, t_visu *venv);
 t_room	*search_room(char *name, t_room **room);
 
 #endif
