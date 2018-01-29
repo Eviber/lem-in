@@ -6,23 +6,26 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/31 19:39:54 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/27 16:04:36 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/29 16:45:16 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "visu_lem-in.h"
 
-static void		get_texture(SDL_Renderer *render, SDL_Texture **texture)
+static int		get_texture(SDL_Renderer *render, SDL_Texture **texture)
 {
 	SDL_Surface		*surface;
 
-	surface = SDL_LoadBMP("src/visu/dirt.bmp");
-	*texture = SDL_CreateTextureFromSurface(render, surface);
+	if (!(surface = SDL_LoadBMP("src/visu/dirt.bmp")))
+		return (1);
+	if (!(*texture = SDL_CreateTextureFromSurface(render, surface)))
+		return (1);
 	SDL_FreeSurface(surface);
+	return (0);
 }
 
-static void		anthill_gen(SDL_Renderer *render, t_visu *venv, t_env *env)
+static int		anthill_gen(SDL_Renderer *render, t_visu *venv, t_env *env)
 {
 	SDL_Texture		*bg;
 	SDL_Rect		bg_pos;
@@ -31,18 +34,21 @@ static void		anthill_gen(SDL_Renderer *render, t_visu *venv, t_env *env)
 	bg_pos.y = -4;
 	bg_pos.w = venv->screen.x;
 	bg_pos.h = venv->screen.y + 4;
-	get_texture(render, &bg);
+	if (get_texture(render, &bg))
+		return (1);
 	get_default_zoom(env->rooms, venv);
-	venv->kb_state = SDL_GetKeyboardState(NULL);
+	if (!(venv->kb_state = SDL_GetKeyboardState(NULL)))
+		return (1);
 	while (!SDL_QuitRequested() && !venv->kb_state[SDL_SCANCODE_Q])
 	{
-		SDL_RenderClear(render);
-		SDL_RenderCopy(render, bg, NULL, &bg_pos);
-		draw_anthill(render, env->rooms, venv);
-		event_manager(render, venv);
+		if (SDL_RenderClear(render) || \
+		SDL_RenderCopy(render, bg, NULL, &bg_pos) || \
+		draw_anthill(render, env->rooms, venv) || event_manager(render, venv))
+			return (1);
 		SDL_RenderPresent(render);
 	}
 	SDL_DestroyTexture(bg);
+	return (0);
 }
 
 static int		display_init(SDL_Renderer *render, SDL_DisplayMode dm, \
@@ -77,7 +83,7 @@ static char		**get_step_list(void)
 	step_list[2] = ft_strdup("L1-1 L2-3 L3-2");
 	step_list[3] = ft_strdup("L2-1 L3-3");
 	step_list[4] = ft_strdup("L3-1");
-	step_list[5] = ft_strdup("L1-1 L2-3 L3-2");
+	step_list[5] = ft_strdup("L1-1 L2-3 L3-2 L1-1 L2-3 L3-2 L1-1 L2-3 L3-2 L1-1 L2-3 L3-2 L1-1 L2-3 L3-2 L1-1 L2-3 L3-2 ");
 	step_list[6] = ft_strdup("L1-1 L2-3 L3-2");
 	step_list[7] = ft_strdup("L1-1 L2-3 L3-2");
 	step_list[8] = ft_strdup("L1-1 L2-3 L3-2");
@@ -109,7 +115,7 @@ static char		**get_step_list(void)
 	return (step_list);
 }
 
-int				lem_in_visu(t_env *env)
+void			lem_in_visu(t_env *env)
 {
 	t_visu				venv;
 	SDL_Window			*win;
@@ -125,14 +131,15 @@ int				lem_in_visu(t_env *env)
 	0, 0, dm.w, dm.h, SDL_WINDOW_FULLSCREEN_DESKTOP)) && \
 	(render = SDL_CreateRenderer(win, -1, 0)) && !TTF_Init())
 	{
-		if (!display_init(render, dm, &venv))
-			anthill_gen(render, &venv, env);
+		if (!(!display_init(render, dm, &venv) && \
+		!anthill_gen(render, &venv, env)))
+			ft_dprintf(2, "SDL error: %s\n", SDL_GetError());
 		SDL_DestroyRenderer(render);
 		SDL_DestroyWindow(win);
 		TTF_Quit();
 		SDL_Quit();
-		return (0);
+		return ;
 	}
-	ft_dprintf(2, "Error start SDL failed: %s\n", SDL_GetError());
-	return (1);
+	SDL_Quit();
+	ft_dprintf(2, "SDL error: %s\n", SDL_GetError());
 }

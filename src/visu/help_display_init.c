@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:19:06 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/27 15:44:53 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/29 14:44:25 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ TTF_Font *font, char *msg)
 static int		create_main_texture(SDL_Renderer *render, t_visu *venv)
 {
 	if (!(venv->help = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, \
-	SDL_TEXTUREACCESS_TARGET, 630, 400)))
+	SDL_TEXTUREACCESS_TARGET, 389, 400)))
 		return (1);
 	if (SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND))
 		return (1);
@@ -61,13 +61,12 @@ static void		create_msg_tab(char ***msgtab)
 	if ((*msgtab = (char**)ft_memalloc(sizeof(char*) * 8)))
 	{
 		(*msgtab)[0] = ft_strdup("Help");
-		(*msgtab)[1] = ft_strdup("Move with keyboard arrow keys");
-		(*msgtab)[2] = ft_strdup("Zoom with keyboard '-' and '+' keys");
-		(*msgtab)[3] = ft_strdup("Center map with keyboard space key");
-		(*msgtab)[4] = \
-		ft_strdup("Move in step-list with keyboard 'j' and 'k' keys");
-		(*msgtab)[5] = ft_strdup("Show/Hid step-list press keyboard 's' key");
-		(*msgtab)[6] = ft_strdup("Show/Hid room's name press keyboard 'r' key");
+		(*msgtab)[1] = ft_strdup("Move with arrow keys");
+		(*msgtab)[2] = ft_strdup("Zoom with '-' and '+' keys");
+		(*msgtab)[3] = ft_strdup("Center map with 'space' key");
+		(*msgtab)[4] = ft_strdup("Move in step-list with 'j' and 'k' keys");
+		(*msgtab)[5] = ft_strdup("Show/Hid step-list press 's' key");
+		(*msgtab)[6] = ft_strdup("Show/Hid room's name press 'r' key");
 		(*msgtab)[7] = NULL;
 	}
 }
@@ -85,7 +84,7 @@ int				help_display_init(SDL_Renderer *render, t_visu *venv)
 	while (msgtab && msgtab[++i])
 	{
 		if (!i)
-			pos.x = 300 - 40;
+			pos.x = 389 / 2 - 20;
 		else
 			pos.x = 20;
 		pos.y = 30 * (i * 2);
