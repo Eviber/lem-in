@@ -1,0 +1,35 @@
+#ants
+10
+#rooms
+##start
+start 1 2
+##end
+end 8 2
+C1 4 1
+C2 5 1
+C3 6 1
+C4 7 1
+A0 3 2
+A1 7 2
+B0 2 3
+B1 3 3
+B2 4 3
+B3 5 3
+B4 6 3
+B5 7 3
+start-A0
+start-B0
+A0-A1
+A1-end
+A0-C1
+A1-B4
+C1-C2
+C2-C3
+C3-C4
+C4-end
+B0-B1
+B1-B2
+B2-B3
+B3-B4
+B4-B5
+B5-end
