@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:19:06 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/29 17:45:47 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/29 18:36:48 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int		create_main_texture(SDL_Renderer *render, t_visu *venv)
 	return (0);
 }
 
-static void		create_msg_tab(char ***msgtab)
+static int		create_msg_tab(char ***msgtab)
 {
 	if ((*msgtab = (char**)ft_memalloc(sizeof(char*) * 8)))
 	{
@@ -77,6 +77,7 @@ static void		create_msg_tab(char ***msgtab)
 			return (1);
 		(*msgtab)[7] = NULL;
 	}
+	return (0);
 }
 
 int				help_display_init(SDL_Renderer *render, t_visu *venv)
