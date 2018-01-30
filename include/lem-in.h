@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/25 19:01:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/30 06:29:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct		s_env
 	long			nb_rooms;
 	long			nb_ants;
 	long			antleft;
+	long			lem_out;
 	int 			depth;
 	int 			conflict;
 }					t_env;

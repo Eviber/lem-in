@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/27 00:49:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/30 06:29:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ static void	put_ants(t_env *env, t_room *pathroom)
 
 void		output(t_env *env, int v)
 {
-	int		lem_out;
 	int		i;
 
-	lem_out = 0;
+	env->lem_out = 0;
 	env->antleft = env->nb_ants;
-	while (lem_out < env->nb_ants)
+	while (env->lem_out < env->nb_ants)
 	{
 		i = 0;
 		while (env->paths[i])
@@ -54,7 +53,7 @@ void		output(t_env *env, int v)
 			{
 				ft_printf("L%d-%s ", env->paths[i]->room->ant, env->end->name);
 				env->paths[i]->room->ant = 0;
-				lem_out++;
+				env->lem_out++;
 			}
 			put_ants(env, env->paths[i]->room);
 			i++;

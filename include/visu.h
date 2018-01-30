@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/16 18:04:42 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/30 05:51:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct			s_winenv
 	struct s_room		**rooms;
 	struct s_env		*colony;
 	size_t				*lastants;
+	TTF_Font			*font;
 	struct s_pos		mov;
 	double				zoom;
 	double				orig_zoom;

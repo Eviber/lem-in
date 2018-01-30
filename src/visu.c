@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/20 00:37:42 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/01/30 07:19:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int		visu_init(t_env *colony)
 	env->layer[ANT] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
 	if (!env->layer[TUBES] || !env->layer[ROOMS] || !env->layer[ANTS])
 		return(panic("Error while creating layers: ", SDL_GetError()));
+	if (TTF_Init() == -1 || !(env->font = TTF_OpenFont("joystix.ttf", 48)))
+		return(panic("Error while initializing SDL_TTF: ", TTF_GetError()));
 //	SDL_SetTextureBlendMode(env->layer[TUBES], SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(env->layer[ROOMS], SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(env->layer[ANTS], SDL_BLENDMODE_BLEND);
@@ -197,6 +199,37 @@ void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 	}
 }
 
+#include <stdio.h>
+void	counter(SDL_Renderer *render, t_env colony, t_winenv *env)
+{
+	SDL_Texture	*tex;
+	SDL_Surface	*surf;
+	SDL_Rect	rect;
+	char		str[40];
+	int			i;
+
+	rect.x = 0;
+	sprintf(str, "at start: %2zu", colony.antleft);
+	surf = TTF_RenderText_Blended(env->font, str, (SDL_Color){255, 255, 255, 255});
+	tex = SDL_CreateTextureFromSurface(render, surf);
+	SDL_QueryTexture(tex, NULL, NULL, &rect.w, &rect.h);
+	rect.y = 0;
+	SDL_RenderCopy(render, tex, NULL, &rect);
+	rect.y = rect.h;
+	SDL_FreeSurface(surf);
+	SDL_DestroyTexture(tex);
+	i = 0;
+	while (env->lastants && env->lastants[i])
+		i++;
+	sprintf(str, "arrived: %3zu", colony.lem_out - i);
+	surf = TTF_RenderText_Blended(env->font, str, (SDL_Color){255, 255, 255, 255});
+	tex = SDL_CreateTextureFromSurface(render, surf);
+	SDL_QueryTexture(tex, NULL, NULL, &rect.w, &rect.h);
+	SDL_RenderCopy(render, tex, NULL, &rect);
+	SDL_FreeSurface(surf);
+	SDL_DestroyTexture(tex);
+}
+
 void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 {
 	t_room	**rooms;
@@ -231,6 +264,7 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 	SDL_RenderCopy(render, w->layer[TUBES], NULL, NULL);
 	SDL_RenderCopy(render, w->layer[ROOMS], NULL, NULL);
 	SDL_RenderCopy(render, w->layer[ANTS], NULL, NULL);
+	counter(render, colony, w);
 }
 
 int		handle_event(t_winenv *env, Uint32 ticks)
