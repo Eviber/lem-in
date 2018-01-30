@@ -1,0 +1,24 @@
+#ants
+10
+#rooms
+##start
+start 0 9
+##end
+end 2 10
+A0 1 9
+A1 0 10
+##end
+B0 2 9
+B1 2 11
+C1 1 10
+C2 0 11
+#tubes
+start-A0
+start-A1
+A0-A1
+A1-C1
+B0-A0
+B1-C2
+A0-C1
+C1-end
+C2-A1
