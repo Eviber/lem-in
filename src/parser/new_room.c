@@ -31,11 +31,12 @@ static t_room	*roomalloc(t_env *env)
 		new[i] = (env->rooms)[i];
 		i++;
 	}
-	if (!(new[i] = (t_room*)malloc(sizeof(t_room))))
+	if (!(new[i] = (t_room*)ft_memalloc(sizeof(t_room))))
 		lem_in_error(DEFAULT, 'q', env);
 	new[i + 1] = NULL;
 	ft_memdel((void**)&(env->rooms));
 	env->rooms = new;
+	env->nb_rooms++;
 	return ((env->rooms)[i]);
 }
 

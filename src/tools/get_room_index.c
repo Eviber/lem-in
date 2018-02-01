@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_room.c                                      :+:      :+:    :+:   */
+/*   get_room_index.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/11 19:20:08 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/01 00:15:27 by vsporer          ###   ########.fr       */
+/*   Created: 2018/01/27 14:40:15 by vsporer           #+#    #+#             */
+/*   Updated: 2018/01/27 14:42:24 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
-#include "parser_lem-in.h"
+#include "visu_lem-in.h"
 
-t_room	*search_room(char *name, t_room **room)
+int		get_room_index(t_room **rooms, t_room *src)
 {
 	int		i;
 
 	i = 0;
-	if (name && room)
-	{
-		while (room[i] && ft_strcmp(name, (room[i])->name))
-			i++;
-		while(0)
-			;
-		return (room[i]);
-	}
+	while (rooms && rooms[i] && rooms[i] != src)
+		i++;
+	if (rooms[i])
+		return (i);
 	else
-		return (NULL);
+		return (-1);
 }

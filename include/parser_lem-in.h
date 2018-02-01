@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 16:24:46 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 19:08:40 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/03 16:15:24 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ void			check_map(t_env *env);
 void			add_pipe(t_room ***pipe, t_room *to, t_env *env);
 t_room			*new_room(char *name, int x, int y, t_env *env);
 /*
-** Visu
+** Solver
 */
-void			lem_in_visu(t_env *env);
-/*
-** Algorithm
-*/
-//void			get_path(t_env *env);
-//void			release_ants(t_env *env);
+void get_path(t_env *env);
+void release_ants(t_env *env);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:16:50 by vsporer           #+#    #+#             */
-/*   Updated: 2017/09/28 11:14:05 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/25 21:46:58 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(char const *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str && str[i])
+	while (str && str[i] != '\0')
 	{
 		i++;
 	}

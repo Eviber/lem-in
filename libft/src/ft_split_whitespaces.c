@@ -6,13 +6,13 @@
 /*   By: vsporer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/14 14:13:00 by vsporer           #+#    #+#             */
-/*   Updated: 2017/09/17 20:48:33 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/25 22:36:50 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int		ft_count_words(char *str)
+static int		ft_count_words(char *str)
 {
 	int		i;
 
@@ -31,7 +31,7 @@ int		ft_count_words(char *str)
 	return (i);
 }
 
-char	*ft_strdup(char *str)
+static char		*ft_strdup(char *str)
 {
 	char	*word;
 	int		len;
@@ -49,7 +49,7 @@ char	*ft_strdup(char *str)
 	return (word);
 }
 
-char	**ft_split_whitespaces(char *str)
+char			**ft_split_whitespaces(char *str)
 {
 	char	**result;
 	int		i;

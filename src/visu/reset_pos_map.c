@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_room.c                                      :+:      :+:    :+:   */
+/*   reset_pos_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/11 19:20:08 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/01 00:15:27 by vsporer          ###   ########.fr       */
+/*   Created: 2018/01/29 14:21:21 by vsporer           #+#    #+#             */
+/*   Updated: 2018/01/29 14:33:04 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
-#include "parser_lem-in.h"
+#include "visu_lem-in.h"
 
-t_room	*search_room(char *name, t_room **room)
+void	reset_pos_map(t_visu *venv)
 {
-	int		i;
+	static Uint32	ticks = 0;
+	Uint32			tmp;
 
-	i = 0;
-	if (name && room)
+	tmp = SDL_GetTicks();
+	if (tmp > ticks + 120)
 	{
-		while (room[i] && ft_strcmp(name, (room[i])->name))
-			i++;
-		while(0)
-			;
-		return (room[i]);
+		venv->zoom = 30;
+		venv->offset.x = 0;
+		venv->offset.y = 0;
+		ticks = tmp;
 	}
-	else
-		return (NULL);
 }

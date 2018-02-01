@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 14:43:43 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/01 00:42:03 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static int	check_ants(char *line, int *mode, t_env *env)
 	while (ft_isdigit(line[i]))
 		i++;
 	if (!line[i] && (n_ants = ft_atoi(line)) > 0)
+	{
 		env->nb_ants = n_ants;
+		env->antleft = n_ants;
+	}
 	else
 		lem_in_error(ANTS, 'q', env);
 	return (0);
@@ -44,6 +47,8 @@ static int	check_room(t_room **ret, char *line, t_env *env)
 		while (room[++j])
 		{
 			i = 0;
+			if (room[j][i] == '-')
+				i++;
 			while (ft_isdigit(room[j][i]))
 				i++;
 			if (room[j][i])
@@ -64,6 +69,9 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 	t_room	*one;
 	t_room	*two;
 
+	one = NULL;
+	two = NULL;
+	pipe = NULL;
 	if ((*mode & 4) || (*mode & 8))
 		return (1);
 	if (!(*mode & 2))
@@ -74,13 +82,20 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 			lem_in_error(DEFAULT, 'q', env);
 		else if (ft_strtablen(pipe) == 2)
 		{
-			if ((one = search_room(pipe[0], env->rooms)) && \
-			(two = search_room(pipe[1], env->rooms)))
+			if ((one = search_room(pipe[0], env->rooms)))
 			{
-				add_pipe(&(one->pipes), two, env);
-				add_pipe(&(two->pipes), one, env);
-				return (0);
+				if ((two = search_room(pipe[1], env->rooms)))
+				{
+					add_pipe(&(one->pipes), two, env);
+					add_pipe(&(two->pipes), one, env);
+					ft_memdel((void**)&pipe[0]);
+					ft_memdel((void**)&pipe[1]);
+					ft_memdel((void**)&pipe);
+					return (0);
+				}
 			}
+			ft_memdel((void**)&pipe[0]);
+			ft_memdel((void**)&pipe[1]);
 		}
 	}
 	return (1);
@@ -99,8 +114,6 @@ static int	check_cmd(int *mode, t_room *room, t_env *env)
 	}
 	if ((*mode & 8))
 	{
-		if (env->end)
-			return (1);
 		env->end = room;
 		*mode = (*mode ^ 8);
 	}

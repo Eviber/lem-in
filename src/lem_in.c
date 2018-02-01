@@ -6,12 +6,13 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 19:08:38 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/03 18:38:28 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/01/03 18:50:11 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "parser_lem-in.h"
+#include "visu_lem-in.h"
 
 static void		print_map(char **input)
 {
@@ -19,7 +20,11 @@ static void		print_map(char **input)
 
 	i = -1;
 	while (input && input[++i])
+	{
 		ft_putendl(input[i]);
+		ft_strdel(&(input[i]));
+	}
+	ft_memdel(((void**)&input));
 }
 
 int				main(int ac, char **av)
@@ -34,22 +39,18 @@ int				main(int ac, char **av)
 		return (1);
 	}
 	print_map(read_map(&env));
-//	check_map(&env);
-//	get_path(&env);
-//	release_ants(&env);
-	while (env.rooms && (env.rooms)[++i])
+	get_path(&env);
+	if (env.paths->room)
+		release_ants(&env);
+	else
 	{
-		ft_printf("Name: %s - Pos: x = %d; y = %d - First pipe: %s", \
-		((env.rooms)[i])->name, ((env.rooms)[i])->pos.x, \
-		((env.rooms)[i])->pos.y, ((((env.rooms)[i])->pipes)[0])->name);
-		if ((env.rooms)[i] == env.start)
-			ft_putstr(" - Start");
-		if ((env.rooms)[i] == env.end)
-			ft_putstr(" - End");
-		ft_putendl("");
+		write(1, "ERROR No path\n", 14);
+		return(0);
 	}
-/*	if (ac == 2 && ft_strcmp(av[1], "-v"))
-		lem_in_visu(&env);*/
-	del_room_tab(env.rooms);
+	if (ac == 2 && !ft_strcmp(av[1], "-v"))
+		lem_in_visu(&env);
+	//del_room_tab(env.rooms);
+	// si youva peux me confirmer que ca boucle bien on a a peux pret le meme
+	//nombre de reponse que felix.
 	return (0);
 }
