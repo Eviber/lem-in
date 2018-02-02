@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/27 20:08:00 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 18:13:45 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ static void		**tab_real(void **oldtab, size_t unitsize)
 
 static void		clean_conflict(t_conflit *conflit)
 {
-	while(conflit->next)
+	while(conflit && conflit->next)
 		conflit = conflit->next;
 	while(0 && conflit)
 	{
@@ -230,7 +230,7 @@ int				save_info(int set, int new_depth, t_room *o_room, t_room *n_room, t_env *
 	}
 	else
 	{
-		if (env->antleft >= conflict[i - (set - env->conflict) - 1]->len && env->antleft >= new_depth)
+		if (conflict[i - (set - env->conflict) - 1] && env->antleft >= conflict[i - (set - env->conflict) - 1]->len && env->antleft >= new_depth)
 		{
 			conflict[i - (set - env->conflict) - 1]->old_room->prev = conflict[i - (set+ - env->conflict) - 1]->miss_direction;
 			clean_conflict(conflict[i - (set - env->conflict) - 1]);
