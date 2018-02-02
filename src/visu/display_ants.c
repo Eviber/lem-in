@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 14:25:08 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/27 15:11:39 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/02 19:11:34 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ int			display_ants(SDL_Renderer *render, t_visu *venv)
 	{
 		if (!(room = ft_strsplit(line[i], '-')))
 			return (1);
-		if (create_ant(render, get_room_index(venv->rooms, \
-		search_room(room[1], venv->rooms)), room[0], venv))
-			return (1);
+		if (search_room(room[1], venv->rooms) != venv->end)
+			if (create_ant(render, get_room_index(venv->rooms, \
+			search_room(room[1], venv->rooms)), room[0], venv))
+				return (1);
 		ft_strdel(&room[0]);
 		ft_strdel(&room[1]);
 		ft_memdel((void**)&room);

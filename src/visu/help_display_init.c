@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:19:06 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/29 18:36:48 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/02 19:06:55 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ TTF_Font *font, char *msg)
 static int		create_main_texture(SDL_Renderer *render, t_visu *venv)
 {
 	if (!(venv->help = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, \
-	SDL_TEXTUREACCESS_TARGET, 389, 400)))
+	SDL_TEXTUREACCESS_TARGET, 500, 460)))
 		return (1);
 	if (SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND))
 		return (1);
@@ -58,7 +58,7 @@ static int		create_main_texture(SDL_Renderer *render, t_visu *venv)
 
 static int		create_msg_tab(char ***msgtab)
 {
-	if ((*msgtab = (char**)ft_memalloc(sizeof(char*) * 8)))
+	if ((*msgtab = (char**)ft_memalloc(sizeof(char*) * 9)))
 	{
 		if (!((*msgtab)[0] = ft_strdup("Help")))
 			return (1);
@@ -69,13 +69,16 @@ static int		create_msg_tab(char ***msgtab)
 		if (!((*msgtab)[3] = ft_strdup("Center map with 'space' key")))
 			return (1);
 		if (!((*msgtab)[4] = \
-		ft_strdup("Move in step-list with 'j' and 'k' keys")))
+		ft_strdup("Move (up/down) in step-list with 'j' and 'k' keys")))
 			return (1);
-		if (!((*msgtab)[5] = ft_strdup("Show/Hid step-list press 's' key")))
+		if (!((*msgtab)[5] = \
+		ft_strdup("Move (left/right) in step-list with 'n' and 'm' keys")))
 			return (1);
-		if (!((*msgtab)[6] = ft_strdup("Show/Hid room's name press 'r' key")))
+		if (!((*msgtab)[6] = ft_strdup("Show/Hid step-list press 's' key")))
 			return (1);
-		(*msgtab)[7] = NULL;
+		if (!((*msgtab)[7] = ft_strdup("Show/Hid room's name press 'r' key")))
+			return (1);
+		(*msgtab)[8] = NULL;
 	}
 	return (0);
 }
@@ -93,7 +96,7 @@ int				help_display_init(SDL_Renderer *render, t_visu *venv)
 	while (msgtab && msgtab[++i])
 	{
 		if (!i)
-			pos.x = 389 / 2 - 20;
+			pos.x = 500 / 2 - 20;
 		else
 			pos.x = 20;
 		pos.y = 30 * (i * 2);
