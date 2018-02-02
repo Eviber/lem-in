@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/02 19:16:47 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/02 19:38:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "visu.h"
 #include "libft.h"
 
-static void	put_ants(t_env *env, t_room *pathroom)
+static void	mov_ants(t_env *env, t_room *pathroom)
 {
 	t_room	*cur;
 
@@ -24,7 +24,6 @@ static void	put_ants(t_env *env, t_room *pathroom)
 		if (cur->prev->ant)
 		{
 			cur->ant = cur->prev->ant;
-			ft_printf("L%d-%s ", cur->ant, cur->name);
 			cur->prev->ant = 0;
 		}
 		cur = cur->prev;
@@ -32,16 +31,38 @@ static void	put_ants(t_env *env, t_room *pathroom)
 	if (cur && env->antleft)
 	{
 		cur->ant = env->nb_ants - env->antleft + 1;
-		if (cur != env->start)
-			ft_printf("L%d-%s ", cur->ant, cur->name);
 		env->antleft--;
 	}
 }
 
+unsigned long	putants(t_env *env, unsigned long min)
+{
+	int				i;
+	unsigned long	target;
+
+	target = 1;
+	while (target <= (unsigned long)env->lem_out)
+	{
+		i = 0;
+//		ft_printf("%lu", target);
+		while (env->rooms[i] && env->rooms[i]->ant != (long)target)
+			i++;//ft_printf("|%lu|", env->rooms[i++]->ant);
+		if (env->rooms[i])
+			ft_printf("AL%d-%s ", target, env->rooms[i]->name);
+		else if (target == min)
+			min++;
+		target++;
+	}
+	ft_putchar('\n');
+	return (min);
+}
+
 void		output(t_env *env, int v)
 {
-	int		i;
+	int				i;
+	unsigned long	min;
 
+	min = 1;
 	env->lem_out = 0;
 	env->antleft = env->nb_ants;
 	while (env->lem_out < env->nb_ants)
@@ -56,12 +77,12 @@ void		output(t_env *env, int v)
 				env->paths[i]->room->ant = 0;
 				env->lem_out++;
 			}
-			put_ants(env, env->paths[i]->room);
+			mov_ants(env, env->paths[i]->room);
 			i++;
 		}
 		if (v)
 			v = visu();
-		ft_putchar('\n');
+		min = putants(env, min);
 	}
 	while (v)
 		v = visu();
