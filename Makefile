@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/01/30 20:21:55 by vsporer          ###   ########.fr        #
+#    Updated: 2018/02/02 16:01:13 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC =				$(PATH_SRC)lem_in.c\
 					$(PATH_SRC)lem_in_error.c
 
 TOOLS =				$(PATH_TOOLS)del_strtab.c\
+					$(PATH_TOOLS)del_strtab_except.c\
 					$(PATH_TOOLS)del_room.c\
 					$(PATH_TOOLS)get_room_index.c\
 					$(PATH_TOOLS)search_room.c

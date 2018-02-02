@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/01 00:42:03 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/02 16:07:29 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ static int	check_room(t_room **ret, char *line, t_env *env)
 				return (1);
 		}
 		*ret = new_room(room[0], ft_atoi(room[1]), ft_atoi(room[2]), env);
-		ft_strdel(&(room[1]));
-		ft_strdel(&(room[2]));
-		ft_memdel((void**)&room);
+		del_strtab_except(&room, 0);
 		return (0);
 	}
+	del_strtab(&room);
 	return (1);
 }
 
@@ -69,9 +68,6 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 	t_room	*one;
 	t_room	*two;
 
-	one = NULL;
-	two = NULL;
-	pipe = NULL;
 	if ((*mode & 4) || (*mode & 8))
 		return (1);
 	if (!(*mode & 2))
@@ -81,22 +77,15 @@ static int	check_pipe(char *line, int *mode, t_env *env)
 		if (!(pipe = ft_strsplit(line, '-')))
 			lem_in_error(DEFAULT, 'q', env);
 		else if (ft_strtablen(pipe) == 2)
-		{
-			if ((one = search_room(pipe[0], env->rooms)))
+			if ((one = search_room(pipe[0], env->rooms)) && \
+			(two = search_room(pipe[1], env->rooms)))
 			{
-				if ((two = search_room(pipe[1], env->rooms)))
-				{
-					add_pipe(&(one->pipes), two, env);
-					add_pipe(&(two->pipes), one, env);
-					ft_memdel((void**)&pipe[0]);
-					ft_memdel((void**)&pipe[1]);
-					ft_memdel((void**)&pipe);
-					return (0);
-				}
+				add_pipe(&(one->pipes), two, env);
+				add_pipe(&(two->pipes), one, env);
+				del_strtab(&pipe);
+				return (0);
 			}
-			ft_memdel((void**)&pipe[0]);
-			ft_memdel((void**)&pipe[1]);
-		}
+		del_strtab(&pipe);
 	}
 	return (1);
 }

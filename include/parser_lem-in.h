@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 16:24:46 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/03 16:15:24 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/02 16:00:39 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void			lem_in_error(int err, char mode, t_env *env);
 */
 void			del_room_tab(t_room **room);
 void			del_strtab(char ***tab);
+void			del_strtab_except(char ***tab, int index);
 t_room			*search_room(char *name, t_room **room);
 /*
 ** Parser
