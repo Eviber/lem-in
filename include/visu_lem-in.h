@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:15:42 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/31 15:37:37 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/02 16:31:27 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	lem_in_visu(t_env *env);
 void	reset_pos_map(t_visu *venv);
 void	move_step(t_visu *venv);
 void	get_default_zoom(t_room **rooms, t_visu *venv);
+void	clean_venv(SDL_Window *win, SDL_Renderer *render, t_visu *venv);
 t_room	*search_room(char *name, t_room **room);
 
 #endif

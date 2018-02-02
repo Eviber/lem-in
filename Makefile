@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/02/02 16:01:13 by vsporer          ###   ########.fr        #
+#    Updated: 2018/02/02 16:31:44 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ TOOLS =				$(PATH_TOOLS)del_strtab.c\
 					$(PATH_TOOLS)del_strtab_except.c\
 					$(PATH_TOOLS)del_room.c\
 					$(PATH_TOOLS)get_room_index.c\
+					$(PATH_TOOLS)clean_venv.c\
 					$(PATH_TOOLS)search_room.c
 
 PARSER =			$(PATH_PARS)read_map.c\
