@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 21:42:18 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/18 22:06:40 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/02 14:51:45 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ void				free_antfarm(t_env *antfarm)
 		free_rooms(antfarm->rooms);
 	if (antfarm->paths)
 		free_paths(antfarm->paths);
+	if (antfarm->to_print)
+		ft_strdel(&(antfarm->to_print));
 }

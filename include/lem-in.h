@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/30 06:29:26 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 14:39:49 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct		s_env
 	long			lem_out;
 	int 			depth;
 	int 			conflict;
+	char			*to_print;
 }					t_env;
 
 enum { ROOM, TUBE, COMM, START, END };

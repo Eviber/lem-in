@@ -6,17 +6,17 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/13 14:43:34 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 17:00:09 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem-in.h>
 #include <eparser.h>
 
-static int			check_antfarm(t_env *antfarm)
-{
-	return ((antfarm->nb_ants > -1) && antfarm->start && antfarm->end);
-}
+//static int			check_antfarm(t_env *antfarm)
+//{
+//	return ((antfarm->nb_ants > -1) && antfarm->start && antfarm->end);
+//}
 
 static int			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 {
@@ -71,6 +71,24 @@ static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
 	return (TRUE);
 }
 
+static void			register_antfarm(t_env *antfarm, char *line)
+{
+	static int		first_line = TRUE;
+	char			*tmp;
+
+	if (first_line)
+	{
+		first_line = FALSE;
+		antfarm->to_print = ft_strdup(line);
+	}
+	else
+	{
+		tmp = ft_strcjoin(antfarm->to_print, line, '\n');
+		ft_strdel(&(antfarm->to_print));
+		antfarm->to_print = tmp;
+	}
+}
+
 int					parse_antfarm(t_env *antfarm)
 {
 	char			*line;
@@ -90,13 +108,14 @@ int					parse_antfarm(t_env *antfarm)
 				ft_strdel(&line);
 				break ;
 			}
+			register_antfarm(antfarm, line);
 			ft_strdel(&line);
 		}
 		else
 			break ;
 	}
 	ft_strdel(&line);
-	if (gnl_ret == -1 || !check_antfarm(antfarm))
+	if (gnl_ret == -1 || !((antfarm->nb_ants > -1) && antfarm->start && antfarm->end))
 		return (FALSE);
 	return (TRUE);
 }

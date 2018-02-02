@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/27 14:53:11 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 17:00:04 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static t_env			init_antfarm(void)
 	ret.nb_ants = -1;
 	ret.antleft = -1;
 	ret.nb_rooms = 0;
+	ret.to_print = NULL;
 	return (ret);
 }
 
@@ -120,6 +121,7 @@ int						main(int argc, char **argv)
 	}
 	else
 	{
+		ft_printf("%s\n", antfarm.to_print);
 		if (v && !visu_init(&antfarm))
 		{
 			ft_putstr_fd("Visualizer failed.\n", 2);
