@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/30 06:29:47 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 19:16:47 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void		output(t_env *env, int v)
 		i = 0;
 		while (env->paths[i])
 		{
-			if (env->paths && env->paths[i] && env->paths[i]->room && env->paths[i]->room->ant)
+			if (env->paths && env->paths[i]
+				&& env->paths[i]->room && env->paths[i]->room->ant)
 			{
 				ft_printf("L%d-%s ", env->paths[i]->room->ant, env->end->name);
 				env->paths[i]->room->ant = 0;

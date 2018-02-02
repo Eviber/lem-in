@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/01/13 15:12:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/02 19:16:01 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static t_room		*init_room(char **tab)
 	return (NULL);
 }
 
-static void			create_room(int *start, int *end, t_env *antfarm, char **tab)
+static void			create_room(int *start, int *end, t_env *antfarm,
+					char **tab)
 {
 	t_room			*room;
 
