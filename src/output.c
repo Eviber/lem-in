@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/03 20:09:20 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/03 20:19:30 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void		output(t_env *env, int v)
 			v = visu();
 		min = putants(env, min, lasts);
 	}
+	free(lasts);
 	while (v)
 		v = visu();
 }
