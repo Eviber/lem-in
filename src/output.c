@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/02 19:38:51 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/03 20:09:20 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,34 @@ static void	mov_ants(t_env *env, t_room *pathroom)
 	}
 }
 
-unsigned long	putants(t_env *env, unsigned long min)
+int				getroomfromant(t_env *env, unsigned long *lasts, t_room *tofill, unsigned long target)
 {
-	int				i;
+	int			i;
+	int			j;
+	
+	i = 0;
+	j = 0;
+	while (env->rooms[i] && (unsigned long)env->rooms[i]->ant != target)
+		i++;
+	while (env->rooms[i] && env->paths[j] && lasts[j] != target)
+		j++;
+	if (env->rooms[i] && lasts[j] != target)
+		*tofill = (env->rooms[i]) ? *(env->rooms[i]) : *(env->paths[j]->room);
+	else
+		return (FALSE);
+	return (TRUE);
+}
+
+unsigned long	putants(t_env *env, unsigned long min, unsigned long *lasts)
+{
+	t_room			tofill;
 	unsigned long	target;
 
-	target = 1;
-	while (target <= (unsigned long)env->lem_out)
+	target = min;
+	while (target <= (unsigned long)env->nb_ants - (unsigned long)env->antleft)
 	{
-		i = 0;
-//		ft_printf("%lu", target);
-		while (env->rooms[i] && env->rooms[i]->ant != (long)target)
-			i++;//ft_printf("|%lu|", env->rooms[i++]->ant);
-		if (env->rooms[i])
-			ft_printf("AL%d-%s ", target, env->rooms[i]->name);
+		if (getroomfromant(env, lasts, &tofill, target))
+			ft_printf("AL%d-%s ", target, tofill.name);
 		else if (target == min)
 			min++;
 		target++;
@@ -59,21 +73,27 @@ unsigned long	putants(t_env *env, unsigned long min)
 
 void		output(t_env *env, int v)
 {
-	int				i;
+	unsigned long	*lasts;
 	unsigned long	min;
+	int				i;
 
 	min = 1;
 	env->lem_out = 0;
 	env->antleft = env->nb_ants;
+	i = 0;
+	while (env->paths && env->paths[i] && env->paths[i]->room)
+		i++;
+	lasts = (unsigned long *)ft_memalloc((i + 1) * sizeof(long));
 	while (env->lem_out < env->nb_ants)
 	{
 		i = 0;
 		while (env->paths[i])
 		{
+			if (env->paths[i]->room)
+				lasts[i] = (unsigned long)(env->paths[i]->room->ant);
 			if (env->paths && env->paths[i]
 				&& env->paths[i]->room && env->paths[i]->room->ant)
 			{
-				ft_printf("L%d-%s ", env->paths[i]->room->ant, env->end->name);
 				env->paths[i]->room->ant = 0;
 				env->lem_out++;
 			}
@@ -82,7 +102,7 @@ void		output(t_env *env, int v)
 		}
 		if (v)
 			v = visu();
-		min = putants(env, min);
+		min = putants(env, min, lasts);
 	}
 	while (v)
 		v = visu();
