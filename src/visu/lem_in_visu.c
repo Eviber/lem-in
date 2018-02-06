@@ -6,14 +6,15 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/31 19:39:54 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/02 16:35:20 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:19:36 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 #include "visu_lem-in.h"
 
-static int		get_texture(SDL_Renderer *render, SDL_Texture **texture)
+static int		get_texture(SDL_Renderer *render, SDL_Texture **texture, \
+SDL_Rect *bg_pos, t_visu *venv)
 {
 	SDL_Surface		*surface;
 
@@ -22,30 +23,35 @@ static int		get_texture(SDL_Renderer *render, SDL_Texture **texture)
 	if (!(*texture = SDL_CreateTextureFromSurface(render, surface)))
 		return (1);
 	SDL_FreeSurface(surface);
+	bg_pos->x = 0;
+	bg_pos->y = -4;
+	bg_pos->w = venv->screen.x;
+	bg_pos->h = venv->screen.y + 4;
 	return (0);
 }
 
 static int		anthill_gen(SDL_Renderer *render, t_visu *venv, t_env *env)
 {
-	SDL_Texture		*bg;
 	SDL_Rect		bg_pos;
+	SDL_Texture		*bg;
+	static Uint32	ticks = 0;
 
-	bg_pos.x = 0;
-	bg_pos.y = -4;
-	bg_pos.w = venv->screen.x;
-	bg_pos.h = venv->screen.y + 4;
-	if (get_texture(render, &bg))
+	if (get_texture(render, &bg, &bg_pos, venv))
 		return (1);
 	get_default_zoom(env->rooms, venv);
 	if (!(venv->kb_state = SDL_GetKeyboardState(NULL)))
 		return (1);
 	while (!SDL_QuitRequested() && !venv->kb_state[SDL_SCANCODE_Q])
 	{
-		if (SDL_RenderClear(render) || \
-		SDL_RenderCopy(render, bg, NULL, &bg_pos) || \
-		draw_anthill(render, env->rooms, venv) || event_manager(render, venv))
-			return (1);
-		SDL_RenderPresent(render);
+		if (ticks + 16 <= SDL_GetTicks())
+		{
+			if (SDL_RenderClear(render) || \
+			SDL_RenderCopy(render, bg, NULL, &bg_pos) || draw_anthill(render, \
+			env->rooms, venv) || event_manager(render, venv))
+				return (1);
+			SDL_RenderPresent(render);
+			ticks = SDL_GetTicks();
+		}
 	}
 	SDL_DestroyTexture(bg);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 14:24:50 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/31 19:06:28 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/06 16:27:12 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static void		event_move(t_visu *venv)
 {
 	if (venv->kb_state[SDL_SCANCODE_UP] && venv->offset.y > \
 	-(venv->screen.y * ZOOM_MAX))
-		venv->offset.y -= 2;
+		venv->offset.y -= 8;
 	if (venv->kb_state[SDL_SCANCODE_DOWN] && venv->offset.y < \
 	venv->screen.y * ZOOM_MAX)
-		venv->offset.y += 2;
+		venv->offset.y += 8;
 	if (venv->kb_state[SDL_SCANCODE_LEFT] && venv->offset.x > \
 	-(venv->screen.x * ZOOM_MAX))
-		venv->offset.x -= 4;
+		venv->offset.x -= 16;
 	if (venv->kb_state[SDL_SCANCODE_RIGHT] && venv->offset.x < \
 	venv->screen.x * ZOOM_MAX)
-		venv->offset.x += 4;
+		venv->offset.x += 16;
 }
 
 static void		event_zoom(t_visu *venv)
@@ -56,7 +56,7 @@ static int		get_step(SDL_Renderer *render, int *step, t_visu *venv)
 
 	if (*step == 4 && frame > 0)
 		frame--;
-	else if (*step == 2 && frame < ((venv->screen.x / 4 + 30) / 4))
+	else if (*step == 2 && frame < ((venv->screen.x / 4 + 30) / 16))
 		frame++;
 	else if (!venv->kb_state[SDL_SCANCODE_S] && *step == 1)
 		*step = 2;
@@ -73,12 +73,12 @@ static int		get_step(SDL_Renderer *render, int *step, t_visu *venv)
 	if (*step == 2 || *step == 3)
 		if (display_ants(render, venv))
 			return (1);
-	boxRGBA(render, venv->screen.x - (frame * 4), 0, venv->screen.x, \
+	boxRGBA(render, venv->screen.x - (frame * 16), 0, venv->screen.x, \
 	venv->screen.y, 0, 0, 0, 160);
-	boxRGBA(render, venv->screen.x - (frame * 4), \
+	boxRGBA(render, venv->screen.x - (frame * 16), \
 	venv->step_select.y, venv->screen.x, \
 	venv->step_select.y + venv->step_select.h, 150, 0, 0, 60);
-	venv->step_size.x = venv->screen.x - ((frame * 4) - 30);
+	venv->step_size.x = venv->screen.x - ((frame * 16) - 30);
 	venv->step_size.w = venv->screen.x / 4;
 	return (SDL_RenderCopy(render, venv->step, &venv->step_focus, \
 	&venv->step_size));
@@ -91,7 +91,7 @@ static int		get_help(SDL_Renderer *render, int *help, t_visu *venv)
 
 	if (*help == 4 && frame > 0)
 		frame--;
-	else if (*help == 2 && frame < 389 / 4)
+	else if (*help == 2 && frame < 389 / 16)
 		frame++;
 	else if (!venv->kb_state[SDL_SCANCODE_H] && \
 	!venv->kb_state[SDL_SCANCODE_F1] && *help == 1)
@@ -104,7 +104,7 @@ static int		get_help(SDL_Renderer *render, int *help, t_visu *venv)
 		*help = 4;
 	if (*help == 4 && frame == 0)
 	*help = 0;
-	pos.x = (frame * 4) - 389;
+	pos.x = (frame * 16) - 389;
 	pos.y = 0;
 	pos.w = 389;
 	pos.h = 400;
