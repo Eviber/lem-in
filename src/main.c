@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/02 17:00:04 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/07 16:01:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_room					*find_room(t_env *antfarm, char *name)
 	t_room				**rooms;
 
 	rooms = antfarm->rooms;
-	while (rooms && *rooms)
+	while (name && rooms && *rooms)
 	{
-		if (!ft_strcmp(name, (*rooms)->name))
+		if ((*rooms)->name && !ft_strcmp(name, (*rooms)->name))
 			return (*rooms);
 		rooms++;
 	}

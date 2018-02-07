@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/03 20:19:30 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/07 16:27:49 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ unsigned long	putants(t_env *env, unsigned long min, unsigned long *lasts)
 	while (target <= (unsigned long)env->nb_ants - (unsigned long)env->antleft)
 	{
 		if (getroomfromant(env, lasts, &tofill, target))
-			ft_printf("AL%d-%s ", target, tofill.name);
+			ft_printf("L%d-%s ", target, tofill.name);
 		else if (target == min)
 			min++;
 		target++;
