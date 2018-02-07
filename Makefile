@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/02/02 14:31:00 by sbrochar         ###   ########.fr        #
+#    Updated: 2018/02/07 16:25:46 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC_DIR = ./src
 OBJ_DIR = ./obj
 
 LIB_DIR = ./libft
-LIB_INC = $(LIB_DIR)/inc
+LIB_INC = $(LIB_DIR)
 
 SRC = get_pipes.c \
 	  get_rooms.c \
