@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 14:16:47 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/20 18:03:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/07 17:01:11 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include "libft.h"
 
-static char	*getbuf(const int fd, int delplz)
+static char	*getbuf(const int fd)
 {
 	static t_list	*catalog = NULL;
 	t_list			*cur;
@@ -28,7 +28,7 @@ static char	*getbuf(const int fd, int delplz)
 	cur = catalog;
 	while (cur->content_size != (size_t)fd && cur->next)
 		cur = cur->next;
-	if (cur->content_size != (size_t)fd && !delplz)
+	if (cur->content_size != (size_t)fd)
 	{
 		if (!(res = ft_strnew(BUFF_SIZE)))
 			return (NULL);
@@ -37,8 +37,6 @@ static char	*getbuf(const int fd, int delplz)
 		cur = cur->next;
 		cur->content_size = (size_t)fd;
 	}
-	if (cur->content_size == (size_t)fd && delplz)
-		ft_memdel(&(cur->content));
 	res = (cur) ? (char *)cur->content : NULL;
 	return (res);
 }
@@ -50,7 +48,7 @@ int			get_next_line(const int fd, char **line)
 	ssize_t				ret;
 
 	ret = 1;
-	buf = getbuf(fd + 1, 0);
+	buf = getbuf(fd + 1);
 	if (!buf || !line || fd < 0 || read(fd, buf, 0) < 0)
 		return (-1);
 	*line = NULL;
@@ -68,6 +66,6 @@ int			get_next_line(const int fd, char **line)
 		ft_strcpy(buf, (ft_strchr(tmp, '\n') + 1));
 	ft_strdel(&tmp);
 	if (!(ret || ft_strlen(buf) || ft_strlen(*line)))
-		getbuf(fd + 1, 1);
+		getbuf(fd + 1);
 	return ((ret || ft_strlen(buf) || ft_strlen(*line)) ? 1 : 0);
 }
