@@ -6,11 +6,11 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/02 19:15:33 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:20:52 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem-in.h>
+#include <lemin.h>
 #include <eparser.h>
 
 static int			check_errors(t_env *antfarm, char **tab, t_room **room1,

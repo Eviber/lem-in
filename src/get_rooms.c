@@ -6,11 +6,11 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/02 19:16:01 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:21:01 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem-in.h>
+#include <lemin.h>
 #include <eparser.h>
 
 static int			check_errors(char **tab)

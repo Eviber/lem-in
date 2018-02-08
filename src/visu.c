@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/30 07:19:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 16:38:49 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_ttf.h>
 #include "libft.h"
-#include "lem-in.h"
+#include "lemin.h"
 #include "visu.h"
 
 #define TURNTIME 1000
 
-int		panic(const char *str, const char *str2)
+int					panic(const char *str, const char *str2)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
 	return (0);
 }
 
-t_winenv		*getsdlenv(t_env *colony)
+t_winenv			*getsdlenv(t_env *colony)
 {
 	static t_winenv	*winenv = NULL;
 
@@ -37,34 +37,34 @@ t_winenv		*getsdlenv(t_env *colony)
 	return (winenv);
 }
 
-int		visu_init(t_env *colony)
+int					visu_init(t_env *colony)
 {
-	t_winenv	*env;
-	t_pos		min;
-	t_pos		max;
-	int			i;
+	t_winenv		*env;
+	t_pos			min;
+	t_pos			max;
+	int				i;
 
 	env = getsdlenv(colony);
 	if (!env || SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
-		return(panic("Error while initializing SDL: ", SDL_GetError()));
+		return (panic("Error while initializing SDL: ", SDL_GetError()));
 	if (SDL_GetDesktopDisplayMode(0, &(env->dispmode)))
-		return(panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError()));
+		return (panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError()));
 	env->win = SDL_CreateWindow("lem-in",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				env->dispmode.w, env->dispmode.h, 0);//SDL_WINDOW_FULLSCREEN);
+				env->dispmode.w, env->dispmode.h, 0); //SDL_WINDOW_FULLSCREEN);
 	if (!env->win)
-		return(panic("Error while creating window: ", SDL_GetError()));
+		return (panic("Error while creating window: ", SDL_GetError()));
 	env->render = SDL_CreateRenderer(env->win, -1, SDL_RENDERER_ACCELERATED);
 	if (!env->render)
-		return(panic("Error while creating renderer: ", SDL_GetError()));
+		return (panic("Error while creating renderer: ", SDL_GetError()));
 	env->layer[TUBES] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
 	env->layer[ROOMS] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
 	env->layer[ANTS] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
 	env->layer[ANT] = SDL_CreateTexture(env->render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, env->dispmode.w, env->dispmode.h);
 	if (!env->layer[TUBES] || !env->layer[ROOMS] || !env->layer[ANTS])
-		return(panic("Error while creating layers: ", SDL_GetError()));
+		return (panic("Error while creating layers: ", SDL_GetError()));
 	if (TTF_Init() == -1 || !(env->font = TTF_OpenFont("joystix.ttf", 48)))
-		return(panic("Error while initializing SDL_TTF: ", TTF_GetError()));
+		return (panic("Error while initializing SDL_TTF: ", TTF_GetError()));
 //	SDL_SetTextureBlendMode(env->layer[TUBES], SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(env->layer[ROOMS], SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(env->layer[ANTS], SDL_BLENDMODE_BLEND);
@@ -102,12 +102,12 @@ int		visu_init(t_env *colony)
 	return (1);
 }
 
-void	putant(t_winenv w, t_room *room, t_room *prev, int ant)
+void				putant(t_winenv w, t_room *room, t_room *prev, int ant)
 {
-	Uint32	ticks;
-	int		*antcolor;
-	t_pos	pos;
-	t_pos	lastpos;
+	Uint32			ticks;
+	int				*antcolor;
+	t_pos			pos;
+	t_pos			lastpos;
 
 	SDL_SetRenderTarget(w.render, w.layer[ANTS]);
 	pos.x = room->pos.x * w.zoom + w.mov.x;
@@ -121,13 +121,13 @@ void	putant(t_winenv w, t_room *room, t_room *prev, int ant)
 		pos.y = (double)lastpos.y + ((double)(pos.y - lastpos.y) *
 			(double)(ticks - w.ticks)) / (double)TURNTIME;
 	}
-	antcolor = (int [4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
+	antcolor = (int[4]){0xFF5069FF, 0xFFD161A0, 0xFFDB8041, 0xFF7FC433};
 	filledCircleColor(w.render, pos.x, pos.y, 10, antcolor[ant % 4]);
 }
 
-void	updatelast(t_winenv *w, t_env colony)
+void				updatelast(t_winenv *w, t_env colony)
 {
-	int		i;
+	int				i;
 
 	if (!w->lastants)
 	{
@@ -146,9 +146,9 @@ void	updatelast(t_winenv *w, t_env colony)
 	}
 }
 
-void	putlast(t_winenv *w, t_env colony)
+void				putlast(t_winenv *w, t_env colony)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	while (w->lastants && colony.paths[i])
@@ -159,31 +159,31 @@ void	putlast(t_winenv *w, t_env colony)
 	}
 }
 
-void	putroom(t_winenv w, t_room *room, t_env colony)
+void				putroom(t_winenv w, t_room *room, t_env colony)
 {
-	t_pos	pos;
+	t_pos			pos;
 
 	SDL_SetRenderTarget(w.render, w.layer[ROOMS]);
 	pos.x = room->pos.x * w.zoom + w.mov.x;
 	pos.y = room->pos.y * w.zoom + w.mov.y;
 	filledCircleColor(w.render, pos.x, pos.y, 33, 0xFF78726F);
 	if (room == colony.start && room == colony.end)
-		filledCircleRGBA (w.render, pos.x, pos.y,
-				30, 200, 200, 200, SDL_ALPHA_OPAQUE);
+		filledCircleRGBA(w.render, pos.x, pos.y, 30, 200, 200, 200,
+							SDL_ALPHA_OPAQUE);
 	else if (room == colony.start)
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFFBCBA00);
 	else if (room == colony.end)
-		filledCircleRGBA (w.render, pos.x, pos.y,
-				30, 200, 200, 100, SDL_ALPHA_OPAQUE);
+		filledCircleRGBA(w.render, pos.x, pos.y, 30, 200, 200, 100,
+							SDL_ALPHA_OPAQUE);
 	else
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF4C4846);
 }
 
-void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
+void				putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 {
-	t_pos	orig;
-	t_pos	dest;
-	int		i;
+	t_pos			orig;
+	t_pos			dest;
+	int				i;
 
 	SDL_SetRenderTarget(render, w.layer[TUBES]);
 	orig.x = room.pos.x * w.zoom + w.mov.x;
@@ -199,14 +199,13 @@ void	putpipes(SDL_Renderer *render, t_room room, t_winenv w)
 	}
 }
 
-#include <stdio.h>
-void	counter(SDL_Renderer *render, t_env colony, t_winenv *env)
+void				counter(SDL_Renderer *render, t_env colony, t_winenv *env)
 {
-	SDL_Texture	*tex;
-	SDL_Surface	*surf;
-	SDL_Rect	rect;
-	char		str[40];
-	int			i;
+	SDL_Texture		*tex;
+	SDL_Surface		*surf;
+	SDL_Rect		rect;
+	char			str[40];
+	int				i;
 
 	rect.x = 0;
 	sprintf(str, "at start: %2zu", colony.antleft);
@@ -230,10 +229,10 @@ void	counter(SDL_Renderer *render, t_env colony, t_winenv *env)
 	SDL_DestroyTexture(tex);
 }
 
-void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
+void				putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 {
-	t_room	**rooms;
-	int		i;
+	t_room			**rooms;
+	int				i;
 
 	i = 0;
 	rooms = colony.rooms;
@@ -267,11 +266,11 @@ void	putrooms(SDL_Renderer *render, t_env colony, t_winenv *w)
 	counter(render, colony, w);
 }
 
-int		handle_event(t_winenv *env, Uint32 ticks)
+int					handle_event(t_winenv *env, Uint32 ticks)
 {
-	const Uint8	*state;
-	double		zoomval;
-	SDL_Point	mouse;
+	const Uint8		*state;
+	double			zoomval;
+	SDL_Point		mouse;
 
 	state = SDL_GetKeyboardState(NULL);
 	SDL_PumpEvents();
@@ -313,7 +312,7 @@ int		handle_event(t_winenv *env, Uint32 ticks)
 	return (state[SDL_SCANCODE_Q] || state[SDL_SCANCODE_ESCAPE]);
 }
 
-int		quitvisu(t_winenv *env, int quit)
+int					quitvisu(t_winenv *env, int quit)
 {
 	if (!env || quit)
 	{
@@ -323,11 +322,11 @@ int		quitvisu(t_winenv *env, int quit)
 	return (1);
 }
 
-int		visu(void)
+int					visu(void)
 {
-	t_winenv	*env;
-	Uint32		frameticks;
-	int			quit;
+	t_winenv		*env;
+	Uint32			frameticks;
+	int				quit;
 
 	env = getsdlenv(NULL);
 	env->ticks = SDL_GetTicks();

@@ -6,17 +6,12 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/02 17:00:09 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:29:41 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem-in.h>
+#include <lemin.h>
 #include <eparser.h>
-
-//static int			check_antfarm(t_env *antfarm)
-//{
-//	return ((antfarm->nb_ants > -1) && antfarm->start && antfarm->end);
-//}
 
 static int			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 {
@@ -49,7 +44,8 @@ static void			parse_comment(int *start, int *end, char *comment)
 	}
 }
 
-static int			get_antfarm(t_env *antfarm, char *line, int *start, int *end)
+static int			get_antfarm(t_env *antfarm, char *line, int *start,
+					int *end)
 {
 	static int		rooms = TRUE;
 	static int		ants = TRUE;

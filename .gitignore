@@ -5,3 +5,4 @@ lem-in
 a.out
 test.c
 tmp
+*.dSYM

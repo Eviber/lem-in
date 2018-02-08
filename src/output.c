@@ -6,17 +6,17 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/07 16:27:49 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 15:51:35 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 #include "visu.h"
 #include "libft.h"
 
-static void	mov_ants(t_env *env, t_room *pathroom)
+static void				mov_ants(t_env *env, t_room *pathroom)
 {
-	t_room	*cur;
+	t_room				*cur;
 
 	cur = pathroom;
 	while (cur && cur->prev && cur->prev != env->start)
@@ -35,11 +35,12 @@ static void	mov_ants(t_env *env, t_room *pathroom)
 	}
 }
 
-int				getroomfromant(t_env *env, unsigned long *lasts, t_room *tofill, unsigned long target)
+static int				getroomfromant(t_env *env, unsigned long *lasts,
+						t_room *tofill, unsigned long target)
 {
-	int			i;
-	int			j;
-	
+	int					i;
+	int					j;
+
 	i = 0;
 	j = 0;
 	while (env->rooms[i] && (unsigned long)env->rooms[i]->ant != target)
@@ -53,10 +54,11 @@ int				getroomfromant(t_env *env, unsigned long *lasts, t_room *tofill, unsigned
 	return (TRUE);
 }
 
-unsigned long	putants(t_env *env, unsigned long min, unsigned long *lasts)
+static unsigned long	putants(t_env *env, unsigned long min,
+						unsigned long *lasts)
 {
-	t_room			tofill;
-	unsigned long	target;
+	t_room				tofill;
+	unsigned long		target;
 
 	target = min;
 	while (target <= (unsigned long)env->nb_ants - (unsigned long)env->antleft)
@@ -71,19 +73,11 @@ unsigned long	putants(t_env *env, unsigned long min, unsigned long *lasts)
 	return (min);
 }
 
-void		output(t_env *env, int v)
+static void				sub_output(t_env *env, int v, unsigned long *lasts,
+						unsigned long min)
 {
-	unsigned long	*lasts;
-	unsigned long	min;
-	int				i;
+	int					i;
 
-	min = 1;
-	env->lem_out = 0;
-	env->antleft = env->nb_ants;
-	i = 0;
-	while (env->paths && env->paths[i] && env->paths[i]->room)
-		i++;
-	lasts = (unsigned long *)ft_memalloc((i + 1) * sizeof(long));
 	while (env->lem_out < env->nb_ants)
 	{
 		i = 0;
@@ -104,6 +98,22 @@ void		output(t_env *env, int v)
 			v = visu();
 		min = putants(env, min, lasts);
 	}
+}
+
+void					output(t_env *env, int v)
+{
+	unsigned long		*lasts;
+	unsigned long		min;
+	int					i;
+
+	min = 1;
+	env->lem_out = 0;
+	env->antleft = env->nb_ants;
+	i = 0;
+	while (env->paths && env->paths[i] && env->paths[i]->room)
+		i++;
+	lasts = (unsigned long *)ft_memalloc((i + 1) * sizeof(long));
+	sub_output(env, v, lasts, min);
 	free(lasts);
 	while (v)
 		v = visu();

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/01/30 05:51:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 15:22:39 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <SDL.h>
 # include <SDL_ttf.h>
-# include "lem-in.h"
+# include "lemin.h"
 
 enum { TUBES, ROOMS, ANTS, ANT };
 

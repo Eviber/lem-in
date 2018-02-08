@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.h                                           :+:      :+:    :+:   */
+/*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/02 14:39:49 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:59:28 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
+#ifndef LEMIN_H
+# define LEMIN_H
 
 typedef struct		s_pos
 {
@@ -32,14 +32,14 @@ typedef struct		s_room
 	int				locked;
 }					t_room;
 
-typedef struct			s_conflit
+typedef struct		s_conflict
 {
 	t_room				*old_room;
 	t_room				*miss_direction;
-	struct s_conflit	*next;
-	struct s_conflit	*prev;
+	struct s_conflict	*next;
+	struct s_conflict	*prev;
 	long				len;
-}						t_conflit;
+}					t_conflict;
 
 typedef struct		s_path
 {
@@ -57,8 +57,8 @@ typedef struct		s_env
 	long			nb_ants;
 	long			antleft;
 	long			lem_out;
-	int 			depth;
-	int 			conflict;
+	int				depth;
+	int				conflict;
 	char			*to_print;
 }					t_env;
 

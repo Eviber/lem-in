@@ -6,11 +6,11 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 21:42:18 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/02 14:51:45 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/02/08 15:21:12 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <lem-in.h>
+#include <lemin.h>
 #include <eparser.h>
 
 void				free_paths(t_path **paths)

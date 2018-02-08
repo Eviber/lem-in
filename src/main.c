@@ -6,11 +6,11 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/07 16:01:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 15:34:41 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 #include "eparser.h"
 #include "solver.h"
 #include "visu.h"
@@ -41,9 +41,9 @@ t_room				**add_room(t_room **rooms, int nb_rooms)
 	return (NULL);
 }
 
-t_room					*find_room(t_env *antfarm, char *name)
+t_room				*find_room(t_env *antfarm, char *name)
 {
-	t_room				**rooms;
+	t_room			**rooms;
 
 	rooms = antfarm->rooms;
 	while (name && rooms && *rooms)
@@ -55,9 +55,9 @@ t_room					*find_room(t_env *antfarm, char *name)
 	return (NULL);
 }
 
-static t_env			init_antfarm(void)
+static t_env		init_antfarm(void)
 {
-	t_env				ret;
+	t_env			ret;
 
 	ret.start = NULL;
 	ret.end = NULL;
@@ -70,14 +70,14 @@ static t_env			init_antfarm(void)
 	return (ret);
 }
 
-static void				debug_room(t_room room)
+/*static void		debug_room(t_room room)
 {
 	ft_printf("%s : pos={%d;%d} ; prev=%p ; next=%p ; ant=%ld ; weight=%d ; dead=%d ; pipes=%p \n", room.name, room.pos.x, room.pos.y, room.prev, room.next, room.ant, room.weight, room.dead, room.pipes);
 }
 
-static void				debug_pipes(t_room **pipes)
+static void			debug_pipes(t_room **pipes)
 {
-	int					i;
+	int				i;
 
 	i = 0;
 	if (pipes)
@@ -93,7 +93,7 @@ static void				debug_pipes(t_room **pipes)
 
 void				debug_colony(t_env colony)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	ft_printf("start=%s\nend=%s\npaths=%p\nrooms=%p\nnb_ants=%ld\nantleft=%ld\n\n", colony.start->name, colony.end->name, colony.paths, colony.rooms, colony.nb_ants, colony.antleft);
@@ -105,12 +105,12 @@ void				debug_colony(t_env colony)
 		ft_printf("tubes of first room:\n");
 		t_room *first_room = *(colony.rooms);
 		debug_pipes(first_room->pipes);
-}
+}*/
 
-int						main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
-	t_env				antfarm;
-	int		v;
+	t_env			antfarm;
+	int				v;
 
 	v = (argc == 2 && ft_strequ(argv[1], "-v"));
 	antfarm = init_antfarm();
