@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 18:50:15 by vsporer           #+#    #+#             */
-/*   Updated: 2018/01/31 19:54:25 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/12 16:54:41 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 static int		create_base(SDL_Renderer *render, t_visu *venv)
 {
+	if (venv->step_size.w > 16383)
+		venv->step_size.w = 16383;
+	if (venv->step_size.h > 16383)
+		venv->step_size.h = 16383;
 	if (!(venv->step = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, \
 	SDL_TEXTUREACCESS_TARGET, venv->step_size.w, venv->step_size.h)))
 		return (1);
