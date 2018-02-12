@@ -1,0 +1,60 @@
+#ants
+30
+#rooms
+##start
+start 0 3
+##end
+end 6 3
+A0 1 1
+A1 2 1
+A2 3 1
+A3 4 1
+C1 1 2
+C2 2 2
+C3 3 2
+C4 4 2
+B0 1 3
+B1 2 3
+B2 3 3
+B3 4 3
+D0 1 4
+D1 2 4
+D2 3 4
+D3 4 4
+E0 1 5
+E1 2 5
+E2 3 5
+E3 4 5
+E4 5 5
+E5 6 5
+#tubes
+start-A0
+A0-C1
+A0-A1
+A1-B1
+A1-A2
+A2-A3
+A3-end
+C1-C2
+C2-C3
+C3-C4
+C4-end
+start-B0
+B0-B1
+B1-B2
+B2-D2
+B3-B2
+B3-end
+start-D0
+D0-D1
+D1-D2
+D2-D3
+D3-E3
+D3-end
+start-E0
+E0-E1
+E1-E2
+E2-E3
+E3-E4
+E4-E5
+E5-end
