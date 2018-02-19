@@ -212,6 +212,10 @@ Norme: ./maps/test_map
 Warning: Not a valid file
 Norme: ./norme.sh
 Warning: Not a valid file
+Norme: ./norme.txt
+Warning: Not a valid file
+Norme: ./norme2.txt
+Warning: Not a valid file
 Norme: ./obj/free_antfarm.o
 Warning: Not a valid file
 Norme: ./obj/get_pipes.o
@@ -256,65 +260,65 @@ Error (line 3): multiple empty lines
 Error (line 4): multiple empty lines
 Error (line 5): line has 83 characters
 Norme: ./libft/includes/ft_printf_list.h
-Norme: ./libft/includes/get_next_line.h
 Norme: ./include/parser_lem-in.h
 Error: global scope bad aligned
 Error: bad filename : parser_lem-in.h
 Error (line 19): preprocessor block must be followed by one empty line
 Error (line 45): multiple empty lines
-Norme: ./libft/includes/ft_printf.h
+Norme: ./libft/includes/get_next_line.h
 Norme: ./include/visu_lem-in.h
 Error: global scope bad aligned
 Error: bad filename : visu_lem-in.h
+Norme: ./libft/includes/ft_printf.h
 Norme: ./libft/src/ft_bzero.c
+Norme: ./libft/src/ft_atoull.c
 Norme: ./libft/src/ft_countchar.c
-Norme: ./libft/src/ft_error.c
 Norme: ./libft/src/ft_isalnum.c
+Norme: ./libft/src/ft_error.c
 Norme: ./libft/src/ft_atoi.c
 Norme: ./libft/src/ft_isascii.c
-Norme: ./libft/src/ft_atoull.c
 Norme: ./libft/src/ft_isdigit.c
 Norme: ./libft/src/ft_isprint.c
 Norme: ./libft/src/ft_lstadd.c
-Norme: ./libft/src/ft_lstaddback.c
-Error: 42 header not at top of the file
-Norme: ./libft/src/ft_itoa.c
-Norme: ./libft/src/ft_lstdelone.c
-Norme: ./libft/src/ft_lstiter.c
-Norme: ./libft/src/ft_lstmap.c
-Norme: ./libft/src/ft_lstnew.c
-Norme: ./libft/src/ft_memalloc.c
 Norme: ./libft/includes/libft.h
 Norme: ./libft/src/ft_isalpha.c
 Norme: ./libft/src/ft_lstdel.c
-Norme: ./libft/src/ft_memccpy.c
+Norme: ./libft/src/ft_lstaddback.c
+Error: 42 header not at top of the file
+Norme: ./libft/src/ft_lstdelone.c
+Norme: ./libft/src/ft_lstiter.c
+Norme: ./libft/src/ft_itoa.c
+Norme: ./libft/src/ft_memalloc.c
+Norme: ./libft/src/ft_lstmap.c
+Norme: ./libft/src/ft_lstnew.c
+Norme: ./libft/src/ft_memchr.c
 Norme: ./libft/src/ft_memcmp.c
 Norme: ./libft/src/ft_memcpy.c
-Norme: ./libft/src/ft_memchr.c
 Norme: ./libft/src/ft_memdel.c
+Norme: ./libft/src/ft_memccpy.c
 Norme: ./libft/src/ft_memset.c
 Norme: ./libft/src/ft_nbrlen.c
 Norme: ./libft/src/ft_memmove.c
-Norme: ./libft/src/ft_printf/attribute/ft_printf_get_minus.c
 Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute_zero.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_get_minus.c
 Norme: ./libft/src/ft_printf/attribute/ft_printf_get_zero.c
-Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_c.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_b.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_c.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_ls_sup.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_not_valid.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_di.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_o.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_p.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_percent.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_s.c
-Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_p.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_xp_xup.c
-Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute.c
 Norme: ./libft/src/ft_printf/ft_parser_printf.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_lc_cup.c
-Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_u.c
 Norme: ./libft/src/ft_printf/ft_printf.c
 Error (line 27): function ft_dprintf has 26 lines
 Error (line 57): function ft_printf has 26 lines
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_u.c
 Norme: ./libft/src/ft_printf/ft_printf_load_struct.c
 Norme: ./libft/src/ft_printf/ft_printf_search_conv.c
 Norme: ./libft/src/ft_printf/ft_printf_clear_flag.c
@@ -323,65 +327,64 @@ Norme: ./libft/src/ft_printf/ft_printf_lenmod.c
 Norme: ./libft/src/ft_printf/ft_printf_search_field.c
 Norme: ./libft/src/ft_printf/ft_printf_switch.c
 Norme: ./libft/src/ft_printf/ft_printf_tolst.c
-Norme: ./libft/src/ft_printf/ft_printf_search_prec.c
 Norme: ./libft/src/ft_printf/ft_printf_tools.c
 Norme: ./libft/src/ft_putchar.c
-Norme: ./libft/src/ft_putchar_fd.c
+Norme: ./libft/src/ft_printf/ft_printf_search_prec.c
 Norme: ./libft/src/ft_putendl.c
+Norme: ./libft/src/ft_putchar_fd.c
 Norme: ./libft/src/ft_putendl_fd.c
-Norme: ./libft/src/ft_putnbr.c
-Norme: ./libft/src/ft_putstr.c
 Norme: ./libft/src/ft_printf/prec_field/ft_printf_prec.c
+Norme: ./libft/src/ft_putstr.c
+Norme: ./libft/src/ft_putnbr_fd.c
 Norme: ./libft/src/ft_putstr_fd.c
 Norme: ./libft/src/ft_putstr_minlen.c
-Norme: ./libft/src/ft_putstr_minlen_fd.c
 Norme: ./libft/src/ft_printf/prec_field/ft_printf_field.c
-Norme: ./libft/src/ft_putnbr_fd.c
-Norme: ./libft/src/ft_strchr.c
+Norme: ./libft/src/ft_putstr_minlen_fd.c
+Norme: ./libft/src/ft_putnbr.c
+Norme: ./libft/src/ft_split_whitespaces.c
 Norme: ./libft/src/ft_strclr.c
 Norme: ./libft/src/ft_strcat.c
-Norme: ./libft/src/ft_split_whitespaces.c
-Norme: ./libft/src/ft_strdel.c
-Norme: ./libft/src/ft_strcmp.c
 Norme: ./libft/src/ft_strcpy.c
-Norme: ./libft/src/ft_strequ.c
+Norme: ./libft/src/ft_strchr.c
 Norme: ./libft/src/ft_strdup.c
+Norme: ./libft/src/ft_strcmp.c
 Norme: ./libft/src/ft_striter.c
+Norme: ./libft/src/ft_strequ.c
 Norme: ./libft/src/ft_striteri.c
-Norme: ./libft/src/ft_strlcat.c
-Norme: ./libft/src/ft_strlen.c
 Norme: ./libft/src/ft_strjoin_free.c
-Norme: ./libft/src/ft_strjoin.c
-Norme: ./libft/src/ft_strmapi.c
+Norme: ./libft/src/ft_strlen.c
 Norme: ./libft/src/ft_strmap.c
+Norme: ./libft/src/ft_strmapi.c
 Norme: ./libft/src/ft_strncat.c
 Norme: ./libft/src/ft_strncmp.c
 Norme: ./libft/src/ft_strncpy.c
+Norme: ./libft/src/ft_strlcat.c
 Norme: ./libft/src/ft_strnequ.c
-Norme: ./libft/src/ft_strrchr.c
-Norme: ./libft/src/ft_strstr.c
-Norme: ./libft/src/ft_strnew.c
 Norme: ./libft/src/ft_strnstr.c
+Norme: ./libft/src/ft_strrchr.c
+Norme: ./libft/src/ft_strdel.c
+Norme: ./libft/src/ft_strjoin.c
 Norme: ./libft/src/ft_strstr_minlen.c
-Norme: ./libft/src/ft_strsubstitute.c
 Norme: ./libft/src/ft_strsub.c
-Norme: ./libft/src/ft_strtablen.c
-Norme: ./libft/src/ft_swap_ptr.c
-Norme: ./libft/src/ft_tolower.c
-Norme: ./libft/src/ft_toupper.c
-Norme: ./libft/src/ft_strtabadd.c
 Norme: ./libft/src/ft_strsplit.c
-Norme: ./libft/src/ft_wcharlen.c
-Error: 42 header not at top of the file
-Norme: ./libft/src/ft_ulltoa_base.c
-Norme: ./libft/src/ft_wcsrtombs.c
-Error: 42 header not at top of the file
-Norme: ./libft/src/ft_wcrtomb.c
+Norme: ./libft/src/ft_strtabadd.c
+Norme: ./libft/src/ft_strnew.c
+Norme: ./libft/src/ft_strstr.c
+Norme: ./libft/src/ft_strtablen.c
+Norme: ./libft/src/ft_tolower.c
 Norme: ./libft/src/ft_strtrim.c
+Norme: ./libft/src/ft_toupper.c
+Norme: ./libft/src/ft_ulltoa_base.c
+Norme: ./libft/src/ft_strsubstitute.c
+Norme: ./libft/src/ft_swap_ptr.c
 Norme: ./libft/src/ft_wcsrlen.c
 Error: 42 header not at top of the file
 Error (line 20, col 6): missing space around -=
-Norme: ./src/lem_in_error.c
+Norme: ./libft/src/ft_wcsrtombs.c
+Error: 42 header not at top of the file
+Norme: ./libft/src/ft_wcrtomb.c
+Norme: ./libft/src/ft_wcharlen.c
+Error: 42 header not at top of the file
 Norme: ./src/lem_in.c
 Error (line 48, col 2): missing space after return
 Error (line 52): bad indentation
@@ -392,43 +395,10 @@ Error (line 54): bad indentation
 Error (line 54): C++ comment
 Norme: ./src/parser/add_pipe.c
 Norme: ./maps/ft_strsplit.c
-Norme: ./src/parser/new_room.c
-Error (line 43, col 37): bad spacing
-Norme: ./libft/src/get_next_line/get_next_line.c
+Norme: ./src/lem_in_error.c
 Norme: ./src/parser/read_map.c
-Norme: ./src/solver/solver_tool.c
-Error: global scope bad aligned
-Error: 42 header not at top of the file
-Error (line 5): Space before function name
-Error (line 7, col 1): missing space after while
-Error (line 9, col 1): missing space after while
-Error (line 17): save_info have 5 parameters
-Error (line 17): Space before function name
-Error (line 17): function save_info has 27 lines
-Error (line 17): line has 82 characters
-Error (line 23): bad indentation
-Error (line 24): bad indentation
-Error (line 25): bad indentation
-Error (line 26): bad indentation
-Error (line 27): bad indentation
-Error (line 28): bad indentation
-Error (line 29): bad indentation
-Error (line 30): bad indentation
-Error (line 34, col 2): missing space after while
-Error (line 35): bad indentation
-Error (line 41, col 3): missing space after return
-Error (line 45, col 1): missing space after return
-Error (line 48): declarations in lock_path are bad aligned
-Error (line 48): Space before function name
-Error (line 56, col 1): missing space after while
-Error (line 61, col 2): missing space after while
-Error (line 74): Space before function name
-Norme: ./src/tools/clean_venv.c
 Norme: ./src/parser/check_in.c
 Error (line 35): function check_room has 26 lines
-Norme: ./src/tools/del_strtab.c
-Norme: ./src/tools/del_room.c
-Norme: ./src/tools/del_strtab_except.c
 Norme: ./src/solver/search_path.c
 Error: global scope bad aligned
 Error: 42 header not at top of the file
@@ -481,9 +451,41 @@ Error (line 113): must begin only by tabulations
 Error (line 114): bad indentation
 Error (line 114): must begin only by tabulations
 Error (line 115, col 25): bad spacing
-Norme: ./src/tools/get_room_index.c
-Norme: ./src/visu/display_ants.c
-Norme: ./src/visu/draw_anthill.c
+Norme: ./libft/src/get_next_line/get_next_line.c
+Norme: ./src/tools/clean_venv.c
+Norme: ./src/parser/new_room.c
+Error (line 43, col 37): bad spacing
+Norme: ./src/tools/del_strtab.c
+Norme: ./src/solver/solver_tool.c
+Error: global scope bad aligned
+Error: 42 header not at top of the file
+Error (line 5): Space before function name
+Error (line 7, col 1): missing space after while
+Error (line 9, col 1): missing space after while
+Error (line 17): save_info have 5 parameters
+Error (line 17): Space before function name
+Error (line 17): function save_info has 27 lines
+Error (line 17): line has 82 characters
+Error (line 23): bad indentation
+Error (line 24): bad indentation
+Error (line 25): bad indentation
+Error (line 26): bad indentation
+Error (line 27): bad indentation
+Error (line 28): bad indentation
+Error (line 29): bad indentation
+Error (line 30): bad indentation
+Error (line 34, col 2): missing space after while
+Error (line 35): bad indentation
+Error (line 41, col 3): missing space after return
+Error (line 45, col 1): missing space after return
+Error (line 48): declarations in lock_path are bad aligned
+Error (line 48): Space before function name
+Error (line 56, col 1): missing space after while
+Error (line 61, col 2): missing space after while
+Error (line 74): Space before function name
+Norme: ./src/tools/del_strtab_except.c
+Norme: ./src/tools/search_room.c
+Error (line 25, col 2): missing space after while
 Norme: ./src/solver/send_ant.c
 Error: 42 header not at top of the file
 Error (line 6): declarations in create_string are bad aligned
@@ -765,16 +767,20 @@ Error (line 152): bad indentation
 Error (line 152): must begin only by tabulations
 Error (line 153): bad indentation
 Error (line 153): must begin only by tabulations
-Norme: ./src/tools/search_room.c
-Error (line 25, col 2): missing space after while
-Norme: ./src/visu/default_zoom.c
+Norme: ./src/visu/display_ants.c
+Norme: ./src/tools/del_room.c
+Norme: ./src/visu/draw_anthill.c
 Norme: ./src/visu/get_rooms_name.c
-Norme: ./src/visu/help_display_init.c
-Norme: ./src/visu/reset_pos_map.c
+Norme: ./src/visu/default_zoom.c
 Norme: ./src/visu/lem_in_visu.c
+Norme: ./src/tools/get_room_index.c
 Norme: ./src/visu/move_step.c
 Error (line 31): function move_step has 26 lines
 Norme: ./src/visu/event_manager.c
 Error (line 53): function get_step has 30 lines
 Error (line 106): bad indentation
 Norme: ./src/visu/step_display_init.c
+Norme: ./srcs/lem-in.c
+Warning: /Users/ygaude/Projects/lem-in/srcs/lem-in.c may not compile or is invalid for some reasons.
+Norme: ./src/visu/reset_pos_map.c
+Norme: ./src/visu/help_display_init.c
