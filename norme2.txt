@@ -1,0 +1,16 @@
+Error: bad filename : visu_lem-in.h
+Norme: ./libft/src/ft_bzero.c
+Norme: ./libft/src/ft_countchar.c
+Norme: ./libft/src/ft_error.c
+Norme: ./libft/src/ft_isalnum.c
+Norme: ./libft/src/ft_atoi.c
+Norme: ./libft/src/ft_isascii.c
+--
+--
+Norme: ./libft/src/ft_wcsrlen.c
+Error: 42 header not at top of the file
+Error (line 20, col 6): missing space around -=
+Norme: ./src/lem_in_error.c
+Norme: ./src/lem_in.c
+Error (line 48, col 2): missing space after return
+Error (line 52): bad indentation

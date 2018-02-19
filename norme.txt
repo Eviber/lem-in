@@ -1,0 +1,780 @@
+Norme: ./Makefile
+Warning: Not a valid file
+Norme: ./a.out
+Warning: Not a valid file
+Norme: ./lem-in
+Warning: Not a valid file
+Norme: ./libft/free_tab.o
+Warning: Not a valid file
+Norme: ./libft/ft_abs.o
+Warning: Not a valid file
+Norme: ./libft/ft_atoi.o
+Warning: Not a valid file
+Norme: ./libft/ft_bzero.o
+Warning: Not a valid file
+Norme: ./libft/ft_imaxtoa.o
+Warning: Not a valid file
+Norme: ./libft/ft_isalnum.o
+Warning: Not a valid file
+Norme: ./libft/ft_isalpha.o
+Warning: Not a valid file
+Norme: ./libft/ft_isascii.o
+Warning: Not a valid file
+Norme: ./libft/ft_isdigit.o
+Warning: Not a valid file
+Norme: ./libft/ft_isprint.o
+Warning: Not a valid file
+Norme: ./libft/ft_isspace.o
+Warning: Not a valid file
+Norme: ./libft/ft_itoa.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstadd.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstaddend.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstdel.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstdelone.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstend.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstiter.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstmap.o
+Warning: Not a valid file
+Norme: ./libft/ft_lstnew.o
+Warning: Not a valid file
+Norme: ./libft/ft_magnitude.o
+Warning: Not a valid file
+Norme: ./libft/ft_memalloc.o
+Warning: Not a valid file
+Norme: ./libft/ft_memccpy.o
+Warning: Not a valid file
+Norme: ./libft/ft_memchr.o
+Warning: Not a valid file
+Norme: ./libft/ft_memcmp.o
+Warning: Not a valid file
+Norme: ./libft/ft_memcpy.o
+Warning: Not a valid file
+Norme: ./libft/ft_memdel.o
+Warning: Not a valid file
+Norme: ./libft/ft_memdup.o
+Warning: Not a valid file
+Norme: ./libft/ft_memjoin.o
+Warning: Not a valid file
+Norme: ./libft/ft_memmove.o
+Warning: Not a valid file
+Norme: ./libft/ft_memset.o
+Warning: Not a valid file
+Norme: ./libft/ft_pr_apply.o
+Warning: Not a valid file
+Norme: ./libft/ft_pr_convert.o
+Warning: Not a valid file
+Norme: ./libft/ft_pr_loop.o
+Warning: Not a valid file
+Norme: ./libft/ft_pr_parse.o
+Warning: Not a valid file
+Norme: ./libft/ft_printf.o
+Warning: Not a valid file
+Norme: ./libft/ft_putchar.o
+Warning: Not a valid file
+Norme: ./libft/ft_putchar_fd.o
+Warning: Not a valid file
+Norme: ./libft/ft_putendl.o
+Warning: Not a valid file
+Norme: ./libft/ft_putendl_fd.o
+Warning: Not a valid file
+Norme: ./libft/ft_putnbr.o
+Warning: Not a valid file
+Norme: ./libft/ft_putnbr_fd.o
+Warning: Not a valid file
+Norme: ./libft/ft_putstr.o
+Warning: Not a valid file
+Norme: ./libft/ft_putstr_fd.o
+Warning: Not a valid file
+Norme: ./libft/ft_strappend.o
+Warning: Not a valid file
+Norme: ./libft/ft_strcat.o
+Warning: Not a valid file
+Norme: ./libft/ft_strchr.o
+Warning: Not a valid file
+Norme: ./libft/ft_strcjoin.o
+Warning: Not a valid file
+Norme: ./libft/ft_strclr.o
+Warning: Not a valid file
+Norme: ./libft/ft_strcmp.o
+Warning: Not a valid file
+Norme: ./libft/ft_strcpy.o
+Warning: Not a valid file
+Norme: ./libft/ft_strdel.o
+Warning: Not a valid file
+Norme: ./libft/ft_strdup.o
+Warning: Not a valid file
+Norme: ./libft/ft_strequ.o
+Warning: Not a valid file
+Norme: ./libft/ft_strinsert.o
+Warning: Not a valid file
+Norme: ./libft/ft_striter.o
+Warning: Not a valid file
+Norme: ./libft/ft_striteri.o
+Warning: Not a valid file
+Norme: ./libft/ft_strjoin.o
+Warning: Not a valid file
+Norme: ./libft/ft_strjoinf.o
+Warning: Not a valid file
+Norme: ./libft/ft_strlcat.o
+Warning: Not a valid file
+Norme: ./libft/ft_strlen.o
+Warning: Not a valid file
+Norme: ./libft/ft_strmap.o
+Warning: Not a valid file
+Norme: ./libft/ft_strmapi.o
+Warning: Not a valid file
+Norme: ./libft/ft_strmerge.o
+Warning: Not a valid file
+Norme: ./libft/ft_strncat.o
+Warning: Not a valid file
+Norme: ./libft/ft_strncmp.o
+Warning: Not a valid file
+Norme: ./libft/ft_strncpy.o
+Warning: Not a valid file
+Norme: ./libft/ft_strnequ.o
+Warning: Not a valid file
+Norme: ./libft/ft_strnew.o
+Warning: Not a valid file
+Norme: ./libft/ft_strnlen.o
+Warning: Not a valid file
+Norme: ./libft/ft_strnstr.o
+Warning: Not a valid file
+Norme: ./libft/ft_strrchr.o
+Warning: Not a valid file
+Norme: ./libft/ft_strsplit.o
+Warning: Not a valid file
+Norme: ./libft/ft_strstr.o
+Warning: Not a valid file
+Norme: ./libft/ft_strsub.o
+Warning: Not a valid file
+Norme: ./libft/ft_strtoupper.o
+Warning: Not a valid file
+Norme: ./libft/ft_strtrim.o
+Warning: Not a valid file
+Norme: ./libft/ft_strtrimall.o
+Warning: Not a valid file
+Norme: ./libft/ft_tolower.o
+Warning: Not a valid file
+Norme: ./libft/ft_toupper.o
+Warning: Not a valid file
+Norme: ./libft/ft_uimaxtoa.o
+Warning: Not a valid file
+Norme: ./libft/get_next_line.o
+Warning: Not a valid file
+Norme: ./libft/libft.a
+Warning: Not a valid file
+Norme: ./libft/Makefile
+Warning: Not a valid file
+Norme: ./maps/bouchon
+Warning: Not a valid file
+Norme: ./maps/coolmap
+Warning: Not a valid file
+Norme: ./maps/cursus
+Warning: Not a valid file
+Norme: ./maps/double_path
+Warning: Not a valid file
+Norme: ./maps/felixmap
+Warning: Not a valid file
+Norme: ./maps/felixmap.dms
+Warning: Not a valid file
+Norme: ./maps/map_conflict
+Warning: Not a valid file
+Norme: ./maps/model_1000
+Warning: Not a valid file
+Norme: ./maps/model_3
+Warning: Not a valid file
+Norme: ./maps/model_bin
+Warning: Not a valid file
+Norme: ./maps/model_cobweb
+Warning: Not a valid file
+Norme: ./maps/model_cornelian
+Warning: Not a valid file
+Norme: ./maps/model_easy
+Warning: Not a valid file
+Norme: ./maps/model_medium
+Warning: Not a valid file
+Norme: ./maps/model_regress
+Warning: Not a valid file
+Norme: ./maps/model_uhc
+Warning: Not a valid file
+Norme: ./maps/simple_map
+Warning: Not a valid file
+Norme: ./maps/subject_map
+Warning: Not a valid file
+Norme: ./maps/test_map
+Warning: Not a valid file
+Norme: ./norme.sh
+Warning: Not a valid file
+Norme: ./obj/free_antfarm.o
+Warning: Not a valid file
+Norme: ./obj/get_pipes.o
+Warning: Not a valid file
+Norme: ./obj/get_rooms.o
+Warning: Not a valid file
+Norme: ./obj/main.o
+Warning: Not a valid file
+Norme: ./obj/output.o
+Warning: Not a valid file
+Norme: ./obj/parsing_antfarm.o
+Warning: Not a valid file
+Norme: ./obj/solver.o
+Warning: Not a valid file
+Norme: ./obj/visu.o
+Warning: Not a valid file
+Norme: ./src/visu/dirt.bmp
+Warning: Not a valid file
+Norme: ./src/visu/game_over.ttf
+Warning: Not a valid file
+Norme: ./include/lem-in.h
+Error: global scope bad aligned
+Error: bad filename : lem-in.h
+Error (line 22): C++ comment
+Error (line 24): Struct s_room bad aligned
+Error (line 34, col 5): bad spacing
+Error (line 37): Struct s_conflit bad aligned
+Error (line 37): s_conflit and t_conflit not aligned.
+Error (line 42): struct and s_conflit not separated by a single space.
+Error (line 43): struct and s_conflit not separated by a single space.
+Error (line 46): Struct s_path bad aligned
+Error (line 55): Struct s_env bad aligned
+Error (line 62, col 5): bad spacing
+Error (line 66, col 4): bad spacing
+Error (line 67, col 4): bad spacing
+Norme: ./include/solver.h
+Error: global scope bad aligned
+Error: not protected against double inclusion
+Error: 42 header not at top of the file
+Error (line 2): multiple empty lines
+Error (line 3): multiple empty lines
+Error (line 4): multiple empty lines
+Error (line 5): line has 83 characters
+Norme: ./libft/includes/ft_printf_list.h
+Norme: ./libft/includes/get_next_line.h
+Norme: ./include/parser_lem-in.h
+Error: global scope bad aligned
+Error: bad filename : parser_lem-in.h
+Error (line 19): preprocessor block must be followed by one empty line
+Error (line 45): multiple empty lines
+Norme: ./libft/includes/ft_printf.h
+Norme: ./include/visu_lem-in.h
+Error: global scope bad aligned
+Error: bad filename : visu_lem-in.h
+Norme: ./libft/src/ft_bzero.c
+Norme: ./libft/src/ft_countchar.c
+Norme: ./libft/src/ft_error.c
+Norme: ./libft/src/ft_isalnum.c
+Norme: ./libft/src/ft_atoi.c
+Norme: ./libft/src/ft_isascii.c
+Norme: ./libft/src/ft_atoull.c
+Norme: ./libft/src/ft_isdigit.c
+Norme: ./libft/src/ft_isprint.c
+Norme: ./libft/src/ft_lstadd.c
+Norme: ./libft/src/ft_lstaddback.c
+Error: 42 header not at top of the file
+Norme: ./libft/src/ft_itoa.c
+Norme: ./libft/src/ft_lstdelone.c
+Norme: ./libft/src/ft_lstiter.c
+Norme: ./libft/src/ft_lstmap.c
+Norme: ./libft/src/ft_lstnew.c
+Norme: ./libft/src/ft_memalloc.c
+Norme: ./libft/includes/libft.h
+Norme: ./libft/src/ft_isalpha.c
+Norme: ./libft/src/ft_lstdel.c
+Norme: ./libft/src/ft_memccpy.c
+Norme: ./libft/src/ft_memcmp.c
+Norme: ./libft/src/ft_memcpy.c
+Norme: ./libft/src/ft_memchr.c
+Norme: ./libft/src/ft_memdel.c
+Norme: ./libft/src/ft_memset.c
+Norme: ./libft/src/ft_nbrlen.c
+Norme: ./libft/src/ft_memmove.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_get_minus.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute_zero.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_get_zero.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_c.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_b.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_ls_sup.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_not_valid.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_di.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_o.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_percent.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_s.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_p.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_xp_xup.c
+Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute.c
+Norme: ./libft/src/ft_printf/ft_parser_printf.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_lc_cup.c
+Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_u.c
+Norme: ./libft/src/ft_printf/ft_printf.c
+Error (line 27): function ft_dprintf has 26 lines
+Error (line 57): function ft_printf has 26 lines
+Norme: ./libft/src/ft_printf/ft_printf_load_struct.c
+Norme: ./libft/src/ft_printf/ft_printf_search_conv.c
+Norme: ./libft/src/ft_printf/ft_printf_clear_flag.c
+Norme: ./libft/src/ft_printf/ft_printf_list.c
+Norme: ./libft/src/ft_printf/ft_printf_lenmod.c
+Norme: ./libft/src/ft_printf/ft_printf_search_field.c
+Norme: ./libft/src/ft_printf/ft_printf_switch.c
+Norme: ./libft/src/ft_printf/ft_printf_tolst.c
+Norme: ./libft/src/ft_printf/ft_printf_search_prec.c
+Norme: ./libft/src/ft_printf/ft_printf_tools.c
+Norme: ./libft/src/ft_putchar.c
+Norme: ./libft/src/ft_putchar_fd.c
+Norme: ./libft/src/ft_putendl.c
+Norme: ./libft/src/ft_putendl_fd.c
+Norme: ./libft/src/ft_putnbr.c
+Norme: ./libft/src/ft_putstr.c
+Norme: ./libft/src/ft_printf/prec_field/ft_printf_prec.c
+Norme: ./libft/src/ft_putstr_fd.c
+Norme: ./libft/src/ft_putstr_minlen.c
+Norme: ./libft/src/ft_putstr_minlen_fd.c
+Norme: ./libft/src/ft_printf/prec_field/ft_printf_field.c
+Norme: ./libft/src/ft_putnbr_fd.c
+Norme: ./libft/src/ft_strchr.c
+Norme: ./libft/src/ft_strclr.c
+Norme: ./libft/src/ft_strcat.c
+Norme: ./libft/src/ft_split_whitespaces.c
+Norme: ./libft/src/ft_strdel.c
+Norme: ./libft/src/ft_strcmp.c
+Norme: ./libft/src/ft_strcpy.c
+Norme: ./libft/src/ft_strequ.c
+Norme: ./libft/src/ft_strdup.c
+Norme: ./libft/src/ft_striter.c
+Norme: ./libft/src/ft_striteri.c
+Norme: ./libft/src/ft_strlcat.c
+Norme: ./libft/src/ft_strlen.c
+Norme: ./libft/src/ft_strjoin_free.c
+Norme: ./libft/src/ft_strjoin.c
+Norme: ./libft/src/ft_strmapi.c
+Norme: ./libft/src/ft_strmap.c
+Norme: ./libft/src/ft_strncat.c
+Norme: ./libft/src/ft_strncmp.c
+Norme: ./libft/src/ft_strncpy.c
+Norme: ./libft/src/ft_strnequ.c
+Norme: ./libft/src/ft_strrchr.c
+Norme: ./libft/src/ft_strstr.c
+Norme: ./libft/src/ft_strnew.c
+Norme: ./libft/src/ft_strnstr.c
+Norme: ./libft/src/ft_strstr_minlen.c
+Norme: ./libft/src/ft_strsubstitute.c
+Norme: ./libft/src/ft_strsub.c
+Norme: ./libft/src/ft_strtablen.c
+Norme: ./libft/src/ft_swap_ptr.c
+Norme: ./libft/src/ft_tolower.c
+Norme: ./libft/src/ft_toupper.c
+Norme: ./libft/src/ft_strtabadd.c
+Norme: ./libft/src/ft_strsplit.c
+Norme: ./libft/src/ft_wcharlen.c
+Error: 42 header not at top of the file
+Norme: ./libft/src/ft_ulltoa_base.c
+Norme: ./libft/src/ft_wcsrtombs.c
+Error: 42 header not at top of the file
+Norme: ./libft/src/ft_wcrtomb.c
+Norme: ./libft/src/ft_strtrim.c
+Norme: ./libft/src/ft_wcsrlen.c
+Error: 42 header not at top of the file
+Error (line 20, col 6): missing space around -=
+Norme: ./src/lem_in_error.c
+Norme: ./src/lem_in.c
+Error (line 48, col 2): missing space after return
+Error (line 52): bad indentation
+Error (line 52): C++ comment
+Error (line 53): bad indentation
+Error (line 53): C++ comment
+Error (line 54): bad indentation
+Error (line 54): C++ comment
+Norme: ./src/parser/add_pipe.c
+Norme: ./maps/ft_strsplit.c
+Norme: ./src/parser/new_room.c
+Error (line 43, col 37): bad spacing
+Norme: ./libft/src/get_next_line/get_next_line.c
+Norme: ./src/parser/read_map.c
+Norme: ./src/solver/solver_tool.c
+Error: global scope bad aligned
+Error: 42 header not at top of the file
+Error (line 5): Space before function name
+Error (line 7, col 1): missing space after while
+Error (line 9, col 1): missing space after while
+Error (line 17): save_info have 5 parameters
+Error (line 17): Space before function name
+Error (line 17): function save_info has 27 lines
+Error (line 17): line has 82 characters
+Error (line 23): bad indentation
+Error (line 24): bad indentation
+Error (line 25): bad indentation
+Error (line 26): bad indentation
+Error (line 27): bad indentation
+Error (line 28): bad indentation
+Error (line 29): bad indentation
+Error (line 30): bad indentation
+Error (line 34, col 2): missing space after while
+Error (line 35): bad indentation
+Error (line 41, col 3): missing space after return
+Error (line 45, col 1): missing space after return
+Error (line 48): declarations in lock_path are bad aligned
+Error (line 48): Space before function name
+Error (line 56, col 1): missing space after while
+Error (line 61, col 2): missing space after while
+Error (line 74): Space before function name
+Norme: ./src/tools/clean_venv.c
+Norme: ./src/parser/check_in.c
+Error (line 35): function check_room has 26 lines
+Norme: ./src/tools/del_strtab.c
+Norme: ./src/tools/del_room.c
+Norme: ./src/tools/del_strtab_except.c
+Norme: ./src/solver/search_path.c
+Error: global scope bad aligned
+Error: 42 header not at top of the file
+Error (line 6): declarations in conflit are bad aligned
+Error (line 6): Space before function name
+Error (line 13, col 1): missing space after while
+Error (line 14): bad indentation
+Error (line 14): must begin only by tabulations
+Error (line 20, col 1): missing space after while
+Error (line 22, col 28): space before ;
+Error (line 41): line has 92 characters
+Error (line 41, col 61): missing space around +
+Error (line 43): bad indentation
+Error (line 44): line has 122 characters
+Error (line 50): bad indentation
+Error (line 50): must begin only by tabulations
+Error (line 50): line has 100 characters
+Error (line 51): must begin only by tabulations
+Error (line 52): must begin only by tabulations
+Error (line 53): must begin only by tabulations
+Error (line 53, col 4): missing space after return
+Error (line 54): must begin only by tabulations
+Error (line 69): line has 94 characters
+Error (line 76): declarations in find_shortest are bad aligned
+Error (line 76): bad spacing after find_shortest
+Error (line 82): line has 94 characters
+Error (line 89, col 26): space before )
+Error (line 90, col 21): bad spacing
+Error (line 96): declarations in get_path are bad aligned
+Error (line 96): Space before function name
+Error (line 96): bad spacing before get_path
+Error (line 98): bad indentation
+Error (line 98): must begin only by tabulations
+Error (line 99): bad indentation
+Error (line 99): must begin only by tabulations
+Error (line 101): bad indentation
+Error (line 101): must begin only by tabulations
+Error (line 103): bad indentation
+Error (line 103): must begin only by tabulations
+Error (line 104): bad indentation
+Error (line 104): must begin only by tabulations
+Error (line 107): bad indentation
+Error (line 107): must begin only by tabulations
+Error (line 111): bad indentation
+Error (line 111): must begin only by tabulations
+Error (line 112): bad indentation
+Error (line 112): must begin only by tabulations
+Error (line 113): bad indentation
+Error (line 113): must begin only by tabulations
+Error (line 114): bad indentation
+Error (line 114): must begin only by tabulations
+Error (line 115, col 25): bad spacing
+Norme: ./src/tools/get_room_index.c
+Norme: ./src/visu/display_ants.c
+Norme: ./src/visu/draw_anthill.c
+Norme: ./src/solver/send_ant.c
+Error: 42 header not at top of the file
+Error (line 6): declarations in create_string are bad aligned
+Error (line 6): Space before function name
+Error (line 8): bad indentation
+Error (line 8): must begin only by tabulations
+Error (line 9): bad indentation
+Error (line 9): must begin only by tabulations
+Error (line 10): bad indentation
+Error (line 10): must begin only by tabulations
+Error (line 11): bad indentation
+Error (line 11): must begin only by tabulations
+Error (line 13): bad indentation
+Error (line 13): must begin only by tabulations
+Error (line 14): bad indentation
+Error (line 14): must begin only by tabulations
+Error (line 15): bad indentation
+Error (line 15): must begin only by tabulations
+Error (line 16): bad indentation
+Error (line 16): must begin only by tabulations
+Error (line 17): bad indentation
+Error (line 17): must begin only by tabulations
+Error (line 18): bad indentation
+Error (line 18): must begin only by tabulations
+Error (line 18, col 2): missing space after while
+Error (line 19): bad indentation
+Error (line 19): must begin only by tabulations
+Error (line 20): bad indentation
+Error (line 20): must begin only by tabulations
+Error (line 21): bad indentation
+Error (line 21): must begin only by tabulations
+Error (line 22): bad indentation
+Error (line 22): must begin only by tabulations
+Error (line 22, col 2): missing space after while
+Error (line 23): bad indentation
+Error (line 23): must begin only by tabulations
+Error (line 24): bad indentation
+Error (line 24): must begin only by tabulations
+Error (line 25): bad indentation
+Error (line 25): must begin only by tabulations
+Error (line 25, col 2): missing space after return
+Error (line 28): declarations in realloc_res are bad aligned
+Error (line 28): Space before function name
+Error (line 28): function realloc_res has 26 lines
+Error (line 30): bad indentation
+Error (line 30): must begin only by tabulations
+Error (line 31): bad indentation
+Error (line 31): must begin only by tabulations
+Error (line 32): bad indentation
+Error (line 32): must begin only by tabulations
+Error (line 33): bad indentation
+Error (line 33): must begin only by tabulations
+Error (line 33, col 6): bad spacing
+Error (line 35): bad indentation
+Error (line 35): must begin only by tabulations
+Error (line 36): bad indentation
+Error (line 36): must begin only by tabulations
+Error (line 37): bad indentation
+Error (line 37): must begin only by tabulations
+Error (line 38): bad indentation
+Error (line 38): must begin only by tabulations
+Error (line 39): bad indentation
+Error (line 39): must begin only by tabulations
+Error (line 39, col 4): missing space after while
+Error (line 40): bad indentation
+Error (line 40): must begin only by tabulations
+Error (line 41): bad indentation
+Error (line 41): must begin only by tabulations
+Error (line 42): bad indentation
+Error (line 42): must begin only by tabulations
+Error (line 42, col 4): missing space after if
+Error (line 43): bad indentation
+Error (line 43): must begin only by tabulations
+Error (line 44): bad indentation
+Error (line 44): must begin only by tabulations
+Error (line 45): bad indentation
+Error (line 45): must begin only by tabulations
+Error (line 46): bad indentation
+Error (line 46): must begin only by tabulations
+Error (line 46, col 8): missing space after while
+Error (line 47): bad indentation
+Error (line 47): must begin only by tabulations
+Error (line 48): bad indentation
+Error (line 48): must begin only by tabulations
+Error (line 49): bad indentation
+Error (line 49): must begin only by tabulations
+Error (line 50): bad indentation
+Error (line 50): must begin only by tabulations
+Error (line 51): bad indentation
+Error (line 51): must begin only by tabulations
+Error (line 51, col 4): missing space after while
+Error (line 52): bad indentation
+Error (line 52): must begin only by tabulations
+Error (line 53): bad indentation
+Error (line 53): must begin only by tabulations
+Error (line 54): bad indentation
+Error (line 54): must begin only by tabulations
+Error (line 55): bad indentation
+Error (line 55): must begin only by tabulations
+Error (line 58): Space before function name
+Error (line 60): bad indentation
+Error (line 60): must begin only by tabulations
+Error (line 61): bad indentation
+Error (line 61): must begin only by tabulations
+Error (line 62): bad indentation
+Error (line 62): must begin only by tabulations
+Error (line 63): bad indentation
+Error (line 63): must begin only by tabulations
+Error (line 64): bad indentation
+Error (line 64): must begin only by tabulations
+Error (line 65): bad indentation
+Error (line 65): must begin only by tabulations
+Error (line 66): bad indentation
+Error (line 66): must begin only by tabulations
+Error (line 67): bad indentation
+Error (line 67): must begin only by tabulations
+Error (line 68): bad indentation
+Error (line 68): must begin only by tabulations
+Error (line 69): bad indentation
+Error (line 69): must begin only by tabulations
+Error (line 70): bad indentation
+Error (line 70): must begin only by tabulations
+Error (line 71): bad indentation
+Error (line 71): must begin only by tabulations
+Error (line 72): bad indentation
+Error (line 72): must begin only by tabulations
+Error (line 73): bad indentation
+Error (line 73): must begin only by tabulations
+Error (line 74): bad indentation
+Error (line 74): must begin only by tabulations
+Error (line 75): bad indentation
+Error (line 75): must begin only by tabulations
+Error (line 76): bad indentation
+Error (line 76): must begin only by tabulations
+Error (line 77): bad indentation
+Error (line 77): must begin only by tabulations
+Error (line 78): bad indentation
+Error (line 78): must begin only by tabulations
+Error (line 78, col 2): missing space after if
+Error (line 79): bad indentation
+Error (line 79): must begin only by tabulations
+Error (line 80): bad indentation
+Error (line 80): must begin only by tabulations
+Error (line 81): bad indentation
+Error (line 81): must begin only by tabulations
+Error (line 82): bad indentation
+Error (line 82): must begin only by tabulations
+Error (line 83): bad indentation
+Error (line 83): must begin only by tabulations
+Error (line 86): declarations in launch_ant are bad aligned
+Error (line 86): Space before function name
+Error (line 86): Bad spacing for argument env
+Error (line 86, col 21): bad spacing
+Error (line 88): bad indentation
+Error (line 88): must begin only by tabulations
+Error (line 89): bad indentation
+Error (line 89): must begin only by tabulations
+Error (line 90): bad indentation
+Error (line 90): must begin only by tabulations
+Error (line 92): bad indentation
+Error (line 92): must begin only by tabulations
+Error (line 93): bad indentation
+Error (line 93): must begin only by tabulations
+Error (line 94): bad indentation
+Error (line 94): must begin only by tabulations
+Error (line 95): bad indentation
+Error (line 95): must begin only by tabulations
+Error (line 96): bad indentation
+Error (line 96): must begin only by tabulations
+Error (line 96, col 2): missing space after while
+Error (line 97): bad indentation
+Error (line 97): must begin only by tabulations
+Error (line 98): bad indentation
+Error (line 98): must begin only by tabulations
+Error (line 99): bad indentation
+Error (line 99): must begin only by tabulations
+Error (line 100): bad indentation
+Error (line 100): must begin only by tabulations
+Error (line 100, col 4): missing space after while
+Error (line 101): bad indentation
+Error (line 101): must begin only by tabulations
+Error (line 102): bad indentation
+Error (line 102): must begin only by tabulations
+Error (line 103): bad indentation
+Error (line 103): must begin only by tabulations
+Error (line 103, col 6): missing space after while
+Error (line 104): bad indentation
+Error (line 104): must begin only by tabulations
+Error (line 105): bad indentation
+Error (line 105): must begin only by tabulations
+Error (line 106): bad indentation
+Error (line 106): must begin only by tabulations
+Error (line 107): bad indentation
+Error (line 107): must begin only by tabulations
+Error (line 108): bad indentation
+Error (line 108): must begin only by tabulations
+Error (line 109): bad indentation
+Error (line 109): must begin only by tabulations
+Error (line 110): bad indentation
+Error (line 110): must begin only by tabulations
+Error (line 111): bad indentation
+Error (line 111): must begin only by tabulations
+Error (line 114): declarations in release_ants are bad aligned
+Error (line 114): Space before function name
+Error (line 114): function release_ants has 38 lines
+Error (line 116): bad indentation
+Error (line 116): must begin only by tabulations
+Error (line 117): bad indentation
+Error (line 117): must begin only by tabulations
+Error (line 118): bad indentation
+Error (line 118): must begin only by tabulations
+Error (line 118, col 15): bad spacing
+Error (line 119): bad indentation
+Error (line 119): must begin only by tabulations
+Error (line 121): bad indentation
+Error (line 121): must begin only by tabulations
+Error (line 122): bad indentation
+Error (line 122): must begin only by tabulations
+Error (line 122): line has 88 characters
+Error (line 123): bad indentation
+Error (line 123): must begin only by tabulations
+Error (line 124): bad indentation
+Error (line 124): must begin only by tabulations
+Error (line 125): bad indentation
+Error (line 125): must begin only by tabulations
+Error (line 126): bad indentation
+Error (line 126): must begin only by tabulations
+Error (line 127): bad indentation
+Error (line 127): must begin only by tabulations
+Error (line 128): bad indentation
+Error (line 128): must begin only by tabulations
+Error (line 129): bad indentation
+Error (line 129): must begin only by tabulations
+Error (line 130): bad indentation
+Error (line 130): must begin only by tabulations
+Error (line 131): bad indentation
+Error (line 131): must begin only by tabulations
+Error (line 132): bad indentation
+Error (line 132): must begin only by tabulations
+Error (line 133): bad indentation
+Error (line 133): must begin only by tabulations
+Error (line 134): bad indentation
+Error (line 134): must begin only by tabulations
+Error (line 135): bad indentation
+Error (line 135): must begin only by tabulations
+Error (line 136): bad indentation
+Error (line 136): must begin only by tabulations
+Error (line 137): bad indentation
+Error (line 137): must begin only by tabulations
+Error (line 138): bad indentation
+Error (line 138): must begin only by tabulations
+Error (line 139): bad indentation
+Error (line 139): must begin only by tabulations
+Error (line 140): bad indentation
+Error (line 140): must begin only by tabulations
+Error (line 141): bad indentation
+Error (line 141): must begin only by tabulations
+Error (line 142): bad indentation
+Error (line 142): must begin only by tabulations
+Error (line 143): bad indentation
+Error (line 143): must begin only by tabulations
+Error (line 144): bad indentation
+Error (line 144): must begin only by tabulations
+Error (line 145): bad indentation
+Error (line 145): must begin only by tabulations
+Error (line 146): bad indentation
+Error (line 146): must begin only by tabulations
+Error (line 147): bad indentation
+Error (line 147): must begin only by tabulations
+Error (line 148): bad indentation
+Error (line 148): must begin only by tabulations
+Error (line 149): bad indentation
+Error (line 149): must begin only by tabulations
+Error (line 150): bad indentation
+Error (line 150): must begin only by tabulations
+Error (line 151): bad indentation
+Error (line 151): must begin only by tabulations
+Error (line 152): bad indentation
+Error (line 152): must begin only by tabulations
+Error (line 153): bad indentation
+Error (line 153): must begin only by tabulations
+Norme: ./src/tools/search_room.c
+Error (line 25, col 2): missing space after while
+Norme: ./src/visu/default_zoom.c
+Norme: ./src/visu/get_rooms_name.c
+Norme: ./src/visu/help_display_init.c
+Norme: ./src/visu/reset_pos_map.c
+Norme: ./src/visu/lem_in_visu.c
+Norme: ./src/visu/move_step.c
+Error (line 31): function move_step has 26 lines
+Norme: ./src/visu/event_manager.c
+Error (line 53): function get_step has 30 lines
+Error (line 106): bad indentation
+Norme: ./src/visu/step_display_init.c
