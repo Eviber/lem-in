@@ -103,7 +103,7 @@ static int		get_help(SDL_Renderer *render, int *help, t_visu *venv)
 	!venv->kb_state[SDL_SCANCODE_F1] && *help == 3)
 		*help = 4;
 	if (*help == 4 && frame == 0)
-	*help = 0;
+		*help = 0;
 	pos.x = (frame * 16) - 389;
 	pos.y = 0;
 	pos.w = 389;

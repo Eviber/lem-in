@@ -2,7 +2,7 @@
 #include "lem_in.h"
 #include "parser_lem_in.h"
 
-static void clean_conflict(t_conflit *conflit)
+static void	clean_conflict(t_conflit *conflit)
 {
 	while (conflit->next)
 		conflit = conflit->next;
@@ -14,7 +14,7 @@ static void clean_conflict(t_conflit *conflit)
 	ft_memdel((void**)&conflit);
 }
 
-static int search_conflict(t_conflit *conflict, int set, int new_dp, t_env *env)
+static int	search_conflict(t_conflit *conflict, int set, int new_dp, t_env *env)
 {
 	while ((set++ - env->conflict) < 1)
 		conflict = conflict->prev;
@@ -28,7 +28,7 @@ static int search_conflict(t_conflit *conflict, int set, int new_dp, t_env *env)
 	return (FALSE);
 }
 
-int save_info(int set, int new_dp, t_room *room, t_env *env)
+int			save_info(int set, int new_dp, t_room *room, t_env *env)
 {
 	static t_conflit *conflict = NULL;
 
@@ -45,11 +45,11 @@ int save_info(int set, int new_dp, t_room *room, t_env *env)
 	else if (set == 0)
 		conflict->prev->miss_direction = room;
 	else if (set > 0)
-		return(search_conflict(conflict, set, new_dp, env));
+		return (search_conflict(conflict, set, new_dp, env));
 	return (FALSE);
 }
 
-void lock_path(t_env *env)
+void		lock_path(t_env *env)
 {
 	t_path	*tmp;
 	t_room	*room;
@@ -75,7 +75,7 @@ void lock_path(t_env *env)
 	}
 }
 
-void reset_room(t_env *env)
+void		reset_room(t_env *env)
 {
 	int i;
 

@@ -29,7 +29,7 @@ typedef struct		s_room
 	unsigned long	ant;
 	int				weight;
 	int				dead;
-	char 			lock;
+	char			lock;
 }					t_room;
 
 typedef struct			s_conflit
@@ -57,12 +57,12 @@ typedef struct		s_env
 	struct s_path	*paths;
 	struct s_room	**rooms;
 	long unsigned	ant_live;
-	char 			**result;
+	char			**result;
 	long			nb_rooms;
 	long			nb_ants;
 	long			antleft;
-	int 			dp;
-	int 			conflict;
+	int				dp;
+	int				conflict;
 }					t_env;
 
 enum { ROOM, TUBE, COMM, START, END };

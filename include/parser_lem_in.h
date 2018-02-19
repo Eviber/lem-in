@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_lem_@in.h                                    :+:      :+:    :+:   */
+/*   parser_lem_in.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -40,7 +40,7 @@ t_room			*new_room(char *name, int x, int y, t_env *env);
 /*
 ** Solver
 */
-void get_path(t_env *env);
-void release_ants(t_env *env);
+void			get_path(t_env *env);
+void			release_ants(t_env *env);
 
 #endif

@@ -45,12 +45,10 @@ int				main(int ac, char **av)
 	else
 	{
 		write(1, "ERROR No path\n", 14);
-		return(0);
+		return (0);
 	}
 	if (ac == 2 && !ft_strcmp(av[1], "-v"))
 		lem_in_visu(&env);
-	//del_room_tab(env.rooms);
-	// si youva peux me confirmer que ca boucle bien on a a peux pret le meme
-	//nombre de reponse que felix.
+	del_room_tab(env.rooms);
 	return (0);
 }
