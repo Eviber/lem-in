@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 16:22:46 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/02 16:33:27 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/12 17:37:12 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 void	clean_venv(SDL_Window *win, SDL_Renderer *render, t_visu *venv)
 {
 	ft_memdel((void**)&venv->pos);
-	TTF_CloseFont(venv->font);
-	SDL_DestroyTexture(venv->help);
-	SDL_DestroyTexture(venv->step);
+	if (venv->font)
+		TTF_CloseFont(venv->font);
+	if (venv->help)
+		SDL_DestroyTexture(venv->help);
+	if (venv->step)
+		SDL_DestroyTexture(venv->step);
 	del_strtab(&venv->step_list);
-	SDL_DestroyRenderer(render);
-	SDL_DestroyWindow(win);
+	if (render)
+		SDL_DestroyRenderer(render);
+	if (win)
+		SDL_DestroyWindow(win);
 	TTF_Quit();
 	SDL_Quit();
 }
