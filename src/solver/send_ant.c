@@ -34,7 +34,7 @@ static void	real_res(t_env *env, char *res, int reset, int i)
 
 	if (reset == 1 && (taille = 1))
 		env->result[i] = ft_memalloc(400);
-	if (reset == 0 && !(index = 0))
+	if (reset == 0 && (index = -1))
 	{
 		while (env->result[i][index + 1])
 			index++;
@@ -99,7 +99,7 @@ void		launch_ant(t_env *env)
 		while (tmp)
 		{
 			room = tmp->room;
-			while(room && (room != env->start || tmp->room == env->start))
+			while (room && (room != env->start || tmp->room == env->start))
 			{
 				select_ant(tmp, room, env, nb_tour);
 				room = room->prev;
@@ -110,7 +110,8 @@ void		launch_ant(t_env *env)
 	}
 }
 
-static int	cnt_max_tour(t_path *tmp, long double value, unsigned long nb_path)
+static int	cnt_max_tour(t_path *tmp, long double value,
+	unsigned long nb_path, t_env *env)
 {
 	unsigned long max_tour;
 
@@ -130,7 +131,7 @@ static int	cnt_max_tour(t_path *tmp, long double value, unsigned long nb_path)
 		nb_path--;
 		tmp = tmp->prev;
 	}
-	return(max_tour);
+	return (max_tour);
 }
 
 void		release_ants(t_env *env)
@@ -155,7 +156,7 @@ void		release_ants(t_env *env)
 			++nb_path;
 			tmp = tmp->prev;
 		}
-		tmp = env->paths;
+		max_tour = cnt_max_tour(env->paths, value, nb_path, env);
 		env->result = ft_memalloc(sizeof(char *) * max_tour);
 		launch_ant(env);
 	}

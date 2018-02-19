@@ -3,19 +3,19 @@
 #include "parser_lem_in.h"
 #include "solver.h"
 
-void conflit(t_room *rooms, t_env *env, long depth, t_room *room_confict)
+void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 {
 	long	dp;
 	long	tmp_dp;
 	t_room	*tmp;
 
-	tmp = rooms;
+	tmp = r;
 	while (tmp->next != env->end)
 		tmp = tmp->next;
 	dp = tmp->weight;
 	env->antleft += dp;
 	tmp_dp = depth + 1;
-	tmp = rooms->prev;
+	tmp = r->prev;
 	++env->conflict;
 	while (tmp->prev)
 	{
@@ -24,41 +24,42 @@ void conflit(t_room *rooms, t_env *env, long depth, t_room *room_confict)
 		tmp = tmp->prev;
 	}
 	env->dp = tmp_dp;
-	depth = depth + 1 - rooms->weight + dp;
-	rooms->dead = 1;
-	save_info(-1, depth, rooms, env);
-	save_info(0, depth, room_confict, env);
+	depth = depth + 1 - r->weight + dp;
+	r->dead = 1;
+	save_info(-1, depth, r, env);
+	save_info(0, depth, r_conf, env);
 }
 
 static int		fill_weight(t_env *env, t_room *r)
 {
 	int		i;
 
-	i = 0;
-	while (r->pipes && r->pipes[i])
+	i = -1;
+	while (r->pipes && r->pipes[++i])
 	{
 		if (r->pipes[i] == env->end)
 		{
 			if (r->lock == 0 || save_info(r->lock, r->weight + 1, NULL, env))
 				return (TRUE);
 		}
-		if (!r->pipes[i]->weight && r->pipes[i] != env->start && (r->pipes[i]->lock != 1 || r == env->start))
-		{
-			r->pipes[i]->weight = r->weight + 1;
-			r->pipes[i]->prev = r;
-			r->pipes[i]->lock = r->lock;
-		}
-		if (r != env->start && r->pipes[i]->lock == 1 && !r->pipes[i]->dead && !r->lock)
-		{
-			conflit(r->pipes[i], env, r->weight, r);
-			return (FALSE);
-		}
-		i++;
+		if (!r->pipes[i]->weight && r->pipes[i] != env->start)
+			if (r->pipes[i]->lock != 1 || r == env->start)
+			{
+				r->pipes[i]->weight = r->weight + 1;
+				r->pipes[i]->prev = r;
+				r->pipes[i]->lock = r->lock;
+			}
+		if (r != env->start && r->pipes[i]->lock == 1)
+			if (!r->pipes[i]->dead && !r->lock)
+			{
+				conflit(r->pipes[i], env, r->weight, r);
+				return (FALSE);
+			}
 	}
 	return (FALSE);
 }
 
-t_room	*try_path(t_env *env, int depth)
+t_room			*try_path(t_env *env, int depth)
 {
 	t_room	*cur;
 	int		i;
@@ -88,7 +89,7 @@ int				find_shortest(t_env *e, int f)
 			{
 				if (!f_room)
 					f_room = tmp;
-				if (!e->paths->room )
+				if (!e->paths->room)
 					e->paths->room  = tmp;
 				return (TRUE);
 			}
@@ -96,10 +97,10 @@ int				find_shortest(t_env *e, int f)
 	return (FALSE);
 }
 
-void get_path(t_env *env)
+void			get_path(t_env *env)
 {
 	t_room	*tmp;
-	int 	i;
+	int		i;
 
 	i = 0;
 	env->paths = (t_path *)ft_memalloc(sizeof(t_path));

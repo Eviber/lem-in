@@ -50,5 +50,6 @@ int				main(int ac, char **av)
 	if (ac == 2 && !ft_strcmp(av[1], "-v"))
 		lem_in_visu(&env);
 	del_room_tab(env.rooms);
+	while(1);
 	return (0);
 }
