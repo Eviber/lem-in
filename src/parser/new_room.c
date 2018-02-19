@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
 
 static t_room	*roomalloc(t_env *env)
 {
@@ -40,7 +40,7 @@ static t_room	*roomalloc(t_env *env)
 	return ((env->rooms)[i]);
 }
 
-t_room			*new_room(char *name, int x,  int y, t_env *env)
+t_room			*new_room(char *name, int x, int y, t_env *env)
 {
 	t_room	*new;
 

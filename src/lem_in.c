@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
+#include "visu_lem_in.h"
 
 static void		print_map(char **input)
 {

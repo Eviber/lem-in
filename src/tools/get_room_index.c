@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "visu_lem_in.h"
 
 int		get_room_index(t_room **rooms, t_room *src)
 {

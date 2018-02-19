@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "visu_lem_in.h"
 
 static int		draw_pipes(SDL_Renderer *render, int i, int j, t_visu *venv)
 {

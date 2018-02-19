@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
 
 t_room	*search_room(char *name, t_room **room)
 {
@@ -22,8 +22,6 @@ t_room	*search_room(char *name, t_room **room)
 	{
 		while (room[i] && ft_strcmp(name, (room[i])->name))
 			i++;
-		while(0)
-			;
 		return (room[i]);
 	}
 	else

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
 
 void	del_strtab_except(char ***tab, int index)
 {

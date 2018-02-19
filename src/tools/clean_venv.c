@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
+#include "visu_lem_in.h"
 
 void	clean_venv(SDL_Window *win, SDL_Renderer *render, t_visu *venv)
 {

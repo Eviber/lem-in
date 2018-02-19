@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "parser_lem-in.h"
+#include "lem_in.h"
+#include "parser_lem_in.h"
 
 static char		*create_msg(int err)
 {

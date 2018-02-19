@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "visu_lem_in.h"
 
 static int	create_ant(SDL_Renderer *render, int i, char *ant, t_visu *venv)
 {

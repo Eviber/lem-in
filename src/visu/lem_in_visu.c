@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-#include "visu_lem-in.h"
+#include "lem_in.h"
+#include "visu_lem_in.h"
 
 static int		get_texture(SDL_Renderer *render, SDL_Texture **texture, \
 SDL_Rect *bg_pos, t_visu *venv)

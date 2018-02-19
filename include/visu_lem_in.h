@@ -50,18 +50,18 @@ typedef struct		s_visu
 /*
 ** Visu
 */
-int		help_display_init(SDL_Renderer *render, t_visu *venv);
-int		step_display_init(SDL_Renderer *render, t_visu *venv);
-int		get_room_index(t_room **rooms, t_room *src);
-int		display_ants(SDL_Renderer *render, t_visu *venv);
-int		get_rooms_name(SDL_Renderer *render, int *room, t_visu *venv);
-int		event_manager(SDL_Renderer *render, t_visu *venv);
-int		draw_anthill(SDL_Renderer *render, t_room **rooms, t_visu *venv);
-void	lem_in_visu(t_env *env);
-void	reset_pos_map(t_visu *venv);
-void	move_step(t_visu *venv);
-void	get_default_zoom(t_room **rooms, t_visu *venv);
-void	clean_venv(SDL_Window *win, SDL_Renderer *render, t_visu *venv);
-t_room	*search_room(char *name, t_room **room);
+int					help_display_init(SDL_Renderer *render, t_visu *venv);
+int					step_display_init(SDL_Renderer *render, t_visu *venv);
+int					get_room_index(t_room **rooms, t_room *src);
+int					display_ants(SDL_Renderer *render, t_visu *venv);
+int					get_rooms_name(SDL_Renderer *r, int *room, t_visu *venv);
+int					event_manager(SDL_Renderer *render, t_visu *venv);
+int					draw_anthill(SDL_Renderer *r, t_room **rooms, t_visu *venv);
+void				lem_in_visu(t_env *env);
+void				reset_pos_map(t_visu *venv);
+void				move_step(t_visu *venv);
+void				get_default_zoom(t_room **rooms, t_visu *venv);
+void				clean_venv(SDL_Window *w, SDL_Renderer *ren, t_visu *venv);
+t_room				*search_room(char *name, t_room **room);
 
 #endif

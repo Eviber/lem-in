@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_lem-in.h                                    :+:      :+:    :+:   */
+/*   parser_lem_@in.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,6 +17,7 @@
 # define DEFAULT 0
 # define ANTS 1
 # define NO_PIPE 2
+
 /*
 ** Base
 */
@@ -41,6 +42,5 @@ t_room			*new_room(char *name, int x, int y, t_env *env);
 */
 void get_path(t_env *env);
 void release_ants(t_env *env);
-
 
 #endif
