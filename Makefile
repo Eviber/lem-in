@@ -37,7 +37,8 @@ TOOLS =				$(PATH_TOOLS)del_strtab.c\
 					$(PATH_TOOLS)del_room.c\
 					$(PATH_TOOLS)get_room_index.c\
 					$(PATH_TOOLS)clean_venv.c\
-					$(PATH_TOOLS)search_room.c
+					$(PATH_TOOLS)search_room.c\
+					$(PATH_TOOLS)create_string.c
 
 PARSER =			$(PATH_PARS)read_map.c\
 					$(PATH_PARS)check_in.c\
