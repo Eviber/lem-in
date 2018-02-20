@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_path.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gcollett <gcollett@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/20 20:15:21 by gcollett          #+#    #+#             */
+/*   Updated: 2018/02/20 20:15:37 by ygaude           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lem_in.h"
 #include "parser_lem_in.h"
@@ -90,7 +101,7 @@ int				find_shortest(t_env *e, int f)
 				if (!f_room)
 					f_room = tmp;
 				if (!e->paths->room)
-					e->paths->room  = tmp;
+					e->paths->room = tmp;
 				return (TRUE);
 			}
 	}
@@ -116,7 +127,7 @@ void			get_path(t_env *env)
 		env->paths->next->prev = env->paths;
 		env->paths = env->paths->next;
 	}
-	if (!env->paths->room &&  env->paths->prev)
+	if (!env->paths->room && env->paths->prev)
 		env->paths = env->paths->prev;
 	lock_path(env);
 }

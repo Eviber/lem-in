@@ -240,9 +240,8 @@ Norme: ./src/visu/game_over.ttf
 Warning: Not a valid file
 Norme: ./include/lem_in.h
 Norme: ./include/solver.h
-Error: 42 header not at top of the file
-Norme: ./include/parser_lem_in.h
 Norme: ./libft/includes/ft_printf_list.h
+Norme: ./include/parser_lem_in.h
 Norme: ./libft/includes/get_next_line.h
 Norme: ./include/visu_lem_in.h
 Norme: ./libft/includes/ft_printf.h
@@ -257,21 +256,20 @@ Norme: ./libft/src/ft_isdigit.c
 Norme: ./libft/src/ft_isprint.c
 Norme: ./libft/src/ft_itoa.c
 Norme: ./libft/src/ft_lstaddback.c
-Error: 42 header not at top of the file
-Norme: ./libft/includes/libft.h
 Norme: ./libft/src/ft_lstdel.c
+Norme: ./libft/src/ft_lstdelone.c
+Norme: ./libft/includes/libft.h
+Norme: ./libft/src/ft_lstiter.c
 Norme: ./libft/src/ft_isalnum.c
 Norme: ./libft/src/ft_lstadd.c
-Norme: ./libft/src/ft_lstiter.c
-Norme: ./libft/src/ft_lstdelone.c
 Norme: ./libft/src/ft_memalloc.c
 Norme: ./libft/src/ft_lstmap.c
 Norme: ./libft/src/ft_lstnew.c
 Norme: ./libft/src/ft_memchr.c
 Norme: ./libft/src/ft_memccpy.c
+Norme: ./libft/src/ft_memdel.c
 Norme: ./libft/src/ft_memcmp.c
 Norme: ./libft/src/ft_memcpy.c
-Norme: ./libft/src/ft_memdel.c
 Norme: ./libft/src/ft_memset.c
 Norme: ./libft/src/ft_nbrlen.c
 Norme: ./libft/src/ft_memmove.c
@@ -291,25 +289,23 @@ Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_xp_xup.c
 Norme: ./libft/src/ft_printf/ft_parser_printf.c
 Norme: ./libft/src/ft_printf/attribute/ft_printf_attribute.c
 Norme: ./libft/src/ft_printf/ft_printf.c
-Error (line 27): function ft_dprintf has 26 lines
-Error (line 57): function ft_printf has 26 lines
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_di.c
 Norme: ./libft/src/ft_printf/conv_fcn/ft_conv_percent.c
 Norme: ./libft/src/ft_printf/ft_printf_load_struct.c
-Norme: ./libft/src/ft_printf/ft_printf_lenmod.c
 Norme: ./libft/src/ft_printf/ft_printf_search_conv.c
 Norme: ./libft/src/ft_printf/ft_printf_list.c
-Norme: ./libft/src/ft_printf/ft_printf_search_field.c
+Norme: ./libft/src/ft_printf/ft_printf_lenmod.c
 Norme: ./libft/src/ft_printf/ft_printf_switch.c
+Norme: ./libft/src/ft_printf/ft_printf_tolst.c
+Norme: ./libft/src/ft_printf/ft_printf_search_field.c
 Norme: ./libft/src/ft_printf/ft_printf_clear_flag.c
 Norme: ./libft/src/ft_printf/ft_printf_tools.c
-Norme: ./libft/src/ft_printf/ft_printf_tolst.c
 Norme: ./libft/src/ft_printf/ft_printf_search_prec.c
 Norme: ./libft/src/ft_putchar.c
 Norme: ./libft/src/ft_putchar_fd.c
 Norme: ./libft/src/ft_putendl.c
-Norme: ./libft/src/ft_putendl_fd.c
 Norme: ./libft/src/ft_printf/prec_field/ft_printf_prec.c
+Norme: ./libft/src/ft_putendl_fd.c
 Norme: ./libft/src/ft_putstr.c
 Norme: ./libft/src/ft_putnbr_fd.c
 Norme: ./libft/src/ft_putstr_fd.c
@@ -330,76 +326,61 @@ Norme: ./libft/src/ft_strjoin.c
 Norme: ./libft/src/ft_strlcat.c
 Norme: ./libft/src/ft_strlen.c
 Norme: ./libft/src/ft_strmap.c
+Norme: ./libft/src/ft_strmapi.c
 Norme: ./libft/src/ft_split_whitespaces.c
 Norme: ./libft/src/ft_strdel.c
-Norme: ./libft/src/ft_strmapi.c
 Norme: ./libft/src/ft_strncat.c
-Norme: ./libft/src/ft_strncpy.c
 Norme: ./libft/src/ft_strnequ.c
+Norme: ./libft/src/ft_strncpy.c
 Norme: ./libft/src/ft_strnew.c
-Norme: ./libft/src/ft_strjoin_free.c
 Norme: ./libft/src/ft_strrchr.c
-Norme: ./libft/src/ft_strncmp.c
 Norme: ./libft/src/ft_strnstr.c
+Norme: ./libft/src/ft_strjoin_free.c
 Norme: ./libft/src/ft_strstr.c
-Norme: ./libft/src/ft_strsub.c
+Norme: ./libft/src/ft_strncmp.c
 Norme: ./libft/src/ft_strstr_minlen.c
+Norme: ./libft/src/ft_strsub.c
 Norme: ./libft/src/ft_strsubstitute.c
 Norme: ./libft/src/ft_strtabadd.c
 Norme: ./libft/src/ft_swap_ptr.c
 Norme: ./libft/src/ft_tolower.c
 Norme: ./libft/src/ft_toupper.c
+Norme: ./libft/src/ft_strtrim.c
 Norme: ./libft/src/ft_ulltoa_base.c
 Norme: ./libft/src/ft_strsplit.c
-Norme: ./libft/src/ft_strtrim.c
 Norme: ./libft/src/ft_strtablen.c
-Norme: ./libft/src/ft_wcharlen.c
-Error: 42 header not at top of the file
 Norme: ./libft/src/ft_wcsrlen.c
-Error: 42 header not at top of the file
-Error (line 20, col 6): missing space around -=
-Norme: ./libft/src/ft_wcsrtombs.c
-Error: 42 header not at top of the file
+Norme: ./libft/src/ft_wcharlen.c
 Norme: ./libft/src/ft_wcrtomb.c
-Norme: ./src/lem_in.c
-Error (line 53): 2 instructions
-Error (line 53): bad indentation
-Error (line 53): missing newline after while
-Error (line 53, col 1): missing space after while
+Norme: ./libft/src/ft_wcsrtombs.c
 Norme: ./src/lem_in_error.c
 Norme: ./src/parser/add_pipe.c
+Norme: ./src/lem_in.c
 Norme: ./maps/ft_strsplit.c
 Norme: ./src/parser/read_map.c
 Norme: ./libft/src/get_next_line/get_next_line.c
 Norme: ./src/parser/new_room.c
 Norme: ./src/parser/check_in.c
-Error (line 35): function check_room has 26 lines
 Norme: ./src/tools/clean_venv.c
-Norme: ./src/solver/search_path.c
-Error: 42 header not at top of the file
-Error (line 93, col 19): bad spacing
-Error (line 119, col 25): bad spacing
-Norme: ./src/solver/solver_tool.c
-Error: 42 header not at top of the file
 Norme: ./src/tools/del_room.c
 Norme: ./src/tools/del_strtab.c
+Norme: ./src/solver/search_path.c
+Norme: ./src/solver/solver_tool.c
 Norme: ./src/tools/del_strtab_except.c
 Norme: ./src/tools/search_room.c
 Norme: ./src/visu/display_ants.c
-Norme: ./src/visu/draw_anthill.c
 Norme: ./src/solver/send_ant.c
 Error: 6 functions in the file
-Error: 42 header not at top of the file
 Norme: ./src/tools/get_room_index.c
-Norme: ./src/visu/default_zoom.c
+Norme: ./src/visu/draw_anthill.c
+Norme: ./src/visu/get_step.c
 Norme: ./src/visu/get_rooms_name.c
-Norme: ./src/visu/help_display_init.c
+Norme: ./src/visu/default_zoom.c
+Norme: ./src/visu/event_manager.c
 Norme: ./src/visu/reset_pos_map.c
 Norme: ./src/visu/move_step.c
-Error (line 31): function move_step has 26 lines
 Norme: ./srcs/lem-in.c
 Warning: /Users/ygaude/Projects/lem-in/srcs/lem-in.c may not compile or is invalid for some reasons.
 Norme: ./src/visu/lem_in_visu.c
-Norme: ./src/visu/event_manager.c
-Error (line 53): function get_step has 30 lines
 Norme: ./src/visu/step_display_init.c
+Norme: ./src/visu/help_display_init.c

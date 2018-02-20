@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 18:50:17 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/20 18:50:20 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 20:11:01 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ size_t	ft_wcsrlen(wchar_t *wcs, size_t lenmax)
 		i++;
 	}
 	if (ret > lenmax)
-		ret -=size;
+		ret -= size;
 	return (ret);
 }
