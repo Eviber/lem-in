@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 21:04:11 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/12 17:12:47 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 19:05:59 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ static void		horizontal_scrolling(t_visu *venv)
 		venv->step_focus.x -= 4;
 }
 
+static void		move_up(t_visu *venv)
+{
+	(venv->i)--;
+	if (venv->step_select.y > 25 && (venv->step_size.y + venv->step_size.h\
+	>= venv->screen.y || venv->step_size.h < venv->screen.y))
+		venv->step_select.y -= 50;
+	else if (venv->step_size.y < 0)
+		venv->step_size.y += 50;
+}
+
+static void		move_down(t_visu *venv)
+{
+	(venv->i)++;
+	if (venv->step_select.y + venv->step_select.h + 50 <= venv->screen.y)
+		venv->step_select.y += 50;
+	else if (venv->step_size.y + venv->step_size.h >= venv->screen.y)
+		venv->step_size.y -= 50;
+}
+
 void			move_step(t_visu *venv)
 {
 	Uint32			tmp;
@@ -36,23 +55,14 @@ void			move_step(t_visu *venv)
 	tmp = SDL_GetTicks();
 	if (venv->kb_state[SDL_SCANCODE_J] && venv->i > 0 && tmp > ticks + 120)
 	{
-		(venv->i)--;
-		if (venv->step_select.y > 25 && (venv->step_size.y + venv->step_size.h\
-		>= venv->screen.y || venv->step_size.h < venv->screen.y))
-			venv->step_select.y -= 50;
-		else if (venv->step_size.y < 0)
-			venv->step_size.y += 50;
+		move_up(venv);
 		ticks = SDL_GetTicks();
 	}
 	else if (venv->kb_state[SDL_SCANCODE_K] && \
 	venv->step_list[venv->i + 1] && tmp > ticks + 120 && (venv->step_size.y +\
 	venv->step_size.h >= venv->screen.y || venv->step_size.h < venv->screen.y))
 	{
-		(venv->i)++;
-		if (venv->step_select.y + venv->step_select.h + 50 <= venv->screen.y)
-			venv->step_select.y += 50;
-		else if (venv->step_size.y + venv->step_size.h >= venv->screen.y)
-			venv->step_size.y -= 50;
+		move_down(venv);
 		ticks = SDL_GetTicks();
 	}
 	horizontal_scrolling(venv);

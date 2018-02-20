@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/02/02 16:31:44 by vsporer          ###   ########.fr        #
+#    Updated: 2018/02/20 19:15:28 by vsporer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ VISU =				$(PATH_VISU)lem_in_visu.c\
 					$(PATH_VISU)get_rooms_name.c\
 					$(PATH_VISU)reset_pos_map.c\
 					$(PATH_VISU)move_step.c\
+					$(PATH_VISU)get_step.c\
 					$(PATH_VISU)event_manager.c
 
 SOLVER = 			$(PATH_SOLV)search_path.c\

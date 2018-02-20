@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visu_lem-in.h                                      :+:      :+:    :+:   */
+/*   visu_lem_in.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 16:15:42 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/02 16:31:27 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 19:15:08 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int					display_ants(SDL_Renderer *render, t_visu *venv);
 int					get_rooms_name(SDL_Renderer *r, int *room, t_visu *venv);
 int					event_manager(SDL_Renderer *render, t_visu *venv);
 int					draw_anthill(SDL_Renderer *r, t_room **rooms, t_visu *venv);
+int					get_step(SDL_Renderer *render, int *step, t_visu *venv);
 void				lem_in_visu(t_env *env);
 void				reset_pos_map(t_visu *venv);
 void				move_step(t_visu *venv);

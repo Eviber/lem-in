@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 12:49:56 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/02 16:07:29 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 19:00:03 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static int	check_room(t_room **ret, char *line, t_env *env)
 	{
 		while (room[++j])
 		{
-			i = 0;
-			if (room[j][i] == '-')
-				i++;
+			i = room[j][0] == '-' ? 1 : 0;
 			while (ft_isdigit(room[j][i]))
 				i++;
 			if (room[j][i])

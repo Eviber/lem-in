@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 14:24:50 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/06 16:27:12 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 19:15:56 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,6 @@ static void		event_zoom(t_visu *venv)
 		(venv->zoom + 1) / venv->zoom;
 		venv->zoom++;
 	}
-}
-
-static int		get_step(SDL_Renderer *render, int *step, t_visu *venv)
-{
-	static int	frame = 0;
-
-	if (*step == 4 && frame > 0)
-		frame--;
-	else if (*step == 2 && frame < ((venv->screen.x / 4 + 30) / 16))
-		frame++;
-	else if (!venv->kb_state[SDL_SCANCODE_S] && *step == 1)
-		*step = 2;
-	else if (venv->kb_state[SDL_SCANCODE_S] && *step == 2)
-		*step = 3;
-	else if (!venv->kb_state[SDL_SCANCODE_S] && *step == 3)
-		*step = 4;
-	if (*step == 4 && frame == 0)
-	{
-		*step = 0;
-		venv->step_focus.x = 0;
-	}
-	move_step(venv);
-	if (*step == 2 || *step == 3)
-		if (display_ants(render, venv))
-			return (1);
-	boxRGBA(render, venv->screen.x - (frame * 16), 0, venv->screen.x, \
-	venv->screen.y, 0, 0, 0, 160);
-	boxRGBA(render, venv->screen.x - (frame * 16), \
-	venv->step_select.y, venv->screen.x, \
-	venv->step_select.y + venv->step_select.h, 150, 0, 0, 60);
-	venv->step_size.x = venv->screen.x - ((frame * 16) - 30);
-	venv->step_size.w = venv->screen.x / 4;
-	return (SDL_RenderCopy(render, venv->step, &venv->step_focus, \
-	&venv->step_size));
 }
 
 static int		get_help(SDL_Renderer *render, int *help, t_visu *venv)

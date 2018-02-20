@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 19:08:38 by vsporer           #+#    #+#             */
-/*   Updated: 2018/02/02 16:12:20 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/02/20 18:54:14 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@ int				main(int ac, char **av)
 	if (ac == 2 && !ft_strcmp(av[1], "-v"))
 		lem_in_visu(&env);
 	del_room_tab(env.rooms);
-	while(1);
 	return (0);
 }
