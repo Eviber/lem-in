@@ -1,2 +1,0 @@
-Norme: ./src/solver/send_ant.c
-Error: 6 functions in the file
