@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/09 19:47:39 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/10 20:45:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void				visu_update(SDL_Renderer *render, t_env colony, t_winenv *w)
 	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_NONE);
 	SDL_RenderClear(render);
 	SDL_SetRenderTarget(render, w->layer[ROOMS]);
-	iSDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 	SDL_RenderClear(render);
 	SDL_RenderFillRect(render, NULL);
 	SDL_SetRenderTarget(render, w->layer[ANTS]);
