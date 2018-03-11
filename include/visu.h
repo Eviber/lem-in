@@ -62,4 +62,29 @@ int						handle_event(t_winenv *env);
 int						visu_init(t_env *colony);
 int						visu(void);
 
+/*
+** visu_put
+*/
+void				putlast(t_winenv *w, t_env colony);
+void				putroomname(t_winenv w, char *roomname, t_pos pos);
+void				putroom(t_winenv w, t_room *room, t_env colony);
+void				putpipes(SDL_Renderer *render, t_room room, t_winenv w);
+void				putcount(t_winenv env, char *str, SDL_Rect *rect);
+
+/*
+**	visu_update
+*/
+
+void				updatelast(t_winenv *w, t_env colony);
+void				visu_update(SDL_Renderer *render, t_env colony, t_winenv *w);
+
+/*
+**	visu
+*/
+
+void				putant(t_winenv w, t_room *room, t_room *prev, int ant);
+void				counter(t_env colony, t_winenv env);
+void				cleartex(SDL_Renderer *render, SDL_Texture *tex);
+void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w);
+
 #endif

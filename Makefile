@@ -29,6 +29,8 @@ SRC = get_pipes.c \
 	  visu_event.c \
 	  visu_init.c \
 	  visu_utils.c \
+		visu_put.c		\
+		visu_update.c		\
 	  free_antfarm.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
