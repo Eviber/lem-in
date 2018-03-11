@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/02/20 19:15:28 by vsporer          ###   ########.fr        #
+#    Updated: 2018/03/11 09:06:13 by gcollett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ PATH_TOOLS =		$(PATH_SRC)tools/
 PATH_SOLV =			$(PATH_SRC)solver/
 
 CC =				gcc -g -Wall -Werror -Wextra
-INC =				-I include/ -I libft/includes/
+INC =				-I include/ -I libft/includes/ `sdl2-config --cflags`
 
 SRC =				$(PATH_SRC)lem_in.c\
 					$(PATH_SRC)lem_in_error.c
