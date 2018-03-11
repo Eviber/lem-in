@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:08:44 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/31 14:24:01 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/03/11 21:08:58 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ t_room			*new_room(char *name, int x, int y, t_env *env)
 {
 	t_room	*new;
 
+	if (search_room(name, env->rooms))
+	{
+		ft_dprintf(2, "lem-in: room \"%s\" already exist\n", name);
+		exit(-1);
+	}
 	new = roomalloc(env);
 	new->pipes = NULL;
 	new->next = NULL;
