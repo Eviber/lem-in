@@ -47,7 +47,7 @@ static int				getroomfromant(t_env *env, unsigned long *lasts,
 		i++;
 	while (env->rooms[i] && env->paths[j] && lasts[j] != target)
 		j++;
-	if (env->rooms[i] && lasts[j] != target)
+	if (env->rooms[i] && lasts[j] != target )
 		*tofill = (env->rooms[i]) ? *(env->rooms[i]) : *(env->paths[j]->room);
 	else
 		return (FALSE);
