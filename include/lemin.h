@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/08 15:59:28 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/11 12:56:54 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_conflict
 typedef struct		s_path
 {
 	struct s_room	*room;
+	int				tosend;
 	int				length;
 }					t_path;
 

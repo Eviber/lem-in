@@ -6,13 +6,124 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/08 15:51:35 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/11 14:47:15 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 #include "visu.h"
 #include "libft.h"
+
+void	calc_tosend(t_env *env)
+{
+	int		i;
+	int		nb_paths;
+	int		total_len;
+	double	meanlen;
+
+	total_len = 0;
+	nb_paths = -1;
+	while (env->paths[++nb_paths]->room)
+	{
+		printf("iroom = %s\n", env->paths[nb_paths]->room->name);
+		total_len += env->paths[nb_paths]->length;
+	}
+	meanlen = (env->nb_ants + total_len) / (nb_paths - 1) + 0.5;
+	printf("(%lu + %d) / %d + 0.5 = %f\n", env->nb_ants, total_len, nb_paths - 1, meanlen);
+	i = -1;
+	while (env->paths[++i]->room)
+	{
+		env->paths[i]->tosend = meanlen - env->paths[i]->length;
+		printf("path %d > %d\n", env->paths[i]->length, env->paths[i]->tosend);
+	}
+}
+
+void	output(t_env *env, int v)
+{
+	// calc limit per path
+	calc_tosend(env);
+	while (v)
+		v = visu();
+}
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 static void				mov_ants(t_env *env, t_room *pathroom)
 {
@@ -120,3 +231,4 @@ void					output(t_env *env, int v)
 	while (v)
 		v = visu();
 }
+*/
