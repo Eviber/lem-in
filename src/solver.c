@@ -237,5 +237,10 @@ void					solve(t_env *env)
 		reset_room(env);
 		env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
 	}
+	if (i == 0)
+	{
+		ft_dprintf(2, "ERROR No path\n");
+		exit(1);
+	}
 	lock_path(env);
 }

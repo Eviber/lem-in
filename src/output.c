@@ -69,7 +69,6 @@ static unsigned long	putants(t_env *env, unsigned long min,
 			min++;
 		target++;
 	}
-	ft_putchar('\n');
 	return (min);
 }
 
@@ -81,6 +80,7 @@ static void				sub_output(t_env *env, int v, unsigned long *lasts,
 	while (env->lem_out < env->nb_ants)
 	{
 		i = 0;
+		ft_putchar('\n');
 		while (env->paths[i])
 		{
 			if (env->paths[i]->room)
@@ -88,6 +88,7 @@ static void				sub_output(t_env *env, int v, unsigned long *lasts,
 			if (env->paths && env->paths[i]
 				&& env->paths[i]->room && env->paths[i]->room->ant)
 			{
+				ft_printf("L%d-%s ",  env->paths[i]->room->ant, env->end->name);
 				env->paths[i]->room->ant = 0;
 				env->lem_out++;
 			}
@@ -98,6 +99,7 @@ static void				sub_output(t_env *env, int v, unsigned long *lasts,
 			v = visu();
 		min = putants(env, min, lasts);
 	}
+	ft_putchar('\n');
 }
 
 void					output(t_env *env, int v)
