@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/09 13:36:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/11 09:53:00 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #include "libft.h"
 #include "visu.h"
 
-SDL_Texture		*strtotex(char *str, t_winenv env, SDL_Color color)
+SDL_Texture		*strtotex(char *str, t_winenv env, TTF_Font *f)
 {
 	SDL_Texture		*tex;
 	SDL_Surface		*surf;
+	SDL_Color		color;
 
-	surf = TTF_RenderText_Blended(env.font, str, color);
+	color = (SDL_Color){255, 255, 255, 255};
+	surf = TTF_RenderText_Blended(f, str, color);
 	if (!surf)
 		panic("Failed creating text surface", SDL_GetError());
 	tex = SDL_CreateTextureFromSurface(env.render, surf);

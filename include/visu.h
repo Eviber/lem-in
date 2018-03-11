@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/09 13:36:55 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/11 09:53:11 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct			s_winenv
 ** Utilities
 */
 int						panic(const char *str, const char *str2);
-SDL_Texture				*strtotex(char *str, t_winenv env, SDL_Color color);
+SDL_Texture				*strtotex(char *str, t_winenv env, TTF_Font *f);
 t_winenv				*getsdlenv(t_env *colony);
 double					dist(double x1, double y1, double x2, double y2);
 int						quitvisu(t_winenv *env);
