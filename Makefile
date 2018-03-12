@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/08 15:52:03 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/12 11:27:29 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 CC = clang
 CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC) `sdl2-config --cflags`
-LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf
+LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf -lm
 
 $(NAME): $(OBJ)
 	make -C $(LIB_DIR)

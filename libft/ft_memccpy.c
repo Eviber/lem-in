@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 03:44:17 by ygaude            #+#    #+#             */
-/*   Updated: 2017/11/08 11:24:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 11:25:25 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void				*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	if (i < n)
 	{
 		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		return ((unsigned char *)(&(dst[i + 1])));
+		return (dst + i + 1);
 	}
 	return (NULL);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_prconvert.c                                     :+:      :+:    :+:   */
+/*   ft_pr_convert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/10/25 21:00:14 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 11:26:10 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec, char **str)
 	{
 		c = *unicstr;
 		i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
-		if (i + 1 > MB_CUR_MAX)
+		if ((unsigned)i + 1 > (unsigned)MB_CUR_MAX)
 		{
 			ft_strdel(&(res.str));
 			return (res);
@@ -38,7 +38,7 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec, char **str)
 			break ;
 		unicstr++;
 	}
-	res.len = (justonce) ? i + 1 : ft_strlen(res.str);
+	res.len = (justonce) ? (unsigned)i + 1 : ft_strlen(res.str);
 	return (res);
 }
 

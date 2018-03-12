@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 16:26:07 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/19 18:02:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 11:26:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 	fmt.str = (char *)format;
 	res = ft_loop(fmt, ap, &error);
 	*ret = res.str;
-	return ((error) ? -1 : res.len);
+	return ((error) ? -1 : (signed)res.len);
 }
 
 int		ft_dprintf(int fd, const char *format, ...)
