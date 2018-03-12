@@ -40,11 +40,14 @@ int				main(int ac, char **av)
 	}
 	print_map(read_map(&env));
 	get_path(&env);
-	if (env.paths->room)
+	if (env.paths->room && env.end != env.start)
 		release_ants(&env);
 	else
 	{
-		write(1, "ERROR No path\n", 14);
+		if (env.paths->room)
+			write(2, "\nStart and End is same room all the ant has arrived\n", 52);
+		else
+			write(2, "ERROR No path\n", 14);
 		return (0);
 	}
 	if (ac == 2 && !ft_strcmp(av[1], "-v"))
