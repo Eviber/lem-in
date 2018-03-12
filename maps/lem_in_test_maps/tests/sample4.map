@@ -1,0 +1,20 @@
+##color
+10
+##start
+room2 5 7
+salut 5 6
+##end
+salle5 4 7
+room2-salle5
+room4 0 4
+salle3 2 6
+sa 7 2
+test 4 2
+ar 2 5
+test2 10 5
+test3 11 4
+lol 5 0
+te 1 2
+room2-room4
+room4-test3
+test3-salle5

@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 14:28:09 by vsporer           #+#    #+#             */
-/*   Updated: 2017/02/28 18:13:09 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/03/12 17:02:19 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	gnl_check_fd(const int fd, char **line)
 		save = save->next;
 	}
 	beginline = gnl_clean_line(gnl_get_line(fd), NULL, line);
-	if (**line == -1)
+	if (line && *line && **line == -1)
 		return ;
 	else if (beginline)
 		ft_lstadd(&file, ft_lstnew((void*)beginline, ft_strlen(beginline) + 1));
