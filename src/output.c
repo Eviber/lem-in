@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/11 14:47:15 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 23:28:52 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	calc_tosend(t_env *env)
 	int		i;
 	int		nb_paths;
 	int		total_len;
-	double	meanlen;
+	int		meanlen;
+	int		mod;
 
 	total_len = 0;
 	nb_paths = -1;
@@ -28,124 +29,104 @@ void	calc_tosend(t_env *env)
 		printf("iroom = %s\n", env->paths[nb_paths]->room->name);
 		total_len += env->paths[nb_paths]->length;
 	}
-	meanlen = (env->nb_ants + total_len) / (nb_paths - 1) + 0.5;
-	printf("(%lu + %d) / %d + 0.5 = %f\n", env->nb_ants, total_len, nb_paths - 1, meanlen);
+	meanlen = (env->nb_ants + total_len) / nb_paths;
+	mod = (env->nb_ants + total_len) % nb_paths;
+	printf("(%lu + %d) / %d = %d\n", env->nb_ants, total_len, nb_paths, meanlen);
 	i = -1;
 	while (env->paths[++i]->room)
 	{
-		env->paths[i]->tosend = meanlen - env->paths[i]->length;
+		env->paths[i]->tosend = meanlen - env->paths[i]->length + (mod > 0);
+		mod--;
 		printf("path %d > %d\n", env->paths[i]->length, env->paths[i]->tosend);
+	}
+	env->paths[i - 1]->tosend = (meanlen - env->paths[i]->length);
+}
+
+static int				mov_new(t_env *env, unsigned int ant)
+{
+	int		i;
+
+	i = 0;
+	while (env->paths[i] && env->paths[i]->start)
+	{
+		if (!env->paths[i]->start->ant && env->paths[i]->tosend)
+		{
+			env->paths[i]->start->ant = env->nb_ants - env->antleft + 1;
+			printf("AL%u-%s ", ant, env->paths[i]->start->name);
+			env->antleft--;
+			env->paths[i]->tosend--;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+static int				mov_ant(t_env *env, unsigned int ant)
+{
+	t_room				*cur;
+	int					i;
+
+	i = 0;
+	if (ant == env->nb_ants - env->antleft + 1)
+		return (mov_new(env, ant));
+	cur = env->paths[0]->room;
+	while (env->paths[i] && env->paths[i]->room)
+	{
+		cur = env->paths[i++]->room;
+		while (cur && cur->ant != ant)
+			cur = cur->prev;
+		if (cur && cur->next)
+		{
+			cur->next->ant = cur->ant;
+			printf("BL%lu-%s ", cur->ant, cur->next->name);
+			if (cur->next == env->end)
+				env->lem_out++;
+			cur->ant = 0;
+			return (1);
+		}
+	}
+	return (1);
+}
+
+void	setfirst(t_env *env)
+{
+	t_room	*cur;
+	int		i;
+
+	i = 0;
+	while (env->paths[i]->room)
+	{
+		cur = env->paths[i]->room;
+		while (cur && cur->prev != env->start)
+			cur = cur->prev;
+		env->paths[i]->start = cur;
+		i++;
 	}
 }
 
 void	output(t_env *env, int v)
 {
+	unsigned int	i;
+
 	// calc limit per path
+	setfirst(env);
 	calc_tosend(env);
+	env->lem_out = 0;
+	env->antleft = env->nb_ants;
+	while (env->lem_out < env->nb_ants)
+	{
+		if (v)
+			v = visu();
+		i = 1;
+		while (i <= env->nb_ants && mov_ant(env, i))
+				i++;
+		printf("\n");
+	}
 	while (v)
 		v = visu();
 }
 /*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-static void				mov_ants(t_env *env, t_room *pathroom)
-{
-	t_room				*cur;
-
-	cur = pathroom;
-	while (cur && cur->prev && cur->prev != env->start)
-	{
-		if (cur->prev->ant)
-		{
-			cur->ant = cur->prev->ant;
-			cur->prev->ant = 0;
-		}
-		cur = cur->prev;
-	}
-	if (cur && env->antleft)
-	{
-		cur->ant = env->nb_ants - env->antleft + 1;
-		env->antleft--;
-	}
-}
-
 static int				getroomfromant(t_env *env, unsigned long *lasts,
 						t_room *tofill, unsigned long target)
 {
