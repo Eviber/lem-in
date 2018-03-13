@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstaddback.c                                    :+:      :+:    :+:   */
+/*   memalloc_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcollett <gcollett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/20 20:07:02 by gcollett          #+#    #+#             */
-/*   Updated: 2018/03/12 13:49:38 by gcollett         ###   ########.fr       */
+/*   Created: 2018/03/12 14:06:38 by gcollett          #+#    #+#             */
+/*   Updated: 2018/03/12 15:29:50 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-void	ft_lstaddback(t_list **alst, t_list *new)
+void	*memalloc_exit(size_t size)
 {
-	t_list	*tmp;
+	void *res;
 
-	if (!*alst)
-		*alst = new;
-	else
+	res = ft_memalloc(size);
+	if (!res)
 	{
-		tmp = *alst;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		write(2, "Malloc error\n", 13);
+		exit(1);
 	}
+	else
+		return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: gcollett <gcollett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 20:12:20 by gcollett          #+#    #+#             */
-/*   Updated: 2018/02/20 20:13:27 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 13:45:22 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	real_res(t_env *env, char *res, int reset, int i)
 	char				*tmp;
 
 	if (reset == 1 && (taille = 1))
-		env->result[i] = ft_memalloc(400);
+		env->result[i] = memalloc_exit(400);
 	if (reset == 0 && (index = -1))
 	{
 		while (env->result[i][index + 1])
@@ -30,7 +30,7 @@ static void	real_res(t_env *env, char *res, int reset, int i)
 		if ((index + ft_strlen(res) + 1 >= taille * 400) && (j = -1))
 		{
 			tmp = env->result[i];
-			env->result[i] = ft_memalloc(++taille * 400);
+			env->result[i] = memalloc_exit(++taille * 400);
 			while (tmp[++j])
 				env->result[i][j] = tmp[j];
 			ft_memdel((void **)tmp);
@@ -146,7 +146,7 @@ void		release_ants(t_env *env)
 			tmp = tmp->prev;
 		}
 		max_tour = cnt_max_tour(env->paths, value, nb_path, env);
-		env->result = ft_memalloc(sizeof(char *) * max_tour);
+		env->result = memalloc_exit(sizeof(char *) * max_tour);
 		launch_ant(env);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gcollett <gcollett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 20:15:21 by gcollett          #+#    #+#             */
-/*   Updated: 2018/02/20 20:15:37 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 13:45:07 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			get_path(t_env *env)
 	int		i;
 
 	i = 0;
-	env->paths = (t_path *)ft_memalloc(sizeof(t_path));
+	env->paths = (t_path *)memalloc_exit(sizeof(t_path));
 	while (find_shortest(env, i))
 	{
 		env->conflict = 1;
@@ -123,7 +123,7 @@ void			get_path(t_env *env)
 		tmp->next = env->end;
 		lock_path(env);
 		reset_room(env);
-		env->paths->next = (t_path *)ft_memalloc(sizeof(t_path ));
+		env->paths->next = (t_path *)memalloc_exit(sizeof(t_path ));
 		env->paths->next->prev = env->paths;
 		env->paths = env->paths->next;
 	}

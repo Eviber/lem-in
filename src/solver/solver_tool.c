@@ -6,12 +6,13 @@
 /*   By: gcollett <gcollett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 20:09:08 by gcollett          #+#    #+#             */
-/*   Updated: 2018/02/20 20:09:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 13:45:32 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "parser_lem_in.h"
+#include "solver.h"
 
 static void	clean_conflict(t_conflit **conflit)
 {
@@ -46,10 +47,10 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 	if (set == -1)
 	{
 		if (!conflict)
-			conflict = ft_memalloc(sizeof(t_conflit));
+			conflict = memalloc_exit(sizeof(t_conflit));
 		conflict->len = new_dp;
 		conflict->old_room = room;
-		conflict->next = ft_memalloc(sizeof(t_conflit));
+		conflict->next = memalloc_exit(sizeof(t_conflit));
 		conflict->next->prev = conflict;
 		conflict = conflict->next;
 	}

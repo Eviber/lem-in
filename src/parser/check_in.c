@@ -42,7 +42,7 @@ static int	check_room(t_room **ret, char *line, t_env *env)
 	if (!(room = ft_split_whitespaces(line)))
 		lem_in_error(DEFAULT, 'q', env);
 	else if (ft_strtablen(room) == 3 && \
-	!ft_strchr(room[0], '-') && !ft_strchr(room[0], 'L'))
+	!ft_strchr(room[0], '-') && room[0][0] != 'L')
 	{
 		while (room[++j])
 		{

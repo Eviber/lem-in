@@ -6,7 +6,7 @@
 #    By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 14:41:19 by vsporer           #+#    #+#              #
-#    Updated: 2018/03/11 09:06:13 by gcollett         ###   ########.fr        #
+#    Updated: 2018/03/12 14:07:21 by gcollett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ TOOLS =				$(PATH_TOOLS)del_strtab.c\
 					$(PATH_TOOLS)get_room_index.c\
 					$(PATH_TOOLS)clean_venv.c\
 					$(PATH_TOOLS)search_room.c\
-					$(PATH_TOOLS)create_string.c
+					$(PATH_TOOLS)create_string.c \
+					$(PATH_TOOLS)memalloc_exit.c \
+
 
 PARSER =			$(PATH_PARS)read_map.c\
 					$(PATH_PARS)check_in.c\

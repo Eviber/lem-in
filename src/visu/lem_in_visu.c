@@ -24,9 +24,9 @@ SDL_Rect *bg_pos, t_visu *venv)
 		return (1);
 	SDL_FreeSurface(surface);
 	bg_pos->x = 0;
-	bg_pos->y = -4;
+	bg_pos->y = -5;
 	bg_pos->w = venv->screen.x;
-	bg_pos->h = venv->screen.y + 4;
+	bg_pos->h = venv->screen.y + 5;
 	return (0);
 }
 

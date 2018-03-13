@@ -16,7 +16,6 @@
 # include "libft.h"
 # define DEFAULT 0
 # define ANTS 1
-# define NO_PIPE 2
 
 /*
 ** Base

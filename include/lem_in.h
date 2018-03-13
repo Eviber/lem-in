@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/15 20:49:26 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/12 14:07:45 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ typedef struct			s_env
 	int					dp;
 	int					conflict;
 }						t_env;
-
-enum { ROOM, TUBE, COMM, START, END };
 
 enum { FALSE, TRUE };
 

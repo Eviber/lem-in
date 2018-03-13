@@ -15,12 +15,11 @@
 
 static char		*create_msg(int err)
 {
-	char	*msg[3];
+	char	*msg[2];
 
 	msg[0] = NULL;
 	msg[1] = "lem_in: ants error";
-	msg[2] = "lem_in: pipe error";
-	if (err >= 0 && err < 3)
+	if (err >= 0 && err < 2)
 		return (msg[err]);
 	else
 		return (NULL);
