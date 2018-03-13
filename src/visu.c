@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/12 11:24:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 15:41:22 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void				counter(t_env colony, t_winenv env)
 	int				i;
 
 	rect = (SDL_Rect){0, 0, 0, 0};
-	ft_asprintf(&str, "at start: %2zu", colony.antleft);
+	asprintf(&str, "at start: %2zu", colony.antleft);
 	putcount(env, str, &rect);
 	rect.y = rect.h;
 	i = 0;
 	while (env.lastants && env.lastants[i])
 		i++;
-	ft_asprintf(&str, "arrived: %3zu", colony.lem_out - i);
+	asprintf(&str, "arrived: %3zu", colony.lem_out - i);
 	putcount(env, str, &rect);
 }
 
@@ -74,14 +74,18 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w)
 	rooms = colony.rooms;
 	while (rooms[i])
 	{
-		if (rooms[i]->pipes)
-			putpipes(render, *(rooms[i]), *w);
-		putroom(*w, rooms[i], colony);
+		if (w->redraw)
+		{
+			if (rooms[i]->pipes)
+				putpipes(render, *(rooms[i]), *w);
+			putroom(*w, rooms[i], colony);
+		}
 		if (rooms[i] && rooms[i]->prev && rooms[i]->ant)
 			putant(*w, rooms[i], rooms[i]->prev, rooms[i]->ant);
 		i++;
 	}
 	putlast(w, colony);
+	w->redraw = 0;
 }
 
 int					visu(void)

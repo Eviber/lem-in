@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/12 11:32:15 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:55:04 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 
 	res.len = s1.len + s2.len;
 	if (s1.str && s2.str && s1.len + s2.len)
-		res.str = ft_memjoin(s1.str, s1.len + 1, s2.str, s2.len);
+		res.str = ft_memjoin(s1.str, s1.len, s2.str, s2.len);
 	else if (s1.str && s1.len)
-		res.str = ft_memdup(s1.str, s1.len + 1);
+		res.str = ft_memdup(s1.str, s1.len);
 	else if (s2.str && s2.len)
-		res.str = ft_memdup(s2.str, s2.len + 1);
+		res.str = ft_memdup(s2.str, s2.len);
 	else
 		res.str = ft_memalloc(1);
 	res.str[res.len] = '\0';

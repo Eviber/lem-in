@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/12 23:28:52 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 16:45:40 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	calc_tosend(t_env *env)
 		mod--;
 		printf("path %d > %d\n", env->paths[i]->length, env->paths[i]->tosend);
 	}
-	env->paths[i - 1]->tosend = (meanlen - env->paths[i]->length);
 }
 
 static int				mov_new(t_env *env, unsigned int ant)
@@ -52,7 +51,7 @@ static int				mov_new(t_env *env, unsigned int ant)
 		if (!env->paths[i]->start->ant && env->paths[i]->tosend)
 		{
 			env->paths[i]->start->ant = env->nb_ants - env->antleft + 1;
-			printf("AL%u-%s ", ant, env->paths[i]->start->name);
+			printf("L%u-%s ", ant, env->paths[i]->start->name);
 			env->antleft--;
 			env->paths[i]->tosend--;
 			return (1);
@@ -79,7 +78,7 @@ static int				mov_ant(t_env *env, unsigned int ant)
 		if (cur && cur->next)
 		{
 			cur->next->ant = cur->ant;
-			printf("BL%lu-%s ", cur->ant, cur->next->name);
+			printf("L%lu-%s ", cur->ant, cur->next->name);
 			if (cur->next == env->end)
 				env->lem_out++;
 			cur->ant = 0;
@@ -114,14 +113,15 @@ void	output(t_env *env, int v)
 	calc_tosend(env);
 	env->lem_out = 0;
 	env->antleft = env->nb_ants;
+	printf("\n");
 	while (env->lem_out < env->nb_ants)
 	{
-		if (v)
-			v = visu();
 		i = 1;
 		while (i <= env->nb_ants && mov_ant(env, i))
 				i++;
 		printf("\n");
+		if (v)
+			v = visu();
 	}
 	while (v)
 		v = visu();

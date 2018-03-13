@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/11 09:53:11 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:11:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct			s_winenv
 	int					quit;
 	unsigned int		turntime;
 	unsigned int		wait;
+	int					redraw;
 }						t_winenv;
 
 /*

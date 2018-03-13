@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/11 09:53:00 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:14:32 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ t_winenv			*getsdlenv(t_env *colony)
 
 	if (!winenv && colony)
 		if ((winenv = (t_winenv *)ft_memalloc(sizeof(t_winenv))))
+		{
 			winenv->colony = colony;
+			winenv->redraw = 1;
+		}
 	return (winenv);
 }
 

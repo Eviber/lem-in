@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/09 12:01:23 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:28:22 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "lemin.h"
 #include "visu.h"
 
-static void			event_zoom(t_winenv *env, const Uint8 *state)
+static int			event_zoom(t_winenv *env, const Uint8 *state)
 {
 	double			zoomval;
 
@@ -37,12 +37,15 @@ static void			event_zoom(t_winenv *env, const Uint8 *state)
 					(env->zoom * zoomval) / env->zoom + env->dispmode.h / 2;
 		env->zoom *= zoomval;
 	}
+	return (state[SDL_SCANCODE_KP_PLUS] ^ state[SDL_SCANCODE_KP_MINUS]);
 }
 
-static void			event_move(t_winenv *env, const Uint8 *state)
+static int			event_move(t_winenv *env, const Uint8 *state)
 {
 	SDL_Point		mouse;
+	t_pos			tmp;
 
+	tmp = env->mov;
 	if (SDL_GetRelativeMouseState(&(mouse.x),
 		(&mouse.y)) & SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
@@ -63,6 +66,7 @@ static void			event_move(t_winenv *env, const Uint8 *state)
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 		env->zoom = env->orig_zoom;
 	}
+	return (tmp.x != env->mov.x || tmp.y != env->mov.y || mouse.x || mouse.y);
 }
 
 int					handle_event(t_winenv *env)
@@ -71,8 +75,8 @@ int					handle_event(t_winenv *env)
 
 	state = SDL_GetKeyboardState(NULL);
 	SDL_PumpEvents();
-	event_zoom(env, state);
-	event_move(env, state);
+	env->redraw |= event_zoom(env, state);
+	env->redraw |= event_move(env, state);
 	env->putnames = state[SDL_SCANCODE_TAB];
 	env->offticks += (state[SDL_SCANCODE_SPACE]) ? 20 : 0;
 	env->wait = 100 * (!state[SDL_SCANCODE_SPACE]);
