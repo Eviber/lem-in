@@ -14,6 +14,14 @@
 #include "parser_lem_in.h"
 #include "solver.h"
 
+void print_room(t_env *env)
+{
+	int i;
+
+	i = 0;
+	while ()
+}
+
 void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 {
 	long	dp;
@@ -24,7 +32,6 @@ void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 	while (tmp->next != env->end)
 		tmp = tmp->next;
 	dp = tmp->weight;
-	env->antleft += dp;
 	tmp_dp = depth + 1;
 	tmp = r->prev;
 	++env->conflict;
@@ -37,8 +44,9 @@ void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 	env->dp = tmp_dp;
 	depth = depth + 1 - r->weight + dp;
 	r->dead = 1;
-	save_info(-1, depth, r, env);
-	save_info(0, depth, r_conf, env);
+	save_info(-2, depth, r, env);
+	save_info(-1, depth, r_conf, env);
+	save_info(0, dp, r_conf, env);
 }
 
 static int		fill_weight(t_env *env, t_room *r)
@@ -76,6 +84,7 @@ t_room			*try_path(t_env *env, int depth)
 	int		i;
 
 	i = 0;
+
 	while (env->rooms[i])
 	{
 		cur = env->rooms[i++];
@@ -107,6 +116,8 @@ int				find_shortest(t_env *e, int f)
 	}
 	return (FALSE);
 }
+
+#include <stdio.h>
 
 void			get_path(t_env *env)
 {
