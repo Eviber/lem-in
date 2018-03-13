@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 15:41:22 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 19:24:27 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int					visu(void)
 	t_winenv		*env;
 
 	env = getsdlenv(NULL);
+	env->colony->end->prev = NULL;
 	env->ticks = SDL_GetTicks();
 	env->frameticks = env->ticks;
 	env->offticks = 0;

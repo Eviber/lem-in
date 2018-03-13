@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 14:23:57 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/13 19:10:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void				updatelast(t_winenv *w, t_env colony)
 	if (!w->lastants)
 	{
 		i = 0;
-		while (colony.paths[i])
+		while (colony.paths[i]->room)
 			i++;
 		w->lastants = (size_t *)ft_memalloc(i * sizeof(size_t));
 		if (!w->lastants)
