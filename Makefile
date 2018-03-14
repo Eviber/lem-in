@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/13 15:32:18 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/14 10:42:09 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ SRC = get_pipes.c \
 	  visu_event.c \
 	  visu_init.c \
 	  visu_utils.c \
-		visu_put.c		\
-		visu_update.c		\
+	  visu_put.c \
+	  visu_update.c \
 	  free_antfarm.c
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
