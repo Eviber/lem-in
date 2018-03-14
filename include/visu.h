@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 10:04:09 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 12:09:10 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct			s_winenv
 	unsigned int		turntime;
 	unsigned int		wait;
 	int					redraw;
+	int					debug;
 }						t_winenv;
 
 /*
@@ -60,9 +61,6 @@ int						quitvisu(t_winenv *env);
 ** Events
 */
 int						handle_event(t_winenv *env);
-
-int						visu_init(t_env *colony);
-int						visu(void);
 
 /*
 ** visu_put
@@ -88,5 +86,12 @@ void				putant(t_winenv w, t_room *room, t_room *prev, int ant);
 void				counter(t_env colony, t_winenv env);
 void				cleartex(SDL_Renderer *render, SDL_Texture *tex);
 void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w);
+
+/*
+**	main visu
+*/
+void					visu_debug(int state);
+int						visu_init(t_env *colony);
+int						visu(void);
 
 #endif

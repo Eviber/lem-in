@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/14 10:42:09 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/14 12:04:59 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = get_pipes.c \
 	  parsing_antfarm.c \
 	  solver.c \
 	  visu.c \
+	  visu_debug.c \
 	  visu_event.c \
 	  visu_init.c \
 	  visu_utils.c \

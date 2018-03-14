@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 10:05:49 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 11:59:00 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w)
 				putpipes(render, *(rooms[i]), *w);
 			putroom(*w, rooms[i], colony);
 		}
-		if (rooms[i] && rooms[i]->prev && rooms[i]->ant)
+		if (!w->debug && rooms[i] && rooms[i]->prev && rooms[i]->ant)
 			putant(*w, rooms[i], rooms[i]->prev, rooms[i]->ant);
 		i++;
 	}
-	putlast(w, colony);
+	if (!w->debug)
+		putlast(w, colony);
 	w->redraw = 0;
 }
 
