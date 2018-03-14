@@ -14,20 +14,17 @@
 #include "parser_lem_in.h"
 #include "solver.h"
 
-#include <stdio.h>
-/*
-static void	clean_conflict(t_env *env)
+#include <stdio.h> // tu leaks la
+
+void	clean_conflict(t_env *env)
 {
-	printf("Nice\n");
 	while (env->conflit->prev)
 	{
 		env->conflit = env->conflit->prev;
-		ft_memdel(env->conflit->next);
+		ft_memdel((void**)&env->conflit->next);
 	}
-	//ft_memdel(env->conflit);
-	printf("Nice\n");
 }
-*/
+
 static int	search_conf(int set, int new_dp, t_env *env)
 {
 	t_conflit *tmp;
@@ -37,18 +34,18 @@ static int	search_conf(int set, int new_dp, t_env *env)
 	tmp = env->conflit;
 	conflit = env->conflict;
 	mean_len = env->mean_len + new_dp;
+	ft_printf("%ld = %ld + %ld \n", env->mean_len + new_dp, env->mean_len , new_dp);
 	while(set)
 	{
-		printf("here = set = %d\n",set);
 		while (set != tmp->state)
-		{
 			tmp = tmp->prev;
-		}
 		set = tmp->state - 1;
+		ft_printf("%ld = %ld - %ld + %ld \n", mean_len - tmp->old_len + tmp->new_len,mean_len,  tmp->old_len , tmp->new_len);
 		mean_len = mean_len - tmp->old_len + tmp->new_len;
-	}
+		}
+	ft_printf("%ld / (%ld + 1) < %ld / %ld : %ld < %ld\n", mean_len , env->nb_path , env->mean_len , env->nb_path, mean_len / (env->nb_path + 1), env->mean_len / env->nb_path);
 	tmp = env->conflit;
-	if (mean_len / (env->nb_path + 1) < env->mean_len / env->nb_path)
+	if ((float)mean_len / (env->nb_path + 1) <= (float)env->mean_len / env->nb_path)
 	{
 		set = env->conflict - 1;
 		while(set)
@@ -58,10 +55,9 @@ static int	search_conf(int set, int new_dp, t_env *env)
 			tmp->old_room->prev = tmp->miss_direction;
 			set = tmp->state - 1;
 		}
-		//clean_conflict(env);
+		ft_printf("nice\n");
 		return (TRUE);
 	}
-	//clean_conflict(env);
 	return (FALSE);
 }
 
@@ -69,8 +65,7 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 {
 	if (set == -2)
 	{
-		if (!env->conflit)
-			env->conflit = memalloc_exit(sizeof(t_conflit));
+		ft_printf("env->conflict = %d\n", env->conflict);
 		env->conflit->new_len = new_dp;
 		env->conflit->old_room = room;
 		env->conflit->next = memalloc_exit(sizeof(t_conflit));
@@ -81,11 +76,11 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 	else if (set == -1)
 		env->conflit->prev->miss_direction = room;
 	else if (set == 0)
-		env->conflit->old_len = new_dp;
-	else if (set > 0)
 	{
-		return (search_conf(--set, new_dp, env));
+		env->conflit->prev->old_len = new_dp;
 	}
+	else if (set > 0)
+		return (search_conf(--set, new_dp, env));
 	return (FALSE);
 }
 
@@ -112,6 +107,14 @@ void		lock_path(t_env *env)
 		}
 		env->nb_path++;
 		tmp->length = len;
+		len = -1;
+		while(room && room->next)
+		{
+			ft_printf("%s - ", room->name);
+			room->weight = ++len;
+			room = room->next;
+		}
+		ft_printf("%s\n", env->end->name);
 		env->mean_len += len;
 		tmp = tmp->prev;
 	}

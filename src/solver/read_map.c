@@ -12,6 +12,7 @@
 
 #include "lem_in.h"
 #include "parser_lem_in.h"
+#include "solver.h"
 
 static void		env_init(t_env *env)
 {
@@ -19,8 +20,16 @@ static void		env_init(t_env *env)
 	env->end = NULL;
 	env->paths = NULL;
 	env->rooms = NULL;
+	env->conflit = memalloc_exit(sizeof(t_conflit));
+	env->ant_live = 0;
+	env->result = NULL;
+	env->mean_len = 0;
+	env->nb_path = 0;
 	env->nb_ants = 0;
+	env->nb_rooms = 0;
 	env->antleft = 0;
+	env->dp = 0;
+	env->conflict = 0;
 }
 
 char			**read_map(t_env *env)

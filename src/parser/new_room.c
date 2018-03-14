@@ -36,7 +36,6 @@ static t_room	*roomalloc(t_env *env)
 	new[i + 1] = NULL;
 	ft_memdel((void**)&(env->rooms));
 	env->rooms = new;
-	env->nb_rooms++;
 	return ((env->rooms)[i]);
 }
 
@@ -50,6 +49,7 @@ t_room			*new_room(char *name, int x, int y, t_env *env)
 		exit(-1);
 	}
 	new = roomalloc(env);
+	env->nb_rooms++;
 	new->pipes = NULL;
 	new->next = NULL;
 	new->prev = NULL;

@@ -10,23 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "lem_in.h"
 #include "parser_lem_in.h"
 #include "solver.h"
-
-#include <stdio.h>
-
-void print_room(t_env *env)
-{
-	int i;
-
-	i = -1;
-	while (env->rooms[++i])
-	{
-		printf("%s : %d\n",env->rooms[i]->name ,env->rooms[i]->lock);
-	}
-	printf("\n");
-}
 
 void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 {
@@ -50,7 +37,6 @@ void			conflit(t_room *r, t_env *env, long depth, t_room *r_conf)
 	env->dp = tmp_dp - 1;
 	depth = depth + 1 - r->weight + dp;
 	r->dead = 1;
-	printf("here\n");
 	save_info(-2, depth, r, env);
 	save_info(-1, depth, r_conf, env);
 	save_info(0, dp, r_conf, env);
@@ -65,10 +51,8 @@ static int		fill_weight(t_env *env, t_room *r)
 	{
 		if (r->pipes[i] == env->end)
 		{
-			ft_printf("Here = %d : %s\n", r->lock, r->name);
-			if (r->lock == 0 || save_info(r->lock, r->weight + 1, NULL, env))
+			if (r->lock == 0 || save_info(r->lock, r->weight - 1, NULL, env))
 			{
-				printf("done\n");
 				return (TRUE);
 			}
 		}
@@ -82,7 +66,6 @@ static int		fill_weight(t_env *env, t_room *r)
 		if (r != env->start && r->pipes[i]->lock == 1)
 			if (!r->pipes[i]->dead && r->lock != 1)
 			{
-
 				conflit(r->pipes[i], env, r->weight, r);
 				return (FALSE);
 			}
@@ -108,17 +91,14 @@ t_room			*try_path(t_env *env, int depth)
 	return (NULL);
 }
 
-int				find_shortest(t_env *e, int f)
+int				find_shortest(t_env *e)
 {
 	t_room			*tmp;
 	static t_room	*f_room = NULL;
 
 	e->dp = 1;
-	while (e->dp <= e->nb_rooms + 1 && (f == 0 || e->dp < e->nb_ants + 1))
+	while (e->dp <= e->nb_rooms)
 	{
-
-			print_room(e);
-			ft_printf("%d <= %d && (%d || %d < %d)\n", e->dp, e->nb_rooms, e->dp, e->nb_ants + 1);
 		if ((tmp = try_path(e, e->dp++)))
 			if (tmp)
 			{
@@ -132,19 +112,15 @@ int				find_shortest(t_env *e, int f)
 	return (FALSE);
 }
 
-#include <stdio.h>
-
 void			get_path(t_env *env)
 {
 	t_room	*tmp;
-	int		i;
 
-	i = 0;
 	env->paths = (t_path *)memalloc_exit(sizeof(t_path));
-	while (find_shortest(env, i))
+	while (find_shortest(env))
 	{
 		env->conflict = 1;
-		i++;
+		clean_conflict(env);
 		tmp = env->paths->room;
 		tmp->next = env->end;
 		lock_path(env);

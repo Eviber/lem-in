@@ -18,5 +18,6 @@ void	reset_room(t_env *env);
 char	*create_string(unsigned long nb_ant, char *room);
 int		save_info(int set, int new_depth, t_room *o_room, t_env *env);
 void	*memalloc_exit(size_t size);
+void	clean_conflict(t_env *env);
 
 #endif
