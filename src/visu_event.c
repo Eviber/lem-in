@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 14:28:22 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 11:16:27 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int					handle_event(t_winenv *env)
 
 	state = SDL_GetKeyboardState(NULL);
 	SDL_PumpEvents();
-	env->redraw |= event_zoom(env, state);
-	env->redraw |= event_move(env, state);
+	env->redraw |= event_zoom(env, state) || event_move(env, state) ||
+					state[SDL_SCANCODE_TAB] ^ env->putnames;
 	env->putnames = state[SDL_SCANCODE_TAB];
 	env->offticks += (state[SDL_SCANCODE_SPACE]) ? 20 : 0;
 	env->wait = 100 * (!state[SDL_SCANCODE_SPACE]);

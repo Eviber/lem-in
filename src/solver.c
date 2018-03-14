@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/12 15:23:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 11:33:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,6 @@ int						find_shortest(t_env *env, int f_iter)
 	return (FALSE);
 }
 
-#include <stdio.h>
 void					solve(t_env *env)
 {
 	int					i;
@@ -244,5 +243,4 @@ void					solve(t_env *env)
 		exit(1);
 	}
 	lock_path(env);
-	printf("i = %d\n", i);
 }

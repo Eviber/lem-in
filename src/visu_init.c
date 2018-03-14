@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 15:38:36 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 11:22:19 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int			sdl_init(t_env *colony, t_winenv **w)
 		return (panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError()));
 	(*w)->win = SDL_CreateWindow("lem-in",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				(*w)->dispmode.w, (*w)->dispmode.h, 0 * SDL_WINDOW_FULLSCREEN);
+				(*w)->dispmode.w, (*w)->dispmode.h, SDL_WINDOW_FULLSCREEN);
 	if (!(*w)->win)
 		return (panic("Error while creating window: ", SDL_GetError()));
 	(*w)->render = SDL_CreateRenderer((*w)->win, -1, SDL_RENDERER_ACCELERATED);
@@ -45,8 +45,8 @@ static int			texinit(t_winenv *w)
 	if (!w->layer[ANT] || !w->layer[TUBES] ||
 		!w->layer[ROOMS] || !w->layer[ANTS])
 		return (panic("Error while creating layers: ", SDL_GetError()));
-	if (TTF_Init() == -1 || !(w->font = TTF_OpenFont("joystix.ttf", 18)) ||
-							!(w->bigfont = TTF_OpenFont("joystix.ttf", 48)))
+	if (TTF_Init() == -1 || !(w->font = TTF_OpenFont("minecraft.ttf", 18)) ||
+							!(w->bigfont = TTF_OpenFont("chargen.ttf", 48)))
 		return (panic("Error while initializing SDL_TTF: ", TTF_GetError()));
 	SDL_SetTextureBlendMode(w->layer[ROOMS], SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(w->layer[ANTS], SDL_BLENDMODE_BLEND);
