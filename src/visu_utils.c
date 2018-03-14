@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 10:02:32 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 13:41:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_winenv			*getsdlenv(t_env *colony)
 			winenv->colony = colony;
 			winenv->redraw = 1;
 			winenv->visu_out = 0;
+			winenv->debug = 1;
 		}
 	return (winenv);
 }

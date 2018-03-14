@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 12:09:10 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 18:50:19 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct			s_winenv
 	size_t				*lastants;
 	TTF_Font			*bigfont;
 	TTF_Font			*font;
+	struct s_room		*head;
 	struct s_pos		mov;
 	double				zoom;
 	double				orig_zoom;
@@ -92,6 +93,6 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w);
 */
 void					visu_debug(int state);
 int						visu_init(t_env *colony);
-int						visu(void);
+int						visu(t_room *room);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:00:45 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 12:06:37 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 14:22:30 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,9 @@
 
 void		visu_debug(int state)
 {
-	getsdlenv(NULL)->debug = state;
+	t_winenv	*w;
+
+	w = getsdlenv(NULL);
+	w->debug = state;
+	w->redraw = 1;
 }

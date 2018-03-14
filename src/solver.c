@@ -6,13 +6,14 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 11:33:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 19:03:41 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "lemin.h"
 #include "libft.h"
+#include "lemin.h"
+#include "visu.h"
 
 static size_t			tabsize(void **tab)
 {
@@ -176,6 +177,7 @@ static int				fill_weight(t_env *env, t_room *room)
 		if (room != env->start && room->pipes[i]->locked == 1
 		&& !room->pipes[i]->dead && !room->locked)
 			conflict(room->pipes[i], env, room->weight, room);
+		visu(room);
 		i++;
 	}
 	return (FALSE);
@@ -243,4 +245,5 @@ void					solve(t_env *env)
 		exit(1);
 	}
 	lock_path(env);
+	visu(NULL);
 }

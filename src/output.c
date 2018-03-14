@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 12:07:54 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 18:50:44 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ void	output(t_env *env, int v)
 				i++;
 		printf("\n");
 		if (v)
-			v = visu();
+			v = visu(NULL);
 	}
 	while (v)
-		v = visu();
+		v = visu(NULL);
 }

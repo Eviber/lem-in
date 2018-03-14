@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 19:15:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 18:57:07 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,43 @@ void				putroomname(t_winenv w, char *roomname, t_pos pos)
 	}
 }
 
+void				debugroom(t_winenv w, t_pos pos, t_room *room)
+{
+	SDL_Rect	dst;
+	SDL_Texture	*tex;
+	char		*str;
+
+	SDL_SetRenderTarget(w.render, w.layer[TUBES]);
+	if (room->locked >= 1)
+	{
+		if (room->next)
+		{
+			dst.x = room->next->pos.x * w.zoom + w.mov.x;
+			dst.y = room->next->pos.y * w.zoom + w.mov.y;
+			thickLineRGBA(w.render, pos.x, pos.y, dst.x, dst.y,
+					10, room->locked * 64 % 256, room->locked * 128 % 256, room->locked * 192 % 256, 255);
+		}
+		dst.x = room->prev->pos.x * w.zoom + w.mov.x;
+		dst.y = room->prev->pos.y * w.zoom + w.mov.y;
+		thickLineRGBA(w.render, pos.x, pos.y, dst.x, dst.y,
+					10, room->locked * 64 % 256, room->locked * 128 % 256, room->locked * 192 % 256, 255);
+	}
+	SDL_SetRenderTarget(w.render, w.layer[ROOMS]);
+	str = ft_itoa(room->weight);
+	filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF009900);
+	if (room == w.head)
+		filledCircleColor(w.render, pos.x, pos.y, 50, 0x99FFFFFF);
+	if ((tex = strtotex(str, w, w.font)))
+	{
+		free(str);
+		dst.x = pos.x - 15;
+		dst.y = pos.y - 15;
+		SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+		SDL_RenderCopy(w.render, tex, NULL, &dst);
+		SDL_DestroyTexture(tex);
+	}
+}
+
 void				putroom(t_winenv w, t_room *room, t_env colony)
 {
 	t_pos			pos;
@@ -64,6 +101,8 @@ void				putroom(t_winenv w, t_room *room, t_env colony)
 	else if (room == colony.end)
 		filledCircleRGBA(w.render, pos.x, pos.y, 30, 200, 200, 100,
 							SDL_ALPHA_OPAQUE);
+	else if (w.debug && room->weight)
+		debugroom(w, pos, room);
 	else
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF4C4846);
 	putroomname(w, room->name, pos);

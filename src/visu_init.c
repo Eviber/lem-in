@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 12:25:21 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 16:30:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int			sdl_init(t_env *colony, t_winenv **w)
 		return (panic("SDL_GetDesktopDisplayMode failed: ", SDL_GetError()));
 	(*w)->win = SDL_CreateWindow("lem-in",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				(*w)->dispmode.w, (*w)->dispmode.h, SDL_WINDOW_FULLSCREEN);
+				(*w)->dispmode.w, (*w)->dispmode.h, 0*SDL_WINDOW_FULLSCREEN);
 	if (!(*w)->win)
 		return (panic("Error while creating window: ", SDL_GetError()));
 	(*w)->render = SDL_CreateRenderer((*w)->win, -1, SDL_RENDERER_ACCELERATED);

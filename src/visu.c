@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 11:59:00 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 18:51:48 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,21 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w)
 	}
 	if (!w->debug)
 		putlast(w, colony);
-	w->redraw = 0;
+	w->redraw = w->debug;
 }
 
-int					visu(void)
+int					visu(t_room *room)
 {
 	t_winenv		*env;
 
 	env = getsdlenv(NULL);
+	env->head = room;
 	env->colony->end->prev = NULL;
 	env->ticks = SDL_GetTicks();
 	env->frameticks = env->ticks;
 	env->offticks = 0;
 	while (!handle_event(env) &&
-			env->frameticks + env->offticks - env->ticks < TURNTIME + env->wait)
+			env->frameticks + env->offticks - env->ticks < (TURNTIME * (!env->debug)) + env->wait)
 	{
 		if (env)
 		{
@@ -108,7 +109,7 @@ int					visu(void)
 		}
 	}
 	env->visu_out = env->colony->lem_out;
-	if (!env->quit)
+	if (!env->quit && !env->debug)
 		updatelast(env, *(env->colony));
 	return (quitvisu(env));
 }
