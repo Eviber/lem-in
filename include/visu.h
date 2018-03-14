@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 14:11:42 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/14 10:04:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_winenv
 	struct s_pos		mov;
 	double				zoom;
 	double				orig_zoom;
+	size_t				visu_out;
 	Uint32				ticks;
 	Uint32				frameticks;
 	Uint32				offticks;
