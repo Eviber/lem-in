@@ -15,24 +15,26 @@
 #include "solver.h"
 
 #include <stdio.h>
-
-static void	clean_conflict(t_conflit **conflit)
+/*
+static void	clean_conflict(t_env *env)
 {
-	while ((*conflit)->prev)
+	printf("Nice\n");
+	while (env->conflit->prev)
 	{
-		*conflit = (*conflit)->prev;
-		ft_memdel((void**)&((*conflit)->next));
+		env->conflit = env->conflit->prev;
+		ft_memdel(env->conflit->next);
 	}
-	ft_memdel((void**)conflit);
+	//ft_memdel(env->conflit);
+	printf("Nice\n");
 }
-
-static int	search_conf(t_conflit **conf, int set, int new_dp, t_env *env)
+*/
+static int	search_conf(int set, int new_dp, t_env *env)
 {
 	t_conflit *tmp;
  	unsigned long mean_len;
 	long conflit;
 
-	tmp = *conf;
+	tmp = env->conflit;
 	conflit = env->conflict;
 	mean_len = env->mean_len + new_dp;
 	while(set)
@@ -45,47 +47,44 @@ static int	search_conf(t_conflit **conf, int set, int new_dp, t_env *env)
 		set = tmp->state - 1;
 		mean_len = mean_len - tmp->old_len + tmp->new_len;
 	}
-	tmp = *conf;
-	if (mean_len / env->nb_path < env->mean_len / env->nb_path)
+	tmp = env->conflit;
+	if (mean_len / (env->nb_path + 1) < env->mean_len / env->nb_path)
 	{
-		set = env->conflict;
+		set = env->conflict - 1;
 		while(set)
 		{
 			while (set != tmp->state)
 				tmp = tmp->prev;
 			tmp->old_room->prev = tmp->miss_direction;
-			set = tmp->state;
+			set = tmp->state - 1;
 		}
-		clean_conflict(conf);
+		//clean_conflict(env);
 		return (TRUE);
 	}
-	clean_conflict(conf);
+	//clean_conflict(env);
 	return (FALSE);
 }
 
 int			save_info(int set, int new_dp, t_room *room, t_env *env)
 {
-	static t_conflit *conflict = NULL;
-
 	if (set == -2)
 	{
-		if (!conflict)
-			conflict = memalloc_exit(sizeof(t_conflit));
-		conflict->new_len = new_dp;
-		conflict->old_room = room;
-		conflict->next = memalloc_exit(sizeof(t_conflit));
-		conflict->next->prev = conflict;
-		conflict->state = env->conflict - 1;
-		ft_printf("new_len = %ld\nnew_len = %ld\nstate = %ld\nroom = %s\n", conflict->new_len, conflict->old_len, conflict->state, conflict->old_room->name);
-		conflict = conflict->next;
+		if (!env->conflit)
+			env->conflit = memalloc_exit(sizeof(t_conflit));
+		env->conflit->new_len = new_dp;
+		env->conflit->old_room = room;
+		env->conflit->next = memalloc_exit(sizeof(t_conflit));
+		env->conflit->next->prev = env->conflit;
+		env->conflit->state = env->conflict - 1;
+		env->conflit = env->conflit->next;
 	}
 	else if (set == -1)
-		conflict->prev->miss_direction = room;
+		env->conflit->prev->miss_direction = room;
 	else if (set == 0)
-		conflict->old_len = new_dp;
+		env->conflit->old_len = new_dp;
 	else if (set > 0)
 	{
-		return (search_conf(&conflict, --set, new_dp, env));
+		return (search_conf(--set, new_dp, env));
 	}
 	return (FALSE);
 }
@@ -97,7 +96,7 @@ void		lock_path(t_env *env)
 	int		len;
 
 	env->nb_path = 0;
-	env->mean_len = 0;
+	env->mean_len = env->nb_ants;
 	tmp = env->paths;
 	while (tmp && tmp->room)
 	{

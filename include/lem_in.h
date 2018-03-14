@@ -59,6 +59,7 @@ typedef struct			s_env
 	struct s_room		*end;
 	struct s_path		*paths;
 	struct s_room		**rooms;
+	struct s_conflit	*conflit;
 	long unsigned		ant_live;
 	char				**result;
 	unsigned long mean_len;
