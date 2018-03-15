@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 09:05:45 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 13:10:34 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w)
 		if (w->redraw)
 		{
 			if (rooms[i]->pipes)
-				putpipes(render, *(rooms[i]), *w);
+				putpipes(render, rooms[i], *w);
 			putroom(*w, rooms[i], colony);
 		}
 		if (!w->debug && rooms[i] && rooms[i]->prev && rooms[i]->ant)
@@ -85,12 +85,12 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w)
 	w->redraw = w->debug;
 }
 
-int					visu(t_room *room)
+int					visu(t_room *room, t_room *pipe)
 {
 	t_winenv		*env;
 
 	env = getsdlenv(NULL);
-	env->head = room;
+	env->head = (t_head){room, pipe};
 	env->colony->end->prev = NULL;
 	env->ticks = SDL_GetTicks();
 	env->frameticks = env->ticks;

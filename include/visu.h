@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:47:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 09:32:49 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 13:10:19 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,16 @@
 
 enum { TUBES, ROOMS, ANTS, ANT };
 
+typedef struct			s_head
+{
+	t_room				*room;
+	t_room				*pipe;
+}						t_head;
+
 typedef struct			s_winenv
 {
 	SDL_DisplayMode		dispmode;
+	struct s_head		head;
 	SDL_Window			*win;
 	SDL_Renderer		*render;
 	SDL_Texture			*layer[4];
@@ -33,7 +40,6 @@ typedef struct			s_winenv
 	size_t				*lastants;
 	TTF_Font			*bigfont;
 	TTF_Font			*font;
-	struct s_room		*head;
 	struct s_pos		mov;
 	double				zoom;
 	double				orig_zoom;
@@ -69,7 +75,7 @@ int						handle_event(t_winenv *env);
 void				putlast(t_winenv *w, t_env colony);
 void				putroomname(t_winenv w, char *roomname, t_pos pos);
 void				putroom(t_winenv w, t_room *room, t_env colony);
-void				putpipes(SDL_Renderer *render, t_room room, t_winenv w);
+void				putpipes(SDL_Renderer *render, t_room *room, t_winenv w);
 void				putcount(t_winenv env, char *str, SDL_Rect *rect);
 void				debugroom(t_winenv w, t_pos pos, t_room *room);
 
@@ -92,6 +98,6 @@ void				visu_putall(SDL_Renderer *render, t_env colony, t_winenv *w);
 */
 void					visu_debug(int state);
 int						visu_init(t_env *colony);
-int						visu(t_room *room);
+int						visu(t_room *room, t_room *pipe);
 
 #endif
