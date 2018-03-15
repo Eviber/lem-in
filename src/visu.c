@@ -96,7 +96,7 @@ int					visu(t_room *room)
 	env->frameticks = env->ticks;
 	env->offticks = 0;
 	while (!handle_event(env) && env->frameticks + env->offticks - env->ticks <
-								(TURNTIME * (!env->debug)) + env->wait)
+								(TURNTIME * (!env->debug))  + env->wait)
 	{
 		if (env)
 		{
