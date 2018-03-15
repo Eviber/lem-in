@@ -59,14 +59,7 @@ static t_env		init_antfarm(void)
 {
 	t_env			ret;
 
-	ret.start = NULL;
-	ret.end = NULL;
-	ret.paths = NULL;
-	ret.rooms = NULL;
-	ret.nb_ants = -1;
-	ret.antleft = -1;
-	ret.nb_rooms = 0;
-	ret.to_print = NULL;
+	ft_bzero(&ret, sizeof(t_env));
 	ret.conflit = ft_memalloc(sizeof(t_conflict));
 	return (ret);
 }

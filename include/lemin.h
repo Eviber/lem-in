@@ -30,6 +30,7 @@ typedef struct		s_room
 	int				weight;
 	int				dead;
 	int				locked;
+	int 			effective_weight;
 }					t_room;
 
 typedef struct		s_conflict
