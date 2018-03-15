@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 11:28:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:32:16 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "visu.h"
 #include "libft.h"
 
-void	calc_tosend(t_env *env)
+void		calc_tosend(t_env *env)
 {
 	int		i;
 	int		nb_paths;
@@ -36,7 +36,7 @@ void	calc_tosend(t_env *env)
 	}
 }
 
-static int				mov_new(t_env *env, unsigned int ant)
+static int	mov_new(t_env *env, unsigned int ant)
 {
 	int		i;
 
@@ -56,7 +56,7 @@ static int				mov_new(t_env *env, unsigned int ant)
 	return (0);
 }
 
-static int				mov_ant(t_env *env, unsigned int ant)
+static int	mov_ant(t_env *env, unsigned int ant)
 {
 	t_room				*cur;
 	int					i;
@@ -83,7 +83,7 @@ static int				mov_ant(t_env *env, unsigned int ant)
 	return (1);
 }
 
-void	setfirst(t_env *env)
+void		setfirst(t_env *env)
 {
 	t_room	*cur;
 	int		i;
@@ -99,11 +99,10 @@ void	setfirst(t_env *env)
 	}
 }
 
-void	output(t_env *env, int v)
+void		output(t_env *env, int v)
 {
 	unsigned int	i;
 
-	// calc limit per path
 	if (v)
 		visu_debug(0);
 	setfirst(env);
@@ -115,7 +114,7 @@ void	output(t_env *env, int v)
 	{
 		i = 1;
 		while (i <= env->nb_ants && mov_ant(env, i))
-				i++;
+			i++;
 		printf("\n");
 		if (v)
 			v = visu(NULL, NULL);

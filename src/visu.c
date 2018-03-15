@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 13:10:34 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:30:50 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int					visu(t_room *room, t_room *pipe)
 	env->frameticks = env->ticks;
 	env->offticks = 0;
 	while (!handle_event(env) && env->frameticks + env->offticks - env->ticks <
-								(TURNTIME * (!env->debug))  + env->wait)
+								(TURNTIME * (!env->debug)) + env->wait)
 	{
 		if (env)
 		{
