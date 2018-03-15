@@ -34,11 +34,14 @@ typedef struct		s_room
 
 typedef struct		s_conflict
 {
+	long				new_len;
+	long				old_len;
+	long 				state;
+	long 				conflict;
 	t_room				*old_room;
 	t_room				*miss_direction;
 	struct s_conflict	*next;
 	struct s_conflict	*prev;
-	long				len;
 }					t_conflict;
 
 typedef struct		s_path
@@ -55,6 +58,9 @@ typedef struct		s_env
 	struct s_room	*end;
 	struct s_path	**paths;
 	struct s_room	**rooms;
+	struct s_conflict	*conflit;
+	unsigned long mean_len;
+	long 				nb_path;
 	long			nb_rooms;
 	long			nb_ants;
 	long			antleft;

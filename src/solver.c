@@ -46,41 +46,67 @@ static void				**tab_real(void **oldtab, size_t unitsize)
 	return (NULL);
 }
 
-static void				clean_conflict(t_conflict *conflict)
+void	clean_conflict(t_env *env)
 {
-	while (conflict && conflict->next)
-		conflict = conflict->next;
-	while (0 && conflict)
+	while (env->conflit->prev)
 	{
-		free(conflict);
-		conflict = conflict->prev;
+		env->conflit = env->conflit->prev;
+		ft_memdel((void**)&env->conflit->next);
 	}
-	conflict = ft_memalloc(sizeof(t_conflict));
 }
 
-int						save_info(int set, int new_depth, t_room *o_room, t_room *n_room, t_env *env)
+static int	search_conf(int set, int new_dp, t_env *env)
 {
-	static t_conflict	**conflict = NULL;
-	size_t				i;
+	t_conflict *tmp;
+ 	unsigned long mean_len;
+	long conflit;
 
-	i = tabsize((void **)conflict);
-	if (set == 0)
+	tmp = env->conflit;
+	conflit = env->conflict;
+	mean_len = env->mean_len + new_dp;
+	while(set)
 	{
-		conflict = (t_conflict **)tab_real((void **)conflict, sizeof(t_conflict));
-		conflict[i]->len = new_depth;
-		conflict[i]->old_room = o_room;
-		conflict[i]->miss_direction = n_room;
-	}
-	else
-	{
-		if (conflict[i - (set - env->conflict) - 1] && env->antleft >= conflict[i - (set - env->conflict) - 1]->len && env->antleft >= new_depth)
-		{
-			conflict[i - (set - env->conflict) - 1]->old_room->prev = conflict[i - (set - env->conflict) - 1]->miss_direction;
-			clean_conflict(conflict[i - (set - env->conflict) - 1]);
-			return (TRUE);
+		while (set != tmp->state)
+			tmp = tmp->prev;
+		set = tmp->state - 1;
+		mean_len = mean_len - tmp->old_len + tmp->new_len;
 		}
-		clean_conflict(conflict[i - (set - env->conflict) - 1]);
+	tmp = env->conflit;
+	if ((float)mean_len / (env->nb_path + 1) <= (float)env->mean_len / env->nb_path)
+	{
+		set = env->conflict - 1;
+		while(set)
+		{
+			while (set != tmp->state)
+				tmp = tmp->prev;
+			tmp->old_room->prev = tmp->miss_direction;
+			set = tmp->state - 1;
+		}
+		return (TRUE);
 	}
+	return (FALSE);
+}
+
+
+int			save_info(int set, int new_dp, t_room *room, t_env *env)
+{
+	if (set == -2)
+	{
+		env->conflit->new_len = new_dp;
+		env->conflit->old_room = room;
+		env->conflit->next = ft_memalloc(sizeof(t_conflict));
+		env->conflit->next->prev = env->conflit;
+		env->conflit->state = env->conflict - 1;
+		env->conflit = env->conflit->next;
+	}
+	else if (set == -1)
+		env->conflit->prev->miss_direction = room;
+	else if (set == 0)
+	{
+		env->conflit->prev->old_len = new_dp;
+	}
+	else if (set > 0)
+		return (search_conf(--set, new_dp, env));
 	return (FALSE);
 }
 
@@ -92,6 +118,8 @@ void					lock_path(t_env *env)
 
 	env->antleft = env->nb_ants;
 	i = 0;
+	env->nb_path = 0;
+	env->mean_len = env->nb_ants;
 	while (env->paths[i] && env->paths[i]->room)
 	{
 		room = env->paths[i]->room;
@@ -104,9 +132,18 @@ void					lock_path(t_env *env)
 			room = room->prev;
 			len++;
 		}
+		env->nb_path++;
 		env->paths[i]->length = len;
 		env->antleft -= len;
 		i++;
+		len = -1;
+		while(room && room->next)
+		{
+			room->weight = ++len;
+			room = room->next;
+		}
+		env->mean_len += len;
+
 	}
 }
 
@@ -127,20 +164,18 @@ void					reset_room(t_env *env)
 	}
 }
 
-void					conflict(t_room *rooms, t_env *env, long depth,
-						t_room *room_confict)
+void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 {
-	long				dp;
-	long				tmp_dp;
-	t_room				*tmp;
+	long	dp;
+	long	tmp_dp;
+	t_room	*tmp;
 
-	tmp = rooms;
+	tmp = r;
 	while (tmp->next != env->end)
 		tmp = tmp->next;
 	dp = tmp->weight;
-	env->antleft += dp;
 	tmp_dp = depth + 1;
-	tmp = rooms->prev;
+	tmp = r->prev;
 	++env->conflict;
 	while (tmp->prev)
 	{
@@ -148,10 +183,12 @@ void					conflict(t_room *rooms, t_env *env, long depth,
 		tmp->weight = --tmp_dp;
 		tmp = tmp->prev;
 	}
-	env->depth = tmp_dp;
-	depth = depth + 1 - rooms->weight + dp;
-	rooms->dead = 1;
-	save_info(0, depth, rooms, room_confict, env);
+	env->depth = tmp_dp - 1;
+	depth = depth + 1 - r->weight + dp;
+	r->dead = 1;
+	save_info(-2, depth, r, env);
+	save_info(-1, depth, r_conf, env);
+	save_info(0, dp, r_conf, env);
 }
 
 static int				fill_weight(t_env *env, t_room *room)
@@ -164,7 +201,7 @@ static int				fill_weight(t_env *env, t_room *room)
 		if (room->pipes[i] == env->end)
 		{
 			if (room->locked == 0
-			|| save_info(room->locked, room->weight + 1, NULL, NULL, env))
+			|| save_info(room->locked, room->weight - 1, NULL, env))
 				return (TRUE);
 		}
 		if (!room->pipes[i]->weight && room->pipes[i] != env->start
@@ -174,9 +211,12 @@ static int				fill_weight(t_env *env, t_room *room)
 			room->pipes[i]->prev = room;
 			room->pipes[i]->locked = room->locked;
 		}
-		if (room != env->start && room->pipes[i]->locked == 1
-		&& !room->pipes[i]->dead && !room->locked)
-			conflict(room->pipes[i], env, room->weight, room);
+		if (room != env->start && room->pipes[i]->locked == 1)
+			if (!room->pipes[i]->dead && room->locked != 1)
+			{
+				conflict(room->pipes[i], env, room->weight, room);
+				return (FALSE);
+			}
 		visu(room);
 		i++;
 	}
@@ -233,6 +273,7 @@ void					solve(t_env *env)
 	while (find_shortest(env, i))
 	{
 		env->conflict = 1;
+		clean_conflict(env);
 		env->paths[i]->room->next = env->end;
 		i++;
 		lock_path(env);

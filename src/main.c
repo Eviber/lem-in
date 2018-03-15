@@ -67,6 +67,7 @@ static t_env		init_antfarm(void)
 	ret.antleft = -1;
 	ret.nb_rooms = 0;
 	ret.to_print = NULL;
+	ret.conflit = ft_memalloc(sizeof(t_conflict));
 	return (ret);
 }
 
