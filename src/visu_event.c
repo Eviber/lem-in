@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 19:10:58 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 08:57:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int			event_move(t_winenv *env, const Uint8 *state)
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 		env->zoom = env->orig_zoom;
 	}
-	return (tmp.x != env->mov.x || tmp.y != env->mov.y || mouse.x || mouse.y);
+	return (state[SDL_SCANCODE_RETURN] || tmp.x != env->mov.x || tmp.y != env->mov.y || mouse.x || mouse.y);
 }
 
 int					handle_event(t_winenv *env)
