@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 18:51:48 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 09:05:45 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int					visu(t_room *room)
 	env->ticks = SDL_GetTicks();
 	env->frameticks = env->ticks;
 	env->offticks = 0;
-	while (!handle_event(env) &&
-			env->frameticks + env->offticks - env->ticks < (TURNTIME * (!env->debug)) + env->wait)
+	while (!handle_event(env) && env->frameticks + env->offticks - env->ticks <
+								(TURNTIME * (!env->debug)) + env->wait)
 	{
 		if (env)
 		{
