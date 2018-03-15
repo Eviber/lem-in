@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 08:57:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 09:20:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ static int			event_zoom(t_winenv *env, const Uint8 *state)
 
 static int			event_move(t_winenv *env, const Uint8 *state)
 {
-	SDL_Point		mouse;
+	SDL_Point		m;
 	t_pos			tmp;
 
 	tmp = env->mov;
-	if (SDL_GetRelativeMouseState(&(mouse.x),
-		(&mouse.y)) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	if (SDL_GetRelativeMouseState(&(m.x), (&m.y)) & SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
-		env->mov.x += mouse.x;
-		env->mov.y += mouse.y;
+		env->mov.x += m.x;
+		env->mov.y += m.y;
 	}
 	else
 	{
@@ -66,7 +65,8 @@ static int			event_move(t_winenv *env, const Uint8 *state)
 		env->mov = (t_pos){env->dispmode.w / 2, env->dispmode.h / 2};
 		env->zoom = env->orig_zoom;
 	}
-	return (state[SDL_SCANCODE_RETURN] || tmp.x != env->mov.x || tmp.y != env->mov.y || mouse.x || mouse.y);
+	return (state[SDL_SCANCODE_RETURN] || tmp.x != env->mov.x ||
+			tmp.y != env->mov.y || m.x || m.y);
 }
 
 int					handle_event(t_winenv *env)

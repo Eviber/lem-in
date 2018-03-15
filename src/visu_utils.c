@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 13:41:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 09:24:25 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "visu.h"
 
-SDL_Texture		*strtotex(char *str, t_winenv env, TTF_Font *f)
+SDL_Texture			*strtotex(char *str, t_winenv env, TTF_Font *f)
 {
 	SDL_Texture		*tex;
 	SDL_Surface		*surf;
