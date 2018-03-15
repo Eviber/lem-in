@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 19:03:41 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 10:26:55 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ void	clean_conflict(t_env *env)
 static int	search_conf(int set, int new_dp, t_env *env)
 {
 	t_conflict *tmp;
- 	unsigned long mean_len;
+	unsigned long mean_len;
 	long conflit;
+	int			t;
 
+	t = set;
 	tmp = env->conflit;
 	conflit = env->conflict;
 	mean_len = env->mean_len + new_dp;
@@ -74,7 +76,7 @@ static int	search_conf(int set, int new_dp, t_env *env)
 	tmp = env->conflit;
 	if ((float)mean_len / (env->nb_path + 1) <= (float)env->mean_len / env->nb_path)
 	{
-		set = env->conflict - 1;
+		set = t;
 		while(set)
 		{
 			while (set != tmp->state)
