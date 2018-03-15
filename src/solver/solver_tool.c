@@ -55,7 +55,6 @@ static int	search_conf(int set, int new_dp, t_env *env)
 			tmp->old_room->prev = tmp->miss_direction;
 			set = tmp->state - 1;
 		}
-		ft_printf("nice\n");
 		return (TRUE);
 	}
 	return (FALSE);

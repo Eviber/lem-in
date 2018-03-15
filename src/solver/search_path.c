@@ -117,7 +117,7 @@ void			get_path(t_env *env)
 	t_room	*tmp;
 
 	env->paths = (t_path *)memalloc_exit(sizeof(t_path));
-	while (find_shortest(env))
+	while (env->nb_path < env->nb_ants && find_shortest(env) )
 	{
 		env->conflict = 1;
 		clean_conflict(env);
@@ -132,4 +132,5 @@ void			get_path(t_env *env)
 	if (!env->paths->room && env->paths->prev)
 		env->paths = env->paths->prev;
 	lock_path(env);
+
 }

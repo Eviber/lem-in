@@ -2,22 +2,22 @@
 10
 #rooms
 ##start
-start -1 1
+start 0 1
 ##end
-end 6 1
-D1 1 0
-D2 2 0
-D3 3 0
-D4 4 0
-D5 5 0
-A0 0 1
-A1 2 1
-A2 5 1
-B0 0 2
-B1 1 2
-C2 2 2
-C3 3 2
-C4 4 2
+end 7 1
+D1 2 0
+D2 3 0
+D3 4 0
+D4 5 0
+D5 6 0
+A0 1 1
+A1 3 1
+A2 6 1
+B0 1 2
+B1 2 2
+C2 3 2
+C3 4 2
+C4 5 2
 #tubes
 start-A0
 A0-A1
