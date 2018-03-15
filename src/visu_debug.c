@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:00:45 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 10:14:59 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 10:42:34 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	tmptorgb(double tmp, double t1, double t2)
 	else if (2 * tmp < 1)
 		res = t1;
 	else if (3 * tmp < 2)
-		res = t2 + (t1 - t2) * (2.0/3.0 - tmp) * 6;
+		res = t2 + (t1 - t2) * (2.0 / 3.0 - tmp) * 6;
 	else
 		res = t2;
 	return ((int)lround(res * 255));
@@ -48,7 +48,7 @@ SDL_Color	hsl(int h, double s, double l)
 	return (res);
 }
 
-void				debuglock(t_winenv w, t_pos pos, t_room *room)
+void		debuglock(t_winenv w, t_pos pos, t_room *room)
 {
 	SDL_Rect	dst;
 	SDL_Color	color;
@@ -71,7 +71,7 @@ void				debuglock(t_winenv w, t_pos pos, t_room *room)
 	}
 }
 
-void				debugroom(t_winenv w, t_pos pos, t_room *room)
+void		debugroom(t_winenv w, t_pos pos, t_room *room)
 {
 	SDL_Rect	dst;
 	SDL_Texture	*tex;
