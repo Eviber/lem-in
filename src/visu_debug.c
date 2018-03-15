@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:00:45 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 10:42:34 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 13:33:08 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void		debuglock(t_winenv w, t_pos pos, t_room *room)
 	SDL_Rect	dst;
 	SDL_Color	color;
 
-	color = hsl(room->locked * 2 * 360 / 5, 100, 50);
+	if (room->dead)
+		color = hsl(room->prev->locked * 2 * 360 / 5, 100, 50);
+	else
+		color = hsl(room->locked * 2 * 360 / 5, 100, 50);
 	SDL_SetRenderTarget(w.render, w.layer[TUBES]);
 	if (room->next)
 	{
@@ -77,12 +80,14 @@ void		debugroom(t_winenv w, t_pos pos, t_room *room)
 	SDL_Texture	*tex;
 	char		*str;
 
-	if (room->locked >= 1)
+	if (room->locked >= 1 || room->dead)
 		debuglock(w, pos, room);
 	SDL_SetRenderTarget(w.render, w.layer[ROOMS]);
 	str = ft_itoa(room->weight);
 	filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF009900);
-	if (room == w.head)
+	if (room->dead)
+		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF000000);
+	if (room == w.head.room)
 		filledCircleColor(w.render, pos.x, pos.y, 50, 0x99FFFFFF);
 	if ((tex = strtotex(str, w, w.font)))
 	{

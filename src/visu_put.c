@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 09:25:10 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/15 13:31:35 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,33 @@ void				putroom(t_winenv w, t_room *room, t_env colony)
 	else if (room == colony.end)
 		filledCircleRGBA(w.render, pos.x, pos.y, 30, 200, 200, 100,
 							SDL_ALPHA_OPAQUE);
-	else if (w.debug && room->weight)
+	else if (w.debug && (room->dead || room->weight))
 		debugroom(w, pos, room);
 	else
 		filledCircleColor(w.render, pos.x, pos.y, 30, 0xFF4C4846);
 	putroomname(w, room->name, pos);
 }
 
-void				putpipes(SDL_Renderer *render, t_room room, t_winenv w)
+void				putpipes(SDL_Renderer *render, t_room *room, t_winenv w)
 {
 	t_pos			orig;
 	t_pos			dest;
 	int				i;
 
 	SDL_SetRenderTarget(render, w.layer[TUBES]);
-	orig.x = room.pos.x * w.zoom + w.mov.x;
-	orig.y = room.pos.y * w.zoom + w.mov.y;
+	orig.x = room->pos.x * w.zoom + w.mov.x;
+	orig.y = room->pos.y * w.zoom + w.mov.y;
 	i = 0;
-	while (room.pipes[i])
+	while (room->pipes[i])
 	{
-		dest.x = room.pipes[i]->pos.x * w.zoom + w.mov.x;
-		dest.y = room.pipes[i]->pos.y * w.zoom + w.mov.y;
-		thickLineRGBA(render, orig.x, orig.y, dest.x, dest.y,
-				10, 255, 255, 255, 50);
+		dest.x = room->pipes[i]->pos.x * w.zoom + w.mov.x;
+		dest.y = room->pipes[i]->pos.y * w.zoom + w.mov.y;
+		if (room == w.head.room && room->pipes[i] == w.head.pipe)
+			thickLineRGBA(render, orig.x, orig.y, dest.x, dest.y,
+						10, 255, 255, 255, 255);
+		else
+			thickLineRGBA(render, orig.x, orig.y, dest.x, dest.y,
+						10, 255, 255, 255, 50);
 		i++;
 	}
 }
