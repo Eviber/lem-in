@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/16 11:44:12 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/16 19:16:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 	++env->conflict;
 	while (tmp->prev)
 	{
-		visu(tmp, tmp->prev);
+		if (env->v)
+			visu(tmp, tmp->prev);
 		tmp->locked = env->conflict;
 		if (!tmp->effective_weight)
 			tmp->effective_weight = tmp->weight;
@@ -226,10 +227,12 @@ static int				fill_weight(t_env *env, t_room *room)
 			if (!room->pipes[i]->dead && room->locked != 1)
 			{
 				conflict(room->pipes[i], env, room->weight, room);
-				visu(room, room->pipes[i]);
+				if (env->v)
+					visu(room, room->pipes[i]);
 				return (FALSE);
 			}
-		visu(room, room->pipes[i]);
+		if (env->v)
+			visu(room, room->pipes[i]);
 		i++;
 	}
 	return (FALSE);
@@ -322,6 +325,7 @@ void					solve(t_env *env)
 		exit(1);
 	}
 	lock_path(env);
-	visu(NULL, NULL);
+	if (env->v)
+		visu(NULL, NULL);
 }
 
