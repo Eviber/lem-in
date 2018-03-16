@@ -6,7 +6,7 @@
 /*   By: vsporer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 13:58:52 by vsporer           #+#    #+#             */
-/*   Updated: 2016/11/15 14:33:12 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/03/16 15:35:05 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ void	ft_bzero(void *s, size_t n)
 {
 	char	*tmp;
 
-	tmp = (char *)s;
-	while (n)
+	if (n > 0)
 	{
-		*tmp = '\0';
-		tmp++;
-		n--;
+		tmp = (char *)s;
+		while (n)
+		{
+			*tmp = '\0';
+			tmp++;
+			n--;
+		}
 	}
 }

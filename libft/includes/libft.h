@@ -6,7 +6,7 @@
 /*   By: vsporer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:35:39 by vsporer           #+#    #+#             */
-/*   Updated: 2017/12/01 21:23:00 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/03/16 16:19:33 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <wchar.h>
-# include "get_next_line.h"
 
 typedef struct		s_list
 {

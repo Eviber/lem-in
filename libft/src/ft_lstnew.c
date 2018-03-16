@@ -6,7 +6,7 @@
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 14:13:42 by vsporer           #+#    #+#             */
-/*   Updated: 2016/11/17 15:36:10 by vsporer          ###   ########.fr       */
+/*   Updated: 2018/03/16 15:02:47 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	{
 		if (content != NULL)
 		{
-			list->content = (void*)malloc(content_size);
+			if (!(list->content = (void*)malloc(content_size)))
+			{
+				ft_memdel((void**)&list);
+				return (NULL);
+			}
 			ft_memcpy(list->content, content, content_size);
 		}
 		else
-		{
 			list->content = NULL;
-		}
 		list->content_size = content_size;
 		list->next = NULL;
 	}

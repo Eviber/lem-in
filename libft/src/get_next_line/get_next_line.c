@@ -5,134 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsporer <vsporer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/28 14:28:09 by vsporer           #+#    #+#             */
-/*   Updated: 2018/03/13 15:18:40 by gcollett         ###   ########.fr       */
+/*   Created: 2018/03/15 20:44:43 by vsporer           #+#    #+#             */
+/*   Updated: 2018/03/16 17:48:32 by vsporer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*gnl_get_line(const int fd)
+static int		create_line(char **begin, char **line)
 {
-	char		buff[BUFF_SIZE + 1];
-	char		*res;
-	char		*tmp;
-	int			ret;
+	char	*nl;
+	size_t	line_size;
+
+	if (!*line)
+		return (0);
+	line_size = ft_strlen(*line);
+	if ((nl = ft_strchr(*line, '\n')) && nl[1] > 0)
+	{
+		if (!(*begin = ft_strdup(nl + 1)))
+			return (ERROR_VALUE);
+		line_size = nl - *line;
+	}
+	else
+		line_size = ft_strlen(*line) - 1;
+	if (!(nl = ft_strsub(*line, 0, line_size)))
+		return (ERROR_VALUE);
+	ft_strdel(line);
+	*line = nl;
+	return (0);
+}
+
+static int		read_line(const int fd, t_gnl_mem *memory)
+{
+	char	buff[BUFF_SIZE + 1];
+	int		ret;
 
 	ret = 1;
-	res = NULL;
-	ft_bzero(buff, BUFF_SIZE + 1);
-	while ((ret = read(fd, buff, BUFF_SIZE)) && ret != ERROR_VALUE)
+	ft_bzero((void*)buff, BUFF_SIZE + 1);
+	if (memory->current_fd)
 	{
-		tmp = res;
-		res = ft_strjoin(tmp, buff);
-		ft_strdel(&tmp);
-		tmp = NULL;
-		if (ft_strchr(buff, '\n'))
-			return (res);
-		ft_bzero(buff, BUFF_SIZE + 1);
+		*(memory->line) = (char*)memory->current_fd->content;
+		memory->current_fd->content = NULL;
 	}
-	if ((ret && !res) || ret == ERROR_VALUE)
+	while (!ft_strchr(*(memory->line), '\n') && \
+	(ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		res = (char*)malloc(sizeof(char));
-		*res = -1;
-	}
-	return (res);
-}
-
-char	*gnl_find_endline(char *brutline, char **line)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = NULL;
-	if (brutline)
-	{
-		while (brutline[i] && brutline[i] != '\n' && *brutline != -1)
-			i++;
-		if (brutline[i] != '\0')
-			tmp = ft_strsub(brutline, (i + 1), ((ft_strlen(brutline) - i) - 1));
-		*line = ft_strsub(brutline, 0, i);
-		ft_strdel(&brutline);
-		return (tmp);
-	}
-	*line = NULL;
-	return (tmp);
-}
-
-char	*gnl_clean_line(char *brutline, char *begline, char **line)
-{
-	char	*clean;
-
-	if (brutline && *brutline == -1)
-	{
-		*line = brutline;
-		brutline = NULL;
-		return (brutline);
-	}
-	if (!brutline)
-	{
-		brutline = begline;
-		begline = NULL;
-	}
-	clean = ft_strjoin(begline, brutline);
-	ft_strdel(&brutline);
-	ft_strdel(&begline);
-	begline = gnl_find_endline(clean, line);
-	if (!begline && (!*line || !*line[0]))
-		ft_strdel(line);
-	return (begline);
-}
-
-void	gnl_check_fd(const int fd, char **line)
-{
-	static t_list	*file;
-	t_list			*save;
-	char			*beginline;
-
-	save = file;
-	while (save)
-	{
-		if (save->content_size == (size_t)fd)
-		{
-			save->content = (void*)gnl_clean_line(gnl_get_line(fd),\
-			(char*)save->content, line);
-			return ;
-		}
-		save = save->next;
-	}
-	beginline = gnl_clean_line(gnl_get_line(fd), NULL, line);
-	if (line && *line && **line == -1)
-		return ;
-	else if (beginline)
-		ft_lstadd(&file, ft_lstnew((void*)beginline, ft_strlen(beginline) + 1));
-	else
-		ft_lstadd(&file, ft_lstnew((void*)beginline, 0));
-	file->content_size = (size_t)fd;
-	ft_strdel(&beginline);
-}
-
-int		get_next_line(const int fd, char **line)
-{
-	if (fd >= INPUT_FD)
-	{
-		if (!line)
+		if (!(*(memory->line) = ft_strjoin_free(*(memory->line), buff, 1)))
 			return (ERROR_VALUE);
-		gnl_check_fd(fd, line);
-		if (*line)
-		{
-			if (**line == -1)
-			{
-				ft_strdel(line);
-				return (ERROR_VALUE);
-			}
-			else
-				return (READ_VALUE);
-		}
-		else
-			return (EOF_VALUE);
+		ft_bzero((void*)buff, BUFF_SIZE + 1);
 	}
-	else
-		return (ERROR_VALUE);
+	return (ret);
+}
+
+int				get_next_line(const int fd, char **line)
+{
+	static t_gnl_mem	memory = {NULL, NULL, NULL};
+	t_list				*tmp;
+
+	if (fd >= 0 && line)
+	{
+		*line = NULL;
+		memory.line = line;
+		memory.current_fd = memory.list_fd;
+		while (memory.current_fd && (int)memory.current_fd->content_size != fd)
+			memory.current_fd = memory.current_fd->next;
+		if (!memory.current_fd)
+		{
+			if (!(tmp = ft_lstnew(NULL, 0)))
+				return (ERROR_VALUE);
+			ft_lstadd(&memory.list_fd, tmp);
+			tmp->content_size = (size_t)fd;
+			memory.current_fd = tmp;
+		}
+		if (read_line(fd, &memory) >= 0 && \
+		!create_line((char**)&(memory.current_fd->content), line))
+			return ((!*line ? EOF_VALUE : READ_VALUE));
+	}
+	return (ERROR_VALUE);
 }
