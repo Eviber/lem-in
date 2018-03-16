@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 13:41:15 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/16 19:25:38 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ int					handle_event(t_winenv *env)
 	env->redraw |= event_zoom(env, state) || event_move(env, state) ||
 					state[SDL_SCANCODE_TAB] ^ env->putnames;
 	env->putnames = state[SDL_SCANCODE_TAB];
-	env->offticks += (!env->debug && state[SDL_SCANCODE_SPACE]) ? 20 : 0;
+	env->offticks += (!env->debug && state[SDL_SCANCODE_LSHIFT]) ? 20 : 0;
 	if (env->debug)
-		env->wait = (state[SDL_SCANCODE_SPACE]) ? 20 : 500;
+		env->wait = (state[SDL_SCANCODE_LSHIFT]) ? 20 : 500;
 	else
-		env->wait = 100 * (!state[SDL_SCANCODE_SPACE]);
+		env->wait = 100 * (!state[SDL_SCANCODE_LSHIFT]);
+	while (state[SDL_SCANCODE_SPACE])
+		SDL_PumpEvents();
 	env->quit |= state[SDL_SCANCODE_Q] || state[SDL_SCANCODE_ESCAPE] ||
 				SDL_QuitRequested();
 	return (env->quit);
