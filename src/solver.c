@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 14:13:21 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/16 11:44:12 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,18 @@ static int	search_conf(int set, int new_dp, t_env *env)
 	t = set;
 	tmp = env->conflit;
 	conflit = env->conflict;
+	printf("%ld = %ld + %d\n", env->mean_len + new_dp, env->mean_len, new_dp);
 	mean_len = env->mean_len + new_dp;
 	while(set)
 	{
 		while (set != tmp->state)
 			tmp = tmp->prev;
 		set = tmp->state - 1;
+		printf("%ld = %ld - %ld + %ld\n", mean_len - tmp->old_len + tmp->new_len, mean_len, tmp->old_len, tmp->new_len);
 		mean_len = mean_len - tmp->old_len + tmp->new_len;
-		}
+	}
 	tmp = env->conflit;
+	printf("%f / %ld <= %f / %ld\n%f <= %f\n", (float)mean_len, (env->nb_path + 1), (float)env->mean_len, env->nb_path, (float)mean_len / (env->nb_path + 1), (float)env->mean_len / env->nb_path);
 	if ((float)mean_len / (env->nb_path + 1) <= (float)env->mean_len / env->nb_path)
 	{
 		set = t;
@@ -92,7 +95,7 @@ static int	search_conf(int set, int new_dp, t_env *env)
 
 int			save_info(int set, int new_dp, t_room *room, t_env *env)
 {
-	if (set == -1)
+	if (set == -2)
 	{
 		env->conflit->new_len = new_dp;
 		env->conflit->old_room = room;
@@ -101,15 +104,14 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 		env->conflit->state = env->conflict - 1;
 		env->conflit = env->conflit->next;
 	}
-	else if (set == -2)
-	{
+	else if (set == -1)
 		env->conflit->prev->miss_direction = room;
+	else if (set == 0)
+	{
 		env->conflit->prev->old_len = new_dp;
 	}
 	else if (set > 0)
-	{
 		return (search_conf(--set, new_dp, env));
-	}
 	return (FALSE);
 }
 
@@ -138,8 +140,8 @@ void					lock_path(t_env *env)
 		env->nb_path++;
 		env->paths[i]->length = len;
 		env->antleft -= len;
-		i++;
 		env->mean_len += len;
+		i++;
 		len = -1;
 		while(room && room->next)
 		{
@@ -157,6 +159,7 @@ void					reset_room(t_env *env)
 	i = -1;
 	while (env->rooms[++i])
 	{
+		env->rooms[i]->effective_weight = 0;
 		if (env->rooms[i]->locked != -1)
 			env->rooms[i]->weight = 0;
 		if (env->rooms[i]->locked != -1)
@@ -176,7 +179,7 @@ void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 	tmp = r;
 	while (tmp->next != env->end)
 		tmp = tmp->next;
-	dp = tmp->weight + 1;
+	dp = tmp->weight;
 	tmp_dp = depth + 1;
 	tmp = r->prev;
 	++env->conflict;
@@ -184,13 +187,17 @@ void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 	{
 		visu(tmp, tmp->prev);
 		tmp->locked = env->conflict;
+		if (!tmp->effective_weight)
+			tmp->effective_weight = tmp->weight;
+		tmp->weight = --tmp_dp;
 		tmp = tmp->prev;
 	}
 	env->depth = tmp_dp - 1;
 	depth = depth + 1 - r->weight + dp;
 	r->dead = 1;
-	save_info(-1, depth, r, env);
-	save_info(-2, dp, r_conf, env);
+	save_info(-2, depth, r, env);
+	save_info(-1, depth, r_conf, env);
+	save_info(0, dp, r_conf, env);
 }
 
 static int				fill_weight(t_env *env, t_room *room)
@@ -203,12 +210,14 @@ static int				fill_weight(t_env *env, t_room *room)
 		if (room->pipes[i] == env->end)
 		{
 			if (room->locked == 0
-			|| save_info(room->locked, room->weight + 1, NULL, env))
+			|| save_info(room->locked, room->effective_weight + 1, NULL, env))
 				return (TRUE);
 		}
 		if (!room->pipes[i]->weight && room->pipes[i] != env->start
 		&& (room->pipes[i]->locked != 1 || room == env->start))
 		{
+			if (room->effective_weight)
+				room->pipes[i]->effective_weight = room->effective_weight + 1;
 			room->pipes[i]->weight = room->weight + 1;
 			room->pipes[i]->prev = room;
 			room->pipes[i]->locked = room->locked;
@@ -245,6 +254,27 @@ t_room					*try_path(t_env *env, int depth)
 	return (NULL);
 }
 
+int						oui(t_env *env, int depth)
+{
+	int		i;
+	int		total_len;
+	int		meanlen;
+	int		mod;
+	int		ret;
+
+	total_len = env->mean_len + depth;
+	meanlen = total_len / (env->nb_path + 1);
+	mod = total_len % (env->nb_path + 1);
+	ret = env->nb_ants;
+	i = -1;
+	while (++i < env->nb_path)
+	{
+		ret -= meanlen - env->paths[i]->length + (mod > 0);
+		mod--;
+	}
+	return (ret > 0);
+}
+
 int						find_shortest(t_env *env, int f_iter)
 {
 	t_room				*tmp;
@@ -254,7 +284,8 @@ int						find_shortest(t_env *env, int f_iter)
 	while (env->depth <= env->nb_rooms - 1)
 	{
 		if ((tmp = try_path(env, env->depth++)))
-			if (tmp != f_room)
+		{
+			if (tmp != f_room && oui(env, (tmp->effective_weight) ? tmp->effective_weight : tmp->weight))
 			{
 				if (!f_room)
 					f_room = tmp;
@@ -262,6 +293,9 @@ int						find_shortest(t_env *env, int f_iter)
 					env->paths[f_iter]->room = tmp;
 				return (TRUE);
 			}
+			else
+				return (FALSE);
+		}
 	}
 	return (FALSE);
 }
@@ -290,3 +324,4 @@ void					solve(t_env *env)
 	lock_path(env);
 	visu(NULL, NULL);
 }
+

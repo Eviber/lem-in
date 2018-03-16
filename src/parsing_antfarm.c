@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/15 15:35:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 15:29:41 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ static int			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 				return (FALSE);
 			i++;
 		}
-		if ((antfarm->nb_ants = ft_atoi(nb_ants) < 0))
-			return (FALSE);
+		antfarm->nb_ants = ft_atoi(nb_ants); // /!\ REPLACE WITH ATOL
 		antfarm->antleft = antfarm->nb_ants;
 	}
 	return (TRUE);
@@ -96,19 +95,23 @@ int					parse_antfarm(t_env *antfarm)
 	line = NULL;
 	start = FALSE;
 	end = FALSE;
-	while ((gnl_ret = get_next_line(0, &line)) > 0 && line && line)
+	while ((gnl_ret = get_next_line(0, &line)) > 0)
 	{
-		if (!get_antfarm(antfarm, line, &start, &end))
+		if (line && *line)
 		{
+			if (!get_antfarm(antfarm, line, &start, &end))
+			{
+				ft_strdel(&line);
+				break ;
+			}
+			register_antfarm(antfarm, line);
 			ft_strdel(&line);
-			break ;
 		}
-		register_antfarm(antfarm, line);
-		ft_strdel(&line);
+		else
+			break ;
 	}
 	ft_strdel(&line);
-	if (gnl_ret == -1 || !((antfarm->nb_ants > -1) &&
-				antfarm->start && antfarm->end))
+	if (gnl_ret == -1 || !((antfarm->nb_ants > -1) && antfarm->start && antfarm->end))
 		return (FALSE);
 	return (TRUE);
 }
