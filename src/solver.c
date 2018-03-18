@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/16 19:16:05 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/18 19:03:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void					lock_path(t_env *env)
 		room->next = env->end;
 		while (room && room->prev)
 		{
+			visu(room, NULL);
 			room->prev->next = room;
 			room->locked = -1;
 			room = room->prev;
@@ -159,6 +160,8 @@ void					reset_room(t_env *env)
 	i = -1;
 	while (env->rooms[++i])
 	{
+		if (env->rooms[i]->locked != -1)
+			env->rooms[i]->prev = NULL;
 		env->rooms[i]->effective_weight = 0;
 		if (env->rooms[i]->locked != -1)
 			env->rooms[i]->weight = 0;
@@ -196,6 +199,7 @@ void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 	env->depth = tmp_dp - 1;
 	depth = depth + 1 - r->weight + dp;
 	r->dead = 1;
+	printf("save_info :\n");
 	save_info(-2, depth, r, env);
 	save_info(-1, depth, r_conf, env);
 	save_info(0, dp, r_conf, env);
