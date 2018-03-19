@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/16 19:15:46 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/19 16:23:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct			s_room
 	int					weight;
 	int					dead;
 	int					locked;
-	int 				effective_weight;
+	int 				weight_diff;
 }						t_room;
 
 typedef struct			s_conflict
@@ -40,6 +40,7 @@ typedef struct			s_conflict
 	long 				state;
 	long 				conflict;
 	t_room				*old_room;
+	t_room				*missss_direction;
 	t_room				*miss_direction;
 	struct s_conflict	*next;
 	struct s_conflict	*prev;
