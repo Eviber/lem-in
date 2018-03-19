@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/19 15:49:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/19 17:23:31 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int					handle_event(t_winenv *env)
 	SDL_PumpEvents();
 	env->redraw |= event_zoom(env, state) || event_move(env, state) ||
 					state[SDL_SCANCODE_TAB] ^ env->putnames;
-	env->putnames = 1;//state[SDL_SCANCODE_TAB];
+	env->putnames = state[SDL_SCANCODE_TAB];
 	env->offticks += (!env->debug && state[SDL_SCANCODE_LSHIFT]) ? 20 : 0;
 	if (env->debug)
 		env->wait = (state[SDL_SCANCODE_LSHIFT]) ? 20 : 500;

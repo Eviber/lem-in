@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/19 16:46:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/19 17:19:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ int						oui(t_env *env, int depth)
 	int		ret;
 
 	total_len = env->mean_len + depth;
-	ft_printf("total_len = %ld\n", total_len);
 	meanlen = total_len / (env->nb_path + 1);
 	mod = total_len % (env->nb_path + 1);
 	ret = env->nb_ants;
 	i = -1;
 	while (++i < env->nb_path)
 	{
-		ft_printf("mean len = %d : ret = %d mod = %d len = %ld i = %d\n", meanlen, ret, mod, env->paths[i]->length, i);
 		ret -= meanlen - env->paths[i]->length + (mod > 0);
 		mod--;
 	}
