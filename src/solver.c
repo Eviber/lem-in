@@ -59,6 +59,7 @@ int						oui(t_env *env, int depth)
 	mod = total_len % (env->nb_path + 1);
 	ret = env->nb_ants;
 	i = -1;
+	ft_printf("total_len = %ld\n", total_len);
 	while (++i < env->nb_path)
 	{
 		ret -= meanlen - env->paths[i]->length + (mod > 0);
@@ -90,9 +91,11 @@ void calcul_path(t_env *env)
 		len = 1;
 		while (room && room->prev)
 		{
+			ft_printf("%s - ", room->name);
 			room = room->prev;
 			len++;
 		}
+		ft_printf("\n");
 		env->paths[i]->length = len;
 		env->mean_len += len;
 		i++;
@@ -110,7 +113,7 @@ static int	search_conf(int set, long new_dp, t_env *env)
 	{
 		while (set != tmp->state)
 			tmp = tmp->prev;
-		set = tmp->conflict - 1;
+		set = tmp->conflict;
 		tmp->old_room->prev = tmp->miss_direction;
 	}
 	tmp = env->conflit;
@@ -139,17 +142,17 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 		env->conflit->missss_direction = room->prev;
 		env->conflit->next = ft_memalloc(sizeof(t_conflict));
 		env->conflit->next->prev = env->conflit;
-		env->conflit->state =  env->conflict - 1;
-		env->conflit->conflict = room->locked;
+		env->conflit->state =  env->conflict;
 		env->conflit = env->conflit->next;
 	}
 	else if (set == 0)
 	{
 		env->conflit->prev->miss_direction = room;
+		env->conflit->prev->conflict = room->locked;
 		env->conflit->prev->old_len = new_dp;
 	}
 	else if (set > 0)
-		return (search_conf(--set, new_dp, env));
+		return (search_conf(set, new_dp, env));
 	return (FALSE);
 }
 
@@ -390,4 +393,3 @@ void					solve(t_env *env)
 	if (env->v)
 		env->v = visu(NULL, NULL);
 }
-
