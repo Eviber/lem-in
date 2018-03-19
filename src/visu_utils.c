@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:31:53 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 09:24:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/19 18:59:21 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ int					quitvisu(t_winenv *env)
 {
 	if (!env || env->quit)
 	{
+		ft_memdel((void **)&env->lastants);
+		TTF_CloseFont(env->bigfont);
+		TTF_CloseFont(env->font);
+		SDL_DestroyTexture(env->layer[0]);
+		SDL_DestroyTexture(env->layer[1]);
+		SDL_DestroyTexture(env->layer[2]);
+		SDL_DestroyTexture(env->layer[3]);
+		SDL_DestroyRenderer(env->render);
+		SDL_DestroyWindow(env->win);
+		ft_memdel((void **)&env);
 		SDL_Quit();
 		return (0);
 	}
