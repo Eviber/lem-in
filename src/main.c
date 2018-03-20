@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 08:17:04 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 10:13:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	prooms(char *s1, t_room **room, char *s2)
 	int		i;
 
 	i = 0;
-	while (room[i])
+	while (room && room[i])
 		printf("%s%s%s\n", s1, room[i++]->name, s2);
 }
 

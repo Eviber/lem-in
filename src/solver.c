@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/20 08:43:49 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 12:05:56 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int						oui(t_env *env, int depth)
 {
 	int		i;
 	int		total_len;
-	int		meanlen;
+	unsigned int		meanlen;
 	int		mod;
 	int		ret;
 
@@ -64,7 +64,8 @@ int						oui(t_env *env, int depth)
 	mod = total_len % (env->nb_path + 1);
 	ret = env->nb_ants;
 	i = -1;
-	ft_printf("total_len = %ld\n", total_len);
+	if (env->nb_path && env->mean_len / env->nb_path < meanlen)
+		return (0);
 	while (++i < env->nb_path)
 	{
 		ret -= meanlen - env->paths[i]->length + (mod > 0);
@@ -96,11 +97,9 @@ void calcul_path(t_env *env)
 		len = 1;
 		while (room && room->prev)
 		{
-			ft_printf("%s - ", room->name);
 			room = room->prev;
 			len++;
 		}
-		ft_printf("\n");
 		env->paths[i]->length = len;
 		env->mean_len += len;
 		i++;
@@ -118,13 +117,12 @@ static int	search_conf(int set, long new_dp, t_env *env)
 	{
 		while (set != tmp->state)
 			tmp = tmp->prev;
-		ft_printf("set : %d tmp->conflict = %d\n",set, tmp->conflict);
 		set = tmp->conflict;
 		tmp->old_room->prev = tmp->miss_direction;
 	}
 	tmp = env->conflit;
 	calcul_path(env);
-	if (!oui(env, new_dp))
+	if (!oui(env, new_dp + 1))
 	{
 		set = t;
 		while(set)
@@ -151,8 +149,6 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 	}
 	else if (set == 0)
 	{
-		ft_printf("tmp->state = %ld\n", env->conflit->state);
-		ft_printf("room = %s | room->locked = %d\n", room->name, room->locked);
 		env->conflit->miss_direction = room;
 		env->conflit->conflict = room->locked;
 		env->conflit->old_len = new_dp;
@@ -195,7 +191,6 @@ void					lock_path(t_env *env)
 			room->weight = ++len;
 			room = room->next;
 		}
-
 	}
 }
 
@@ -382,7 +377,7 @@ void					solve(t_env *env)
 	i = 0;
 	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * 50);
 	env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
-	while (find_shortest(env, i))
+	while (env->nb_path < env->nb_ants && find_shortest(env, i))
 	{
 		env->conflict = 1;
 		clean_conflict(env);
