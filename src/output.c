@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/20 12:10:50 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 21:41:32 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "visu.h"
 #include "libft.h"
 
-void	calc_tosend(t_env *env)
+void					calc_tosend(t_env *env)
 {
 	int		i;
 	int		nb_paths;
@@ -46,7 +46,7 @@ static int				mov_new(t_env *env, unsigned int ant)
 		if (!env->paths[i]->start->ant && env->paths[i]->tosend)
 		{
 			env->paths[i]->start->ant = env->nb_ants - env->antleft + 1;
-			printf("L%u-%s ", ant, env->paths[i]->start->name);
+			ft_printf("L%u-%s ", ant, env->paths[i]->start->name);
 			env->antleft--;
 			env->paths[i]->tosend--;
 			return (1);
@@ -62,7 +62,9 @@ static int				mov_ant(t_env *env, unsigned int ant)
 	int					i;
 
 	i = 0;
-	if (ant == env->nb_ants - env->antleft + 1)
+	if (env->paths[0]->start == env->start && ++env->lem_out)
+		return (ft_printf("L%lu-%s ", ant, env->end->name));
+	else if (ant == env->nb_ants - env->antleft + 1)
 		return (mov_new(env, ant));
 	cur = env->paths[0]->room;
 	while (env->paths[i] && env->paths[i]->room)
@@ -73,7 +75,7 @@ static int				mov_ant(t_env *env, unsigned int ant)
 		if (cur && cur->next)
 		{
 			cur->next->ant = cur->ant;
-			printf("L%lu-%s ", cur->ant, cur->next->name);
+			ft_printf("L%lu-%s ", cur->ant, cur->next->name);
 			if (cur->next == env->end)
 				env->lem_out++;
 			cur->ant = 0;
@@ -83,7 +85,7 @@ static int				mov_ant(t_env *env, unsigned int ant)
 	return (1);
 }
 
-void	setfirst(t_env *env)
+void					setfirst(t_env *env)
 {
 	t_room	*cur;
 	int		i;
@@ -92,14 +94,14 @@ void	setfirst(t_env *env)
 	while (env->paths[i]->room)
 	{
 		cur = env->paths[i]->room;
-		while (cur && cur->prev != env->start)
+		while (cur && cur != env->start && cur->prev != env->start)
 			cur = cur->prev;
 		env->paths[i]->start = cur;
 		i++;
 	}
 }
 
-void	output(t_env *env, int v)
+void					output(t_env *env, int v)
 {
 	unsigned int	i;
 
@@ -109,16 +111,17 @@ void	output(t_env *env, int v)
 	calc_tosend(env);
 	env->lem_out = 0;
 	env->antleft = env->nb_ants;
-	printf("\n");
+	ft_printf("\n");
 	while (env->lem_out < env->nb_ants)
 	{
 		i = 1;
 		while (i <= env->nb_ants && mov_ant(env, i))
 			i++;
-		printf("\n");
-		if (v)
-			v = visu(NULL, NULL);
+		ft_printf("\n");
+		if (env->v)
+			env->v = visu(NULL, NULL);
 	}
-	while (v)
-		v = visu(NULL, NULL);
+	env->paths[0]->start = NULL;
+	while (env->v)
+		env->v = visu(NULL, NULL);
 }

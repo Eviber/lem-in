@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/20 12:05:56 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 22:24:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,24 @@
 #include "lemin.h"
 #include "visu.h"
 
-static size_t			tabsize(void **tab)
+static t_path	**addpath(t_path **oldtab)
 {
-	size_t				i;
-
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
-}
-
-static void				**tab_real(void **oldtab, size_t unitsize)
-{
-	void				**ret;
 	size_t				size;
-	size_t				new_size;
 
 	size = 0;
 	while (oldtab[size])
 		size++;
-	oldtab[size] = ft_memalloc(unitsize);
-	return oldtab;
-	size = tabsize(oldtab);
-	new_size = sizeof(void *) * (size + 2);
-	ret = ft_memalloc(new_size);
-	if (ret)
-	{
-		if (oldtab)
-			ft_memcpy(ret, oldtab, sizeof(void *) * size);
-		ret[size] = ft_memalloc(unitsize);
-		ft_memdel((void **)&oldtab);
-		if (ret[size])
-			return (ret);
-	}
-	return (NULL);
+	oldtab[size] = ft_memalloc(sizeof(t_path));
+	return (oldtab);
 }
 
-int						oui(t_env *env, int depth)
+int				oui(t_env *env, int depth)
 {
-	int		i;
-	int		total_len;
-	unsigned int		meanlen;
-	int		mod;
-	int		ret;
+	int				i;
+	int				total_len;
+	unsigned int	meanlen;
+	int				mod;
+	int				ret;
 
 	total_len = env->mean_len + depth;
 	meanlen = total_len / (env->nb_path + 1);
@@ -74,7 +49,7 @@ int						oui(t_env *env, int depth)
 	return (ret > 0);
 }
 
-void	clean_conflict(t_env *env)
+void			clean_conflict(t_env *env)
 {
 	while (env->conflit->prev)
 	{
@@ -83,7 +58,7 @@ void	clean_conflict(t_env *env)
 	}
 }
 
-void calcul_path(t_env *env)
+void			calcul_path(t_env *env)
 {
 	t_room	*room;
 	int		len;
@@ -106,30 +81,27 @@ void calcul_path(t_env *env)
 	}
 }
 
-static int	search_conf(int set, long new_dp, t_env *env)
+static int		search_conf(int origlock, int tmplock, long new_dp, t_env *env)
 {
-	t_conflict *tmp;
-	int			t;
+	t_conflict	*tmp;
 
-	t = set;
 	tmp = env->conflit;
-	while(set)
+	while (origlock)
 	{
-		while (set != tmp->state)
+		while (origlock != tmp->state)
 			tmp = tmp->prev;
-		set = tmp->conflict;
+		origlock = tmp->conflict;
 		tmp->old_room->prev = tmp->miss_direction;
 	}
 	tmp = env->conflit;
 	calcul_path(env);
 	if (!oui(env, new_dp + 1))
 	{
-		set = t;
-		while(set)
+		while (tmplock)
 		{
-			while (set != tmp->state)
+			while (tmplock != tmp->state)
 				tmp = tmp->prev;
-			set = tmp->conflict;
+			tmplock = tmp->conflict;
 			tmp->old_room->prev = tmp->missss_direction;
 		}
 		return (FALSE);
@@ -137,7 +109,7 @@ static int	search_conf(int set, long new_dp, t_env *env)
 	return (TRUE);
 }
 
-int			save_info(int set, int new_dp, t_room *room, t_env *env)
+int				save_info(int set, int new_dp, t_room *room, t_env *env)
 {
 	if (set == -1)
 	{
@@ -145,7 +117,7 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 		env->conflit->old_room = room;
 		env->conflit->missss_direction = room->prev;
 		env->conflit->next = ft_memalloc(sizeof(t_conflict));
-		env->conflit->state =  env->conflict;
+		env->conflit->state = env->conflict;
 	}
 	else if (set == 0)
 	{
@@ -158,35 +130,31 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 	return (FALSE);
 }
 
-void					lock_path(t_env *env)
+void			lock_path(t_env *env)
 {
 	t_room				*room;
 	int					len;
 	int					i;
 
-	env->antleft = env->nb_ants;
 	i = 0;
 	env->nb_path = 0;
 	env->mean_len = env->nb_ants;
 	while (env->paths[i] && env->paths[i]->room)
 	{
 		room = env->paths[i]->room;
-		len = 1;
+		len = 0;
 		room->next = env->end;
-		while (room && room->prev)
+		while (room && room->prev && ++len)
 		{
 			room->prev->next = room;
 			room->locked = -1;
 			room = room->prev;
-			len++;
 		}
 		env->nb_path++;
-		env->paths[i]->length = len;
-		env->antleft -= len;
+		env->paths[i++]->length = len;
 		env->mean_len += len;
-		i++;
 		len = -1;
-		while(room && room->next)
+		while (room && room->next)
 		{
 			room->weight = ++len;
 			room = room->next;
@@ -194,7 +162,7 @@ void					lock_path(t_env *env)
 	}
 }
 
-void					reset_room(t_env *env)
+void			reset_room(t_env *env)
 {
 	int					i;
 
@@ -212,39 +180,7 @@ void					reset_room(t_env *env)
 		env->rooms[i]->dead = 0;
 	}
 }
-/*
-void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
-{
-	long	dp;
-	long	tmp_dp;
-	t_room	*tmp;
 
-	tmp = r;
-	while (tmp->next != env->end)
-		tmp = tmp->next;
-	dp = tmp->weight;
-	tmp_dp = depth + 1;
-	tmp = r->prev;
-	++env->conflict;
-	while (tmp->prev)
-	{
-		if (env->v)
-			visu(tmp, tmp->prev);
-		tmp->locked = env->conflict;
-		if (!tmp->effective_weight)
-			tmp->effective_weight = tmp->weight;
-		tmp->weight = --tmp_dp;
-		tmp = tmp->prev;
-	}
-	env->depth = tmp_dp - 1;
-	depth = depth + 1 - r->weight + dp;
-	r->dead = 1;
-	printf("save_info :\n");
-	save_info(-2, depth, r, env);
-	save_info(-1, depth, r_conf, env);
-	save_info(0, dp, r_conf, env);
-}
-*/
 void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 {
 	long	dp;
@@ -290,7 +226,7 @@ void			conflict(t_room *r, t_env *env, long depth, t_room *r_conf)
 	save_info(0, dp, r_conf, env);
 }
 
-static int				fill_weight(t_env *env, t_room *room)
+static int		fill_weight(t_env *env, t_room *room)
 {
 	int					i;
 
@@ -300,11 +236,11 @@ static int				fill_weight(t_env *env, t_room *room)
 		if (room->pipes[i] == env->end)
 		{
 			if (room->locked == 0
-			|| search_conf(room->locked, room->weight + room->weight_diff, env))
+			|| search_conf(room->locked, room->locked, room->weight + room->weight_diff, env))
 				return (TRUE);
 		}
 		if (!room->pipes[i]->weight && room->pipes[i] != env->start
-		&& (room->pipes[i]->locked != 1 || room == env->start))
+				&& (room->pipes[i]->locked != 1 || room == env->start))
 		{
 			room->pipes[i]->weight_diff = room->weight_diff;
 			room->pipes[i]->weight = room->weight + 1;
@@ -326,7 +262,7 @@ static int				fill_weight(t_env *env, t_room *room)
 	return (FALSE);
 }
 
-t_room					*try_path(t_env *env, int depth)
+t_room			*try_path(t_env *env, int depth)
 {
 	t_room				*cur;
 	int					i;
@@ -336,7 +272,7 @@ t_room					*try_path(t_env *env, int depth)
 	{
 		cur = env->rooms[i++];
 		if (cur->weight == depth - 1 && cur->locked != 1
-		&& (cur->weight || cur == env->start))
+				&& (cur->weight || cur == env->start))
 		{
 			if (fill_weight(env, cur))
 				return (cur);
@@ -345,7 +281,7 @@ t_room					*try_path(t_env *env, int depth)
 	return (NULL);
 }
 
-int						find_shortest(t_env *env, int f_iter)
+int				find_shortest(t_env *env, int f_iter)
 {
 	t_room				*tmp;
 	static t_room		*f_room = NULL;
@@ -370,13 +306,13 @@ int						find_shortest(t_env *env, int f_iter)
 	return (FALSE);
 }
 
-void					solve(t_env *env)
+void			solve(t_env *env)
 {
 	int					i;
 
 	i = 0;
-	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * 50);
-	env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
+	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * (env->nb_rooms - 1));
+	env->paths = addpath(env->paths);
 	while (env->nb_path < env->nb_ants && find_shortest(env, i))
 	{
 		env->conflict = 1;
@@ -385,7 +321,7 @@ void					solve(t_env *env)
 		i++;
 		lock_path(env);
 		reset_room(env);
-		env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
+		env->paths = addpath(env->paths);
 	}
 	if (i == 0)
 	{

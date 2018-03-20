@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/14 12:18:46 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 21:36:54 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void				visu_update(SDL_Renderer *render, t_env colony, t_winenv *w)
 	SDL_RenderCopy(render, w->layer[TUBES], NULL, NULL);
 	SDL_RenderCopy(render, w->layer[ROOMS], NULL, NULL);
 	SDL_RenderCopy(render, w->layer[ANTS], NULL, NULL);
-	counter(colony, *w);
+	if (!w->debug)
+		counter(colony, *w);
 }
