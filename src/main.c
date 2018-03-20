@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 12:24:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 15:09:58 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int					main(int argc, char **argv)
 	antfarm.v = (argc == 2 && ft_strequ(argv[1], "-v"));
 	if (!parse_antfarm(&antfarm))
 	{
-		ft_printf("ERROR\n");
+		ft_printf("ERROr\n");
 		antfarm.v = 0;
 	}
 	else
@@ -86,7 +86,7 @@ int					main(int argc, char **argv)
 		if (antfarm.start != antfarm.end && solve(&antfarm, &antfarm.v))
 			output(&antfarm, antfarm.v);
 		else
-			ft_printf("ERROR\n");
+			ft_printf("eRROR\n");
 	}
 	free_antfarm(&antfarm);
 	return (0);
