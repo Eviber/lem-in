@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/13 14:55:04 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 09:10:15 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 		res.str = ft_memdup(s2.str, s2.len);
 	else
 		res.str = ft_memalloc(1);
-	res.str[res.len] = '\0';
 	if (c == 'F' || c == 'B')
 		ft_memdel((void **)&(s1.str));
 	if (c == 'S' || c == 'B')

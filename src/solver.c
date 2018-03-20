@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/19 17:19:59 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 08:43:49 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ static void				**tab_real(void **oldtab, size_t unitsize)
 	size_t				size;
 	size_t				new_size;
 
+	size = 0;
+	while (oldtab[size])
+		size++;
+	oldtab[size] = ft_memalloc(unitsize);
+	return oldtab;
 	size = tabsize(oldtab);
 	new_size = sizeof(void *) * (size + 2);
 	ret = ft_memalloc(new_size);
@@ -113,6 +118,7 @@ static int	search_conf(int set, long new_dp, t_env *env)
 	{
 		while (set != tmp->state)
 			tmp = tmp->prev;
+		ft_printf("set : %d tmp->conflict = %d\n",set, tmp->conflict);
 		set = tmp->conflict;
 		tmp->old_room->prev = tmp->miss_direction;
 	}
@@ -125,7 +131,7 @@ static int	search_conf(int set, long new_dp, t_env *env)
 		{
 			while (set != tmp->state)
 				tmp = tmp->prev;
-			set = tmp->conflict - 1;
+			set = tmp->conflict;
 			tmp->old_room->prev = tmp->missss_direction;
 		}
 		return (FALSE);
@@ -141,18 +147,18 @@ int			save_info(int set, int new_dp, t_room *room, t_env *env)
 		env->conflit->old_room = room;
 		env->conflit->missss_direction = room->prev;
 		env->conflit->next = ft_memalloc(sizeof(t_conflict));
-		env->conflit->next->prev = env->conflit;
 		env->conflit->state =  env->conflict;
-		env->conflit = env->conflit->next;
 	}
 	else if (set == 0)
 	{
-		env->conflit->prev->miss_direction = room;
-		env->conflit->prev->conflict = room->locked;
-		env->conflit->prev->old_len = new_dp;
+		ft_printf("tmp->state = %ld\n", env->conflit->state);
+		ft_printf("room = %s | room->locked = %d\n", room->name, room->locked);
+		env->conflit->miss_direction = room;
+		env->conflit->conflict = room->locked;
+		env->conflit->old_len = new_dp;
+		env->conflit->next->prev = env->conflit;
+		env->conflit = env->conflit->next;
 	}
-	else if (set > 0)
-		return (search_conf(set, new_dp, env));
 	return (FALSE);
 }
 
@@ -299,12 +305,13 @@ static int				fill_weight(t_env *env, t_room *room)
 		if (room->pipes[i] == env->end)
 		{
 			if (room->locked == 0
-			|| save_info(room->locked, room->weight + room->weight_diff, 0, env))
+			|| search_conf(room->locked, room->weight + room->weight_diff, env))
 				return (TRUE);
 		}
 		if (!room->pipes[i]->weight && room->pipes[i] != env->start
 		&& (room->pipes[i]->locked != 1 || room == env->start))
 		{
+			room->pipes[i]->weight_diff = room->weight_diff;
 			room->pipes[i]->weight = room->weight + 1;
 			room->pipes[i]->prev = room;
 			room->pipes[i]->locked = room->locked;
@@ -373,6 +380,7 @@ void					solve(t_env *env)
 	int					i;
 
 	i = 0;
+	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * 50);
 	env->paths = (t_path **)tab_real((void **)env->paths, sizeof(t_path));
 	while (find_shortest(env, i))
 	{
