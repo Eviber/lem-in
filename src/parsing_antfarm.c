@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/08 15:29:41 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/20 12:13:05 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,19 @@ int					parse_antfarm(t_env *antfarm)
 	line = NULL;
 	start = FALSE;
 	end = FALSE;
-	while ((gnl_ret = get_next_line(0, &line)) > 0)
+	while ((gnl_ret = get_next_line(0, &line)) > 0 && line && *line)
 	{
-		if (line && *line)
+		if (!get_antfarm(antfarm, line, &start, &end))
 		{
-			if (!get_antfarm(antfarm, line, &start, &end))
-			{
-				ft_strdel(&line);
-				break ;
-			}
-			register_antfarm(antfarm, line);
 			ft_strdel(&line);
-		}
-		else
 			break ;
+		}
+		register_antfarm(antfarm, line);
+		ft_strdel(&line);
 	}
 	ft_strdel(&line);
-	if (gnl_ret == -1 || !((antfarm->nb_ants > -1) && antfarm->start && antfarm->end))
+	if (gnl_ret == -1 ||
+		!((antfarm->nb_ants > -1) && antfarm->start && antfarm->end))
 		return (FALSE);
 	return (TRUE);
 }

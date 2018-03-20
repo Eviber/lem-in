@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 11:28:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 12:10:50 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	output(t_env *env, int v)
 {
 	unsigned int	i;
 
-	// calc limit per path
 	if (v)
 		visu_debug(0);
 	setfirst(env);
@@ -115,7 +114,7 @@ void	output(t_env *env, int v)
 	{
 		i = 1;
 		while (i <= env->nb_ants && mov_ant(env, i))
-				i++;
+			i++;
 		printf("\n");
 		if (v)
 			v = visu(NULL, NULL);

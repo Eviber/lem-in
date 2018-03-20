@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 10:13:51 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 12:24:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,6 @@ static t_env		init_antfarm(void)
 	return (ret);
 }
 
-void	prooms(char *s1, t_room **room, char *s2)
-{
-	int		i;
-
-	i = 0;
-	while (room && room[i])
-		printf("%s%s%s\n", s1, room[i++]->name, s2);
-}
-
-void	debug(t_env env)
-{
-	int i;
-
-	i = 0;
-	while (env.rooms[i])
-	{
-		printf("%s:\n", env.rooms[i]->name);
-		prooms("->", env.rooms[i]->pipes, "");
-		i++;
-	}
-}
-
 int					main(int argc, char **argv)
 {
 	t_env			antfarm;
@@ -99,7 +77,6 @@ int					main(int argc, char **argv)
 	}
 	else
 	{
-		debug(antfarm);
 		ft_printf("%s\n", antfarm.to_print);
 		if (antfarm.v && !visu_init(&antfarm))
 		{
