@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 13:31:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/20 21:40:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void				putlast(t_winenv *w, t_env colony)
 	int				i;
 
 	i = 0;
+	if (colony.paths[0]->start == colony.start)
+	{
+		putant(*w, colony.end, colony.start, 1);
+		w->colony->antleft = 0;
+	}
 	while (w->lastants && colony.paths[i] && colony.paths[i]->room)
 	{
 		if (w->lastants[i])
