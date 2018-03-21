@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/21 18:26:06 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/21 19:20:42 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,16 @@ static void			add_pipe(t_room **room1, t_room **room2)
 	}
 }
 
+#include <stdio.h>
+
 static int			check_dashes(char *line)
 {
 	char			*dash;
-
-	dash = ft_strchr(line, '-') + 1;
+	
+	dash = ft_strchr(line, '-');
 	if (dash)
 	{
-		if (ft_strchr(dash, '-'))
+		if (ft_strchr(dash + 1, '-'))
 			return (FALSE);
 	}
 	return (TRUE);
