@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/21 21:50:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/21 22:03:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,23 @@ t_room				*find_room(t_env *antfarm, char *name)
 		rooms++;
 	}
 	return (NULL);
+}
+
+int					find_pipe(t_room **pipes, char *room)
+{
+	int				i;
+
+	i = 0;
+	if (pipes && room)
+	{
+		while (pipes[i])
+		{
+			if (!ft_strcmp(pipes[i]->name, room))
+				return (TRUE);
+			i++;
+		}
+	}
+	return (FALSE);
 }
 
 static t_env		init_antfarm(void)

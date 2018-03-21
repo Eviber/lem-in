@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/08 15:20:52 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/21 22:05:58 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <eparser.h>
 
 static int			check_errors(t_env *antfarm, char **tab, t_room **room1,
-					t_room **room2)
+								t_room **room2)
 {
 	if (tab && tab[0] && tab[1] && !tab[2])
 	{
@@ -46,12 +46,28 @@ static void			add_pipe(t_room **room1, t_room **room2)
 	size_t			nb_pipes1;
 	size_t			nb_pipes2;
 
-	nb_pipes1 = get_nb_pipes(*room1);
-	nb_pipes2 = get_nb_pipes(*room2);
-	(*room1)->pipes = add_room((*room1)->pipes, nb_pipes1);
-	(*room1)->pipes[nb_pipes1] = *room2;
-	(*room2)->pipes = add_room((*room2)->pipes, nb_pipes2);
-	(*room2)->pipes[nb_pipes2] = *room1;
+	if (!find_pipe((*room1)->pipes, (*room2)->name))
+	{
+		nb_pipes1 = get_nb_pipes(*room1);
+		nb_pipes2 = get_nb_pipes(*room2);
+		(*room1)->pipes = add_room((*room1)->pipes, nb_pipes1);
+		(*room1)->pipes[nb_pipes1] = *room2;
+		(*room2)->pipes = add_room((*room2)->pipes, nb_pipes2);
+		(*room2)->pipes[nb_pipes2] = *room1;
+	}
+}
+
+static int			check_dashes(char *line)
+{
+	char			*dash;
+
+	dash = ft_strchr(line, '-');
+	if (dash)
+	{
+		if (ft_strchr(dash + 1, '-'))
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
 int					parse_pipe(t_env *antfarm, char *line)
@@ -64,7 +80,7 @@ int					parse_pipe(t_env *antfarm, char *line)
 	room1 = NULL;
 	room2 = NULL;
 	tmp = ft_strtrim(line);
-	if (!tmp)
+	if (!tmp || !check_dashes(tmp))
 		return (FALSE);
 	tab = ft_strsplit(tmp, '-');
 	ft_strdel(&tmp);

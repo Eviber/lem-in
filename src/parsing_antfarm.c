@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:10:27 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 12:13:05 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/21 22:04:27 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ static int			get_nb_ants(t_env *antfarm, char *nb_ants, int *ants)
 				return (FALSE);
 			i++;
 		}
-		antfarm->nb_ants = ft_atoi(nb_ants); // /!\ REPLACE WITH ATOL
+		antfarm->nb_ants = ft_atol(nb_ants);
 		antfarm->antleft = antfarm->nb_ants;
 	}
 	return (TRUE);
 }
 
-static void			parse_comment(int *start, int *end, char *comment)
+static void			parse_comment(int *start, int *end, char *comment, int ants)
 {
 	if (*comment == '#')
 	{
-		if (!ft_strcmp(comment + 1, "start"))
+		if (!ft_strcmp(comment + 1, "start") && !ants)
 			*start = TRUE;
-		else if (!ft_strcmp(comment + 1, "end"))
+		else if (!ft_strcmp(comment + 1, "end") && !ants)
 			*end = TRUE;
 	}
 }
@@ -51,7 +51,7 @@ static int			get_antfarm(t_env *antfarm, char *line, int *start,
 	static int		ants = TRUE;
 
 	if (*line == '#')
-		parse_comment(start, end, line + 1);
+		parse_comment(start, end, line + 1, ants);
 	else if (ants)
 		return (get_nb_ants(antfarm, line, &ants));
 	else
