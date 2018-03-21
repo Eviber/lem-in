@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 02:32:59 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 15:10:56 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/21 17:16:49 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ int					parse_pipe(t_env *antfarm, char *line)
 
 	room1 = NULL;
 	room2 = NULL;
-	ft_printf("line before: [%s]\n", line);
 	tmp = ft_strtrim(line);
 	if (!tmp)
 		return (FALSE);
-	ft_printf("line after: [%s]\n", tmp);
 	tab = ft_strsplit(tmp, '-');
 	ft_strdel(&tmp);
 	if (!tab)

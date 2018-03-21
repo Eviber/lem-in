@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 15:20:07 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/21 17:33:33 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,22 @@ static void			create_room(int *start, int *end, t_env *antfarm,
 	}
 }
 
+static void			update_room(t_room *room, char **tab)
+{
+	int				x;
+	int				y;
+
+	x = ft_atoi(tab[1]);
+	y = ft_atoi(tab[2]);
+	room->pos.x = x;
+	room->pos.y = y;
+}
+
 int					parse_room(int *start, int *end, t_env *antfarm, char *line)
 {
 	char			**tab;
 	char			*tmp;
+	t_room			*room;
 
 	tmp = ft_strtrimall(line);
 	tab = ft_strsplit(tmp, ' ');
@@ -100,7 +112,10 @@ int					parse_room(int *start, int *end, t_env *antfarm, char *line)
 		free_tab(&tab);
 		return (FALSE);
 	}
-	create_room(start, end, antfarm, tab);
+	if ((room = find_room(antfarm, tab[0])) != NULL)
+		update_room(room, tab);
+	else
+		create_room(start, end, antfarm, tab);
 	free_tab(&tab);
 	return (TRUE);
 }
