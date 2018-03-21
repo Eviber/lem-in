@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/20 12:24:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/21 21:50:31 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int					main(int argc, char **argv)
 			ft_putstr_fd("Visualizer failed.\n", 2);
 			antfarm.v = 0;
 		}
-		if (antfarm.start != antfarm.end && solve(&antfarm, &antfarm.v))
-			output(&antfarm, antfarm.v);
+		if (antfarm.start != antfarm.end && solve(&antfarm))
+			output(&antfarm);
 		else
 			ft_printf("ERROR\n");
 	}

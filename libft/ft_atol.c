@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solver.h                                           :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/20 20:37:35 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/21 21:49:10 by ygaude           ###   ########.fr       */
+/*   Created: 2018/03/21 21:55:45 by ygaude            #+#    #+#             */
+/*   Updated: 2018/03/21 21:58:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOLVER_H
-# define SOLVER_H
+#include "libft.h"
 
-int		ispathworth(t_env *env, int depth);
+long				ft_atol(const char *str)
+{
+	long	ret;
+	int		i;
+	int		sign;
 
-void	conflict(t_room *locked_room, t_env *env, long depth, t_room *origin);
-
-int		check_conf(t_room *room, t_env *env);
-int		find_shortest(t_env *env, int f_iter);
-void	lock(t_env *env);
-
-int		solve(t_env *env);
-void	output(t_env *env);
-
-#endif
+	i = 0;
+	ret = 0;
+	sign = 1;
+	while (ft_isspace(str[i]) && str[i] > 0)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		sign = (str[i++] == '-') ? -1 : 1;
+	while (str[i] >= '0' && str[i] <= '9')
+		ret = ret * 10 + ((str[i++] - '0') * sign);
+	return (ret);
+}

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 00:09:48 by ygaude            #+#    #+#             */
-/*   Updated: 2018/02/07 16:22:46 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/21 21:58:45 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_list
 
 unsigned int		ft_abs(int n);
 int					ft_atoi(const char *str);
+long				ft_atol(const char *str);
 void				ft_bzero(void *s, size_t size);
 char				*ft_imaxtoa(intmax_t n, unsigned int base);
 int					ft_isalnum(int c);
