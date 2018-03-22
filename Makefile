@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/22 10:35:00 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/22 11:00:47 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC =	check_conflict.c find_shortest.c free_antfarm.c get_pipes.c get_rooms.c\
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_DIR) `sdl2-config --cflags`
+CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_DIR) `sdl2-config --cflags`
 LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf -lm
 
 all: $(LIBFT) $(NAME)

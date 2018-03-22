@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/21 21:50:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 10:59:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				solve(t_env *env)
 	int					i;
 
 	i = 0;
-	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * (env->nb_rooms - 1));
+	env->paths = (t_path **)ft_memalloc(sizeof(t_path*) * (env->nb_rooms + 1));
 	env->paths = addpath(env->paths);
 	while (env->nb_path < env->nb_ants && find_shortest(env, i))
 	{
@@ -70,6 +70,7 @@ int				solve(t_env *env)
 		reset_room(env->rooms);
 		env->paths = addpath(env->paths);
 	}
+	clean_conflict(env);
 	if (i == 0)
 	{
 		ft_dprintf(2, "ERROR No path\n");
