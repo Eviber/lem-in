@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/22 09:25:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 11:47:14 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int			check_errors(char **tab)
 			return (FALSE);
 		while ((tab[1])[++i])
 			if (!ft_isdigit((tab[1])[i]) &&
-				!(tab[1][i] == '-' && ft_isdigit((tab[1])[i + 1])))
+					!(tab[1][i] == '-' && ft_isdigit((tab[1])[i + 1])))
 				return (FALSE);
 		i = -1;
 		while ((tab[2])[++i])
 			if (!ft_isdigit((tab[2])[i]) &&
-				!(tab[2][i] == '-' && ft_isdigit((tab[2])[i + 1])))
+					!(tab[2][i] == '-' && ft_isdigit((tab[2])[i + 1])))
 				return (FALSE);
 		return (TRUE);
 	}
@@ -60,7 +60,7 @@ static t_room		*init_room(char **tab)
 }
 
 static void			create_room(int *start, int *end, t_env *antfarm,
-					char **tab)
+		char **tab)
 {
 	t_room			*room;
 
@@ -92,6 +92,16 @@ static void			update_room(t_room *room, char **tab)
 	y = ft_atoi(tab[2]);
 	room->pos.x = x;
 	room->pos.y = y;
+	if (*start)
+	{
+		*start = FALSE;
+		antfarm->start = room;
+	}
+	if (*end)
+	{
+		*end = FALSE;
+		antfarm->end = room;
+	}
 }
 
 int					parse_room(int *start, int *end, t_env *antfarm, char *line)
@@ -109,7 +119,7 @@ int					parse_room(int *start, int *end, t_env *antfarm, char *line)
 		return (FALSE);
 	}
 	if ((room = find_room(antfarm, tab[0])) != NULL)
-		update_room(room, tab);
+		update_room(room, tab, start, end);
 	else
 		create_room(start, end, antfarm, tab);
 	free_tab(&tab);
