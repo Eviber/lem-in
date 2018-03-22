@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/21 22:03:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 10:38:02 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static t_env		init_antfarm(void)
 	t_env			ret;
 
 	ft_bzero(&ret, sizeof(t_env));
-	ret.conflit = ft_memalloc(sizeof(t_conflict));
+	ret.conflit = (t_conflict *)ft_memalloc(sizeof(t_conflict));
 	return (ret);
 }
 
