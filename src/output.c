@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 20:41:26 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/20 21:41:32 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 09:28:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ void					setfirst(t_env *env)
 	}
 }
 
-void					output(t_env *env, int v)
+void					output(t_env *env)
 {
 	unsigned int	i;
 
-	if (v)
+	if (env->v)
 		visu_debug(0);
 	setfirst(env);
 	calc_tosend(env);

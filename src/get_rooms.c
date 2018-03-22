@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/21 17:33:33 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/22 09:25:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,20 @@ static int			check_errors(char **tab)
 {
 	int				i;
 
-	i = 0;
+	i = -1;
 	if (tab && tab[0] && tab[1] && tab[2] && !tab[3])
 	{
 		if (tab[0][0] == 'L' || ft_strchr(tab[0], '-'))
 			return (FALSE);
-		while ((tab[1])[i])
-		{
-			if (!ft_isdigit((tab[1])[i]) && !(tab[1][i] == '-' && ft_isdigit((tab[1])[i + 1])))
+		while ((tab[1])[++i])
+			if (!ft_isdigit((tab[1])[i]) &&
+				!(tab[1][i] == '-' && ft_isdigit((tab[1])[i + 1])))
 				return (FALSE);
-			i++;
-		}
-		i = 0;
-		while ((tab[2])[i])
-		{
-			if (!ft_isdigit((tab[2])[i]) && !(tab[2][i] == '-' && ft_isdigit((tab[2])[i + 1])))
+		i = -1;
+		while ((tab[2])[++i])
+			if (!ft_isdigit((tab[2])[i]) &&
+				!(tab[2][i] == '-' && ft_isdigit((tab[2])[i + 1])))
 				return (FALSE);
-			i++;
-		}
 		return (TRUE);
 	}
 	return (FALSE);
