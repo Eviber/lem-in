@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:29:29 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/21 21:47:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 11:17:48 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	assume_conflict(int origlock, t_conflict *tmp)
 	{
 		while (origlock != tmp->state)
 			tmp = tmp->prev;
-		origlock = tmp->conflict;
-		tmp->old_room->prev = tmp->miss_direction;
+		origlock = tmp->id;
+		tmp->old_room->prev = tmp->to_redirect;
 	}
 }
 
@@ -56,13 +56,13 @@ static int	revert_conflict(int origlock, t_conflict *tmp)
 	{
 		while (origlock != tmp->state)
 			tmp = tmp->prev;
-		origlock = tmp->conflict;
-		tmp->old_room->prev = tmp->missss_direction;
+		origlock = tmp->id;
+		tmp->old_room->prev = tmp->old_redirect;
 	}
 	return (FALSE);
 }
 
-void		calcul_path(t_env *env)
+static void	calcul_path(t_env *env)
 {
 	t_room	*room;
 	int		len;

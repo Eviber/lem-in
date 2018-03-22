@@ -6,7 +6,7 @@
 #    By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 02:18:15 by ygaude            #+#    #+#              #
-#    Updated: 2018/03/22 10:39:33 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/22 11:18:57 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJ = ${SRC:c=o}
 all: $(NAME)
 
 %.o : %.c
-	@printf "Compiling... $(CC) $(CFLAGS) -c -o %-44s\r" "$@ $^"
+	@printf "Compiling... $(CC) $(CFLAGS) -c -o %-15s %-28s\r" "$@" "$^"
 	@$(CC) $(CFLAGS)	-c -o $@ $^
 
 $(NAME): $(OBJ)

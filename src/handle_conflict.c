@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 21:31:50 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/21 21:32:22 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 11:15:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 void			save_conflict(t_room *origin, t_room *locked_room, t_env *env)
 {
 	env->conflit->old_room = locked_room;
-	env->conflit->missss_direction = locked_room->prev;
+	env->conflit->old_redirect = locked_room->prev;
 	env->conflit->next = ft_memalloc(sizeof(t_conflict));
 	env->conflit->state = env->conflict;
-	env->conflit->miss_direction = origin;
-	env->conflit->conflict = origin->locked;
+	env->conflit->to_redirect = origin;
+	env->conflit->id = origin->locked;
 	env->conflit->next->prev = env->conflit;
 	env->conflit = env->conflit->next;
 }

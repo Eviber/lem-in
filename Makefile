@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/22 11:00:47 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/22 11:28:12 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,9 @@ LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf -lm
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJ)
+	@printf "%-54c\rLinking...\n" ' '
 	@$(CC) -o $@ $^ $(LFLAGS)
-	@printf "$(CC) -o $@ $^ $(LFLAGS)\n"
+	@printf "Done !\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -45,12 +46,14 @@ $(LIBFT):
 	make -C $(LIB_DIR)
 
 clean:
-	make -C $(LIB_DIR) clean
-	rm -f $(OBJ)
+	@make -C $(LIB_DIR) clean
+	@rm -f $(OBJ)
+	@printf "Removed objs\n"
 
 fclean: clean
-	make -C $(LIB_DIR) fclean
-	rm -f $(NAME)
+	@make -C $(LIB_DIR) fclean
+	@rm -f $(NAME)
+	@printf "Removed $(NAME)\n"
 
 re: fclean all
 
