@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 21:42:18 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/02/08 15:21:12 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/22 10:38:00 by sbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ void				free_antfarm(t_env *antfarm)
 		free_paths(antfarm->paths);
 	if (antfarm->to_print)
 		ft_strdel(&(antfarm->to_print));
+	if (antfarm->conflit)
+		ft_memdel((void **)&(antfarm->conflit));
 }
