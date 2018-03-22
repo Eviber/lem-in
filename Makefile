@@ -6,7 +6,7 @@
 #    By: sbrochar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/15 17:13:45 by sbrochar          #+#    #+#              #
-#    Updated: 2018/03/21 22:03:14 by ygaude           ###   ########.fr        #
+#    Updated: 2018/03/22 10:35:00 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC_DIR = ./src
 OBJ_DIR = ./obj
 
 LIB_DIR = ./libft
-LIB_INC = $(LIB_DIR)
+LIBFT = $(LIB_DIR)/libft.a
 
 SRC =	check_conflict.c find_shortest.c free_antfarm.c get_pipes.c get_rooms.c\
 		handle_conflict.c lock_path.c main.c output.c parsing_antfarm.c\
@@ -26,19 +26,23 @@ SRC =	check_conflict.c find_shortest.c free_antfarm.c get_pipes.c get_rooms.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
-CC = clang
-CFLAGS = -g -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC) `sdl2-config --cflags`
-LFLAGS = -fsanitize=address -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf -lm
+CC = gcc
+CFLAGS = -c -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_DIR) `sdl2-config --cflags`
+LFLAGS = -L$(LIB_DIR) -lft `sdl2-config --libs` -lSDL2_gfx -lSDL2_ttf -lm
+
+all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJ)
-	make -C $(LIB_DIR)
-	$(CC) -o $@ $^ $(LFLAGS)
-
-all: $(NAME)
+	@$(CC) -o $@ $^ $(LFLAGS)
+	@printf "$(CC) -o $@ $^ $(LFLAGS)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^
+	@printf "Compiling... %-21s => %-21s\r" $^ $@
+
+$(LIBFT):
+	make -C $(LIB_DIR)
 
 clean:
 	make -C $(LIB_DIR) clean
