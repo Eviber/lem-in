@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 15:28:55 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/21 21:51:54 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 11:13:38 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef struct			s_conflict
 	long				new_len;
 	long				old_len;
 	long				state;
-	long				conflict;
+	long				id;
 	t_room				*old_room;
-	t_room				*missss_direction;
-	t_room				*miss_direction;
+	t_room				*old_redirect;
+	t_room				*to_redirect;
 	struct s_conflict	*next;
 	struct s_conflict	*prev;
 }						t_conflict;
