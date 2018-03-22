@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 22:12:14 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/22 11:47:14 by sbrochar         ###   ########.fr       */
+/*   Updated: 2018/03/22 11:55:35 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static void			create_room(int *start, int *end, t_env *antfarm,
 	}
 }
 
-static void			update_room(t_room *room, char **tab)
+static void			update_room(int *startend[2], t_env *antfarm,
+								t_room *room, char **tab)
 {
 	int				x;
 	int				y;
@@ -92,14 +93,14 @@ static void			update_room(t_room *room, char **tab)
 	y = ft_atoi(tab[2]);
 	room->pos.x = x;
 	room->pos.y = y;
-	if (*start)
+	if (*startend[0])
 	{
-		*start = FALSE;
+		*startend[0] = FALSE;
 		antfarm->start = room;
 	}
-	if (*end)
+	if (*startend[1])
 	{
-		*end = FALSE;
+		*startend[1] = FALSE;
 		antfarm->end = room;
 	}
 }
@@ -109,7 +110,10 @@ int					parse_room(int *start, int *end, t_env *antfarm, char *line)
 	char			**tab;
 	char			*tmp;
 	t_room			*room;
+	int				*startend[2];
 
+	startend[0] = start;
+	startend[1] = end;
 	tmp = ft_strtrimall(line);
 	tab = ft_strsplit(tmp, ' ');
 	ft_strdel(&tmp);
@@ -119,7 +123,7 @@ int					parse_room(int *start, int *end, t_env *antfarm, char *line)
 		return (FALSE);
 	}
 	if ((room = find_room(antfarm, tab[0])) != NULL)
-		update_room(room, tab, start, end);
+		update_room(startend, antfarm, room, tab);
 	else
 		create_room(start, end, antfarm, tab);
 	free_tab(&tab);

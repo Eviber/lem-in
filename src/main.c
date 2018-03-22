@@ -6,7 +6,7 @@
 /*   By: sbrochar <sbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:59:46 by sbrochar          #+#    #+#             */
-/*   Updated: 2018/03/22 10:46:16 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 12:01:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int					main(int argc, char **argv)
 		if (antfarm.start != antfarm.end && solve(&antfarm))
 			output(&antfarm);
 		else
-			ft_printf("ERROR\n");
+			ft_printf("%s\n", (antfarm.start != antfarm.end) ? "ERROR" : "");
 	}
 	free_antfarm(&antfarm);
 	return (0);
