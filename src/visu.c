@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 15:29:16 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/15 13:10:34 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 12:13:54 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void				counter(t_env colony, t_winenv env)
 	char			*str;
 
 	rect = (SDL_Rect){0, 0, 0, 0};
-	asprintf(&str, "at start: %2zu", colony.antleft);
+	ft_asprintf(&str, "at start: %2zu", colony.antleft);
 	putcount(env, str, &rect);
 	rect.y = rect.h;
-	asprintf(&str, "arrived: %3zu", env.visu_out);
+	ft_asprintf(&str, "arrived: %3zu", env.visu_out);
 	putcount(env, str, &rect);
 }
 

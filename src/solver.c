@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:42:05 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/22 10:59:59 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 12:25:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int				solve(t_env *env)
 	clean_conflict(env);
 	if (i == 0)
 	{
-		ft_dprintf(2, "ERROR No path\n");
+		ft_dprintf(2, "No solution\n");
 		exit(1);
 	}
 	lock(env);

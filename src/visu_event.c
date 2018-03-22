@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 15:39:24 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/19 17:23:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/22 12:17:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int					handle_event(t_winenv *env)
 	env->putnames = state[SDL_SCANCODE_TAB];
 	env->offticks += (!env->debug && state[SDL_SCANCODE_LSHIFT]) ? 20 : 0;
 	if (env->debug)
-		env->wait = (state[SDL_SCANCODE_LSHIFT]) ? 20 : 500;
+		env->wait = (state[SDL_SCANCODE_LSHIFT]) ? 5 : 50;
 	else
 		env->wait = 100 * (!state[SDL_SCANCODE_LSHIFT]);
 	while (state[SDL_SCANCODE_SPACE])
