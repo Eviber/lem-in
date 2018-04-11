@@ -2,6 +2,7 @@
 *.a
 *.swp
 lem-in
-libft/*
 a.out
 test.c
+tmp
+*.dSYM
