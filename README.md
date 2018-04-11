@@ -70,7 +70,7 @@ It is composed of three parts:
 * The rooms
 * The links
 
-Comments can be anywhere but you have to specify the start and end rooms by putting the commands ##start ans ##end before declaring the room.
+Comments can be anywhere but you have to specify the start and end rooms by putting the commands ##start and ##end before declaring the room.
 
 ## Authors
 
