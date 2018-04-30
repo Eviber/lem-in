@@ -1,6 +1,7 @@
 # Lem-in
 
 This program will find the best way to move "ants" from a specific room to another in a graph.
+![lem-in screenshot](https://i.imgur.com/iCaUZCS.png "lem-in screenshot")
 
 ## Getting Started
 
