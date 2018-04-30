@@ -36,7 +36,7 @@ make all
 
 ## Example
 
-([video](https://youtu.be/aD20O2oQ1DQ))
+**([Here is a video example](https://youtu.be/aD20O2oQ1DQ))**
 
 A map should look like this:
 ```
