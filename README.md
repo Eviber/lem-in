@@ -36,33 +36,45 @@ make all
 
 ## Example
 
+([video](https://youtu.be/aD20O2oQ1DQ))
+
 A map should look like this:
 ```
-42
+20
+a 0 0
 ##start
-1 23 3
-2 16 7
-#comment
-3 16 3
-4 16 5
-5 9 3
-6 1 5
-7 4 8
+b 0 4
+c 2 2
+d 4 0
+e 3 4
+f 6 2
+g 6 4
+h 5 7
+i 9 0
+j 9 4
+k 9 6
+l 7 8
 ##end
-0 9 5
-0-4
-0-6
-1-3
-4-3
-5-2
-3-5
-#another comment
-4-2
-2-1
-7-6
-7-2
-7-4
-6-5
+m 12 4
+n 12 8
+a-b
+b-e
+e-g
+g-j
+j-m
+a-d
+d-i
+i-j
+b-c
+c-f
+f-g
+e-h
+h-l
+l-n
+n-m
+g-k
+k-m
+
 ```
 
 It is composed of three parts:
