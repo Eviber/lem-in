@@ -15,7 +15,11 @@ or you can redirect an existing map:
 ```
 ./lem-in < map
 ```
-
+use -v to launch the visualizer
+space to pause, shift to speed up, tab to display rooms name
+```
+./lem-in -v < map
+```
 ### Prerequisites
 
 You will need SDL2, SDL2\_GFX and SDL2\_TTF
