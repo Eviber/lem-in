@@ -15,7 +15,7 @@ or you can redirect an existing map:
 ```
 ./lem-in < map
 ```
-use -v to launch the visualizer
+use -v to launch the visualizer  
 space to pause, shift to speed up, tab to display rooms name
 ```
 ./lem-in -v < map
